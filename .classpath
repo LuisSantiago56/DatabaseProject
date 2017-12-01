@@ -32,5 +32,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/postgresql"/>
+	<classpathentry kind="lib" path="/media/psf/Home/Downloads/postgresql-42.1.4.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

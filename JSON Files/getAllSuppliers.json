@@ -1,0 +1,37 @@
+[
+	{
+		"Sid":122,
+		"Sname":"Luis",
+		"Slastname" : "Santiago",
+		"Saddress":{
+				"street":"El Camino Real",
+				"city":"San Jose",
+				"zipcode":95014
+			},
+		"phoneNumbers":[9988664422, 1234567890]
+	},
+	
+	{
+		"Sid":133,
+		"Sname":"Elnois",
+		"Slastname" : "Norat",
+		"Saddress":{
+				"street":"El Camino Real",
+				"city":"San Jose",
+				"zipcode":95014
+			},
+		"phoneNumbers":[9988664422, 1234567890]
+	},
+	
+	{
+		"Sid":144,
+		"Sname":"Stephanie",
+		"Slastname" : "Garcia",
+		"Saddress":{
+				"street":"El Camino Real",
+				"city":"San Jose",
+				"zipcode":95014
+			},
+		"phoneNumbers":[9988664422, 1234567890]
+	}
+]

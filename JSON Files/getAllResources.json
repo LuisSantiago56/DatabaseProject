@@ -1,0 +1,37 @@
+[
+	{
+		"Rid":123,
+		"Rname":"Gallon",
+		"Rprice": 0.00
+	},
+	
+	{
+		"Rid":133,
+		"Rname":"Ice",
+		"Rprice": 0.00
+	},
+	
+	{
+		"Rid":144,
+		"Rname":"Gasoline",
+		"Rprice": 0.00
+	},
+	
+	{
+		"Rid":155,
+		"Rname":"Batteries",
+		"Rprice": 0.00
+	},
+	
+	{
+		"Rid":166,
+		"Rname":"Clothing",
+		"Rprice": 0.00
+	},
+	
+	{
+		"Rid":177,
+		"Rname":"Baby Food",
+		"Rprice": 0.00
+	}
+]

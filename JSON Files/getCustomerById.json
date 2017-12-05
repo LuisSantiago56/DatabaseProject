@@ -1,0 +1,11 @@
+{
+		"Cid":122,
+		"Cname":"Luis",
+		"Clastname" : "Santiago",
+		"Caddress":{
+				"street":"El Camino Real",
+				"city":"San Jose",
+				"zipcode":95014
+			},
+		"phoneNumbers":[9988664422, 1234567890]
+}

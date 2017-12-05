@@ -1,4 +1,4 @@
-package test;
+package main;
 
 import java.io.UnsupportedEncodingException;
 
@@ -38,17 +38,17 @@ public class Controller {
 		return handler.getResourceById(rid);
 	}
 	
-	@RequestMapping("/appdb/supplier/")
+	@RequestMapping("/appdb/suppliers/")
 	public String getAllSuppliers(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
 		return handler.getAllSuppliers(request);
 	}
 	
-	@RequestMapping("/appdb/supplier/{sid}")
+	@RequestMapping("/appdb/suppliers/{sid}")
 	public String getSupplierById(@PathVariable int sid) {
 		return handler.getSupplierById(sid);
 	}
 	
-	@RequestMapping("appdb/customer")
+	@RequestMapping("appdb/customers")
 	public String getAllCustomers(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
 		return handler.getAllCustomers(request);
 	}

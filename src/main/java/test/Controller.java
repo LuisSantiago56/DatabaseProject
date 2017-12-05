@@ -28,14 +28,64 @@ public class Controller {
 		return "Hello, this is the parts DB App!";
 	}
 	
-	@RequestMapping("/PartApp/parts")
-	public String getAllParts(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
-		return handler.getAllParts(request);
+	@RequestMapping("/appdb/resources")
+	public String getAllResources(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
+		return handler.getAllResources(request);
 	}
 	
-	@RequestMapping("/PartApp/parts/{pid}")
-	public String getPartById(@PathVariable int pid) {
-		return handler.getPartById(pid);
+	@RequestMapping("/appdb/resources/{rid}")
+	public String getResourceById(@PathVariable int rid) {
+		return handler.getResourceById(rid);
+	}
+	
+	@RequestMapping("/appdb/supplier/")
+	public String getAllSuppliers(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
+		return handler.getAllSuppliers(request);
+	}
+	
+	@RequestMapping("/appdb/supplier/{sid}")
+	public String getSupplierById(@PathVariable int sid) {
+		return handler.getSupplierById(sid);
+	}
+	
+	@RequestMapping("appdb/customer")
+	public String getAllCustomers(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
+		return handler.getAllCustomers(request);
+	}
+	
+	@RequestMapping("appdb/customer/{cid}")
+	public String getCustomerById(@PathVariable int cid) {
+		return handler.getCustomerById(cid);
+	}
+	
+	@RequestMapping("appdb/town")
+	public String getAllTowns(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
+		return handler.getAllTowns(request);
+	}
+	
+	@RequestMapping("appdb/town/{tid}")
+	public String getTownByID(@PathVariable int tid) {
+		return handler.getTownByID(tid);
+	}
+	
+	@RequestMapping("appdb/region")
+	public String getAllRegions(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
+		return handler.getAllRegions(request);
+	}
+	
+	@RequestMapping("appdb/region/{reg_id}")
+	public String getRegionById(@PathVariable int reg_id) {
+		return handler.getRegionById(reg_id);
+	}
+	
+	@RequestMapping("appdb/category")
+	public String getAllCategories(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
+		return handler.getAllCategories(request);
+	}
+	
+	@RequestMapping("appdb/category/{cat_id}")
+	public String getCategoryById(@PathVariable int cat_id) {
+		return handler.getCategoryById(cat_id);
 	}
 	
 	@RequestMapping("/Connect")

@@ -24,7 +24,7 @@ public class Handler {
 	DAO dao = new DAO();
 	static String json;
 	
-	public String getAllParts(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
+	public String getAllResources(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
 		String req = request.getQueryString();
 		logger.info("Im in getAllParts Method");
 		logger.info("Request Args: " + request.getQueryString());
@@ -37,16 +37,69 @@ public class Handler {
 				logger.info(entry.getKey() + " : " + entry.getValue());
 			}
 
-			//return "Getting All Parts with Args: " + query_pairs.toString();
-			return json;
+			return "Getting All Parts with Args: " + query_pairs.toString();
 		}
 		return "Getting All Parts!";
 	}
 	
-	public String getPartById(@PathVariable int pid) {
+	public String getResourceById(@PathVariable int rid) {
 		logger.info("Im in getPartById Method");
-		return "Getting Part By Id: " + pid;
+		return "Getting Part By Id: " + rid;
 	}
+	
+	public String getAllSuppliers(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getSupplierById(int sid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public String getAllCustomers(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getCustomerById(int cid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getAllTowns(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getTownByID(int tid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getAllRegions(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getRegionById(int reg_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getAllCategories(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getCategoryById(int cat_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+	//=================================================================
 	
 	private static Map<String, String> splitQuery(HttpServletRequest request) throws UnsupportedEncodingException {
 	    Map<String, String> query_pairs = new HashMap<String, String>();

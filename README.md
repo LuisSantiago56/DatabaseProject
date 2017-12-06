@@ -23,3 +23,6 @@ This App was made by:
 Elnois Norat : elnois.norat@upr.edu
 Stephanie Garcia : stephanie.garcia8@upr.edu
 Luis Santiago : luis.santiago56@upr.edu
+
+Instructions
+For using this App you will need to run "As Java Application" the main class called MainApp.java. After this you will open your internet browser and type as URL localhost:8080/appdb/ for accessing the main page of the App. To see what other routes you can use to access the information of the different tables please read the ER Report to see the different URLs.

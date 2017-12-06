@@ -25,7 +25,7 @@ public class Controller {
 	@RequestMapping("/")
 	public String Home() {
 		logger.info("Im in Home Page");
-		return "Hello, this is the parts DB App!";
+		return "Hello, this is the Disaster Relief DB App!";
 	}
 	
 	@RequestMapping("/appdb/resources")

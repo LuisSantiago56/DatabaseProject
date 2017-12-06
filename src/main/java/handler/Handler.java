@@ -89,7 +89,7 @@ public class Handler {
 	
 	public String getAllCustomers(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
 		String req = request.getQueryString();
-		logger.info("Im in getAllCustomerss Method");
+		logger.info("Im in getAllCustomers Method");
 		logger.info("Request Args: " + request.getQueryString());
 		
 		if (req != null) {

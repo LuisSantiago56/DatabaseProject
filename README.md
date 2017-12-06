@@ -8,8 +8,7 @@ This simple app shows how to build a REST API for the backend of a database appl
 The Controller, Handlers and DAOs organize the data.
 
 Controller - the main class runs the Spring framework.
-Handlers - 
-Handlers - the handler modules takes care of implementing the logic of each REST call. In this sense, a handler is a Facade for accessing a given operation on a data collection. Each object handles a particular type of request for a data collection (e.g. Parts). The handlers rely upon the Data Access Objects (DAOs) to extract data from the database. The handlers encode the responses to the client with JSON and provide the appropriate HTTP response code.
+Handlers - the handler communicates with the data base.The handlers rely upon the Data Access Objects (DAOs) to extract data from the database. The handlers encode the responses to the client with JSON and provide the appropriate HTTP response code.
 DAOs - the Data Access Objects (DAOs) take care of moving data in and out of the database engine by making SQL queries and wrapping the results in the objects and object list of appropriate types.
 
 Requirements

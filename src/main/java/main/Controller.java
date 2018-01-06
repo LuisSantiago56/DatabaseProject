@@ -1,6 +1,9 @@
 package main;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import PlainObjects.Announcement;
+import PlainObjects.Category;
+import PlainObjects.City;
+import PlainObjects.CustomerAddress;
+import PlainObjects.Customers;
+import PlainObjects.Resources;
+import PlainObjects.SubCategory;
+import PlainObjects.SupplierAddress;
+import PlainObjects.Suppliers;
 import dao.JobServerConnection;
 import handler.Handler;
 
@@ -29,69 +41,94 @@ public class Controller {
 	}
 	
 	@RequestMapping("/appdb/resources")
-	public String getAllResources(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
+	public ArrayList<Resources> getAllResources(HttpServletRequest request) throws UnsupportedEncodingException, SQLException {
 		return handler.getAllResources(request);
 	}
 	
 	@RequestMapping("/appdb/resources/{rid}")
-	public String getResourceById(@PathVariable int rid) {
+	public Resources getResourceById(@PathVariable int rid) {
 		return handler.getResourceById(rid);
 	}
 	
-	@RequestMapping("/appdb/suppliers/")
-	public String getAllSuppliers(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
+	@RequestMapping("/appdb/suppliers")
+	public 	ArrayList<Suppliers> getAllSuppliers(HttpServletRequest request) throws UnsupportedEncodingException, SQLException {
 		return handler.getAllSuppliers(request);
 	}
 	
 	@RequestMapping("/appdb/suppliers/{sid}")
-	public String getSupplierById(@PathVariable int sid) {
+	public Suppliers getSupplierById(@PathVariable int sid) {
 		return handler.getSupplierById(sid);
 	}
 	
 	@RequestMapping("appdb/customers")
-	public String getAllCustomers(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
+	public ArrayList<Customers> getAllCustomers(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllCustomers(request);
 	}
 	
 	@RequestMapping("appdb/customer/{cid}")
-	public String getCustomerById(@PathVariable int cid) {
+	public Customers getCustomerById(@PathVariable int cid) {
 		return handler.getCustomerById(cid);
 	}
 	
-	@RequestMapping("appdb/town")
-	public String getAllTowns(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
-		return handler.getAllTowns(request);
-	}
-	
-	@RequestMapping("appdb/town/{tid}")
-	public String getTownByID(@PathVariable int tid) {
-		return handler.getTownByID(tid);
-	}
-	
-	@RequestMapping("appdb/region")
-	public String getAllRegions(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
-		return handler.getAllRegions(request);
-	}
-	
-	@RequestMapping("appdb/region/{reg_id}")
-	public String getRegionById(@PathVariable int reg_id) {
-		return handler.getRegionById(reg_id);
-	}
-	
 	@RequestMapping("appdb/category")
-	public String getAllCategories(HttpServletRequest request) throws UnsupportedEncodingException, JsonProcessingException {
+	public ArrayList<Category> getAllCategories(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllCategories(request);
 	}
 	
 	@RequestMapping("appdb/category/{cat_id}")
-	public String getCategoryById(@PathVariable int cat_id) {
+	public Category getCategoryById(@PathVariable int cat_id) {
 		return handler.getCategoryById(cat_id);
 	}
 	
-	@RequestMapping("/Connect")
-	public String Connect() {
-		JobServerConnection jdbc = new JobServerConnection();
-		return jdbc.jobServerConnection();
+	@RequestMapping("appdb/subcategory")
+	public ArrayList<SubCategory> getAllSubCategories(HttpServletRequest request) throws UnsupportedEncodingException {
+		return handler.getAllSubCategories(request);
 	}
 	
+	@RequestMapping("appdb/subcategory/{subcatid}")
+	public SubCategory getSubCategoryById(@PathVariable int subcat_id) {
+		return handler.getSubCategoryById(subcat_id);
+	}
+
+	@RequestMapping("appdb/supplieraddress")
+	public ArrayList<SupplierAddress> getAllSupplierAddress(HttpServletRequest request) throws UnsupportedEncodingException {
+		return handler.getAllSupplierAddress(request);
+	}
+	
+	@RequestMapping("appdb/supplieraddress/{supadd_id}")
+	public SupplierAddress getSupplierAddressById(@PathVariable int supadd_id) {
+		return handler.getSupplierAddressById(supadd_id);
+	}
+
+	@RequestMapping("appdb/customeraddress")
+	public ArrayList<CustomerAddress> getAllCustomerAddress(HttpServletRequest request) throws UnsupportedEncodingException {
+		return handler.getAllCustomerAddress(request);
+	}
+	
+	@RequestMapping("appdb/customeraddress/{cusadd_id}")
+	public CustomerAddress getCustomerAddressById(@PathVariable int cusadd_id) {
+		return handler.getCustomerAddressById(cusadd_id);
+	}
+
+	@RequestMapping("appdb/city")
+	public ArrayList<City> getAllCities(HttpServletRequest request) throws UnsupportedEncodingException {
+		return handler.getAllCities(request);
+	}
+	
+	@RequestMapping("appdb/city/{cityid}")
+	public City getCityById(@PathVariable int cityId) {
+		return handler.getCityById(cityId);
+	}
+
+	@RequestMapping("/appdb/announcement")
+	public ArrayList<Announcement> getAllAnnouncements(HttpServletRequest request) throws UnsupportedEncodingException {
+		return handler.getAllAnnouncements(request);
+	}
+	
+	@RequestMapping("/appdb/announcement/{annid}")
+	public Announcement getAnnouncementById(int annid) {
+		return handler.getAnnouncementById(annid);
+	}
+
+
 }

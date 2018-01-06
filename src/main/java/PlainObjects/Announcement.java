@@ -6,6 +6,7 @@ public class Announcement {
 
 	private long annid;
 	private Date anndate;
+	private long sid;
 	private long rid;
 	private int qty;
 	private float price;
@@ -21,6 +22,12 @@ public class Announcement {
 	}
 	public void setAnndate(Date anndate) {
 		this.anndate = anndate;
+	}
+	public long getSid() {
+		return sid;
+	}
+	public void setSid(long sid) {
+		this.sid = sid;
 	}
 	public long getRid() {
 		return rid;
@@ -42,7 +49,9 @@ public class Announcement {
 	}
 	@Override
 	public String toString() {
-		return "Announcement [annid=" + annid + ", anndate=" + anndate + ", rid=" + rid + ", qty=" + qty + ", price="
-				+ price + "]";
+		return "Announcement [annid=" + annid + ", anndate=" + anndate + ", sid=" + sid + ", rid=" + rid + ", qty="
+				+ qty + ", price=" + price + "]";
 	}
+	
+	
 }

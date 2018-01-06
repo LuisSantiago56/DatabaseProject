@@ -3,7 +3,6 @@ package main;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,18 +12,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import PlainObjects.Announcement;
 import PlainObjects.Category;
 import PlainObjects.City;
+import PlainObjects.CreditCard;
 import PlainObjects.CustomerAddress;
 import PlainObjects.Customers;
+import PlainObjects.Location;
+import PlainObjects.Purchase;
+import PlainObjects.Request;
 import PlainObjects.Resources;
 import PlainObjects.SubCategory;
 import PlainObjects.SupplierAddress;
 import PlainObjects.Suppliers;
-import dao.JobServerConnection;
 import handler.Handler;
 
 @RestController
@@ -130,5 +130,44 @@ public class Controller {
 		return handler.getAnnouncementById(annid);
 	}
 
+	@RequestMapping("/appdb/request")
+	public ArrayList<Request> getAllRequests(HttpServletRequest request) throws UnsupportedEncodingException {
+		return handler.getAllRequests(request);
+	}
+	
+	@RequestMapping("/appdb/request/{reqid}")
+	public Request getRequestById(int reqid) {
+		return handler.getRequestById(reqid);
+	}
 
+	@RequestMapping("/appdb/location")
+	public ArrayList<Location> getAllLocations(HttpServletRequest request) throws UnsupportedEncodingException {
+		return handler.getAllLocations(request);
+	}
+	
+	@RequestMapping("/appdb/location/{locid}")
+	public Location getLocationById(int locid) {
+		return handler.getLocationById(locid);
+	}
+
+	@RequestMapping("/appdb/purchase")
+	public ArrayList<Purchase> getAllPurchases(HttpServletRequest request) throws UnsupportedEncodingException {
+		return handler.getAllPurchases(request);
+	}
+	
+	@RequestMapping("/appdb/purchase/{purid}")
+	public Purchase getPurchaseById(int purid) {
+		return handler.getPurchaseById(purid);
+	}
+	
+	@RequestMapping("/appdb/creditcard")
+	public ArrayList<CreditCard> getAllCreditCards(HttpServletRequest request) throws UnsupportedEncodingException {
+		return handler.getAllCreditCards(request);
+	}
+	
+	@RequestMapping("/appdb/creditcard/{credcardnumber}")
+	public CreditCard getCreditCardById(int credcardnumber) {
+		return handler.getCreditCardById(credcardnumber);
+	}
+	
 }

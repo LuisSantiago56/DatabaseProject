@@ -13,14 +13,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import PlainObjects.Announcement;
 import PlainObjects.Category;
 import PlainObjects.City;
+import PlainObjects.CreditCard;
 import PlainObjects.CustomerAddress;
 import PlainObjects.Customers;
+import PlainObjects.Location;
+import PlainObjects.Purchase;
+import PlainObjects.Request;
 import PlainObjects.Resources;
 import PlainObjects.SubCategory;
 import PlainObjects.SupplierAddress;
@@ -211,7 +212,7 @@ public class Handler {
 	}
 
 	public City getCityById(int cityId) {
-		logger.info("Im on getCustomerAddressById Method");
+		logger.info("Im on getCityById Method");
 		return dao.getCityByID(cityId);
 	}
 
@@ -234,10 +235,101 @@ public class Handler {
 	}
 
 	public Announcement getAnnouncementById(int annid) {
-		logger.info("Im on getCustomerAddressById Method");
+		logger.info("Im on getAnnouncementById Method");
 		return dao.getAnnouncementById(annid);
 	}
+
+	public ArrayList<Request> getAllRequests(HttpServletRequest request) throws UnsupportedEncodingException {
+		String req = request.getQueryString();
+		Map<String, String> query_pairs = null;
+		logger.info("Im in getAllRequests Method");
+		
+		if (req != null) {
+			query_pairs = splitQuery(request);
+			
+			for(Entry<String, String> entry: query_pairs.entrySet()) {
+				System.out.println(entry.getKey() + " : " + entry.getValue());
+			}
+		}
+		
+		ArrayList<Request> requestList = dao.getAllRequests(query_pairs);
+		
+		return requestList;
+	}
+
+	public Request getRequestById(int reqid) {
+		logger.info("Im on getRequestById Method");
+		return dao.getRequestById(reqid);
+	}
+
+	public ArrayList<Location> getAllLocations(HttpServletRequest request) throws UnsupportedEncodingException {
+		String req = request.getQueryString();
+		Map<String, String> query_pairs = null;
+		logger.info("Im in getAllLocations Method");
+		
+		if (req != null) {
+			query_pairs = splitQuery(request);
+			
+			for(Entry<String, String> entry: query_pairs.entrySet()) {
+				System.out.println(entry.getKey() + " : " + entry.getValue());
+			}
+		}
+		
+		ArrayList<Location> locationList = dao.getAllLocations(query_pairs);
+		
+		return locationList;
+	}
+
+	public Location getLocationById(int locid) {
+		logger.info("Im on getLocationsById Method");
+		return dao.getLocationById(locid);
+	}
+
+	public ArrayList<Purchase> getAllPurchases(HttpServletRequest request) throws UnsupportedEncodingException {
+		String req = request.getQueryString();
+		Map<String, String> query_pairs = null;
+		logger.info("Im in getAllPurchases Method");
+		
+		if (req != null) {
+			query_pairs = splitQuery(request);
+			
+			for(Entry<String, String> entry: query_pairs.entrySet()) {
+				System.out.println(entry.getKey() + " : " + entry.getValue());
+			}
+		}
+		
+		ArrayList<Purchase> purchaseList = dao.getAllPurchases(query_pairs);
+		
+		return purchaseList;
+	}
 	
+	public Purchase getPurchaseById(int purid) {
+		logger.info("Im on getPurchaseById Method");
+		return dao.getPurchaseById(purid);
+	}
+
+	public ArrayList<CreditCard> getAllCreditCards(HttpServletRequest request) throws UnsupportedEncodingException {
+		String req = request.getQueryString();
+		Map<String, String> query_pairs = null;
+		logger.info("Im in getAllCreditCards Method");
+		
+		if (req != null) {
+			query_pairs = splitQuery(request);
+			
+			for(Entry<String, String> entry: query_pairs.entrySet()) {
+				System.out.println(entry.getKey() + " : " + entry.getValue());
+			}
+		}
+		
+		ArrayList<CreditCard> creditcardList = dao.getAllCreditCards(query_pairs);
+		
+		return creditcardList;
+	}
+
+	public CreditCard getCreditCardById(int credcardnumber) {
+		logger.info("Im on getCreditCardById Method");
+		return dao.getCreditCardById(credcardnumber);
+	}
 	
 	//=================================================================
 	

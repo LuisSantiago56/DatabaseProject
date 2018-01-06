@@ -11,13 +11,16 @@ import java.util.Map.Entry;
 import PlainObjects.Announcement;
 import PlainObjects.Category;
 import PlainObjects.City;
+import PlainObjects.CreditCard;
 import PlainObjects.CustomerAddress;
 import PlainObjects.Customers;
+import PlainObjects.Location;
+import PlainObjects.Purchase;
+import PlainObjects.Request;
 import PlainObjects.Resources;
 import PlainObjects.SubCategory;
 import PlainObjects.SupplierAddress;
 import PlainObjects.Suppliers;
-import handler.JsonRespond;
 
 public class DAO {
 
@@ -651,7 +654,8 @@ public class DAO {
 				
 				announcement.setAnnid(rs.getLong("annid"));
 				announcement.setAnndate(rs.getDate("anndate"));
-				announcement.setRid(rs.getInt("rid"));
+				announcement.setSid(rs.getLong("sid"));
+				announcement.setRid(rs.getLong("rid"));
 				announcement.setQty(rs.getInt("qty"));
 				announcement.setPrice(rs.getFloat("price"));
 				
@@ -682,7 +686,8 @@ public class DAO {
 				
 				announcement.setAnnid(rs.getLong("annid"));
 				announcement.setAnndate(rs.getDate("anndate"));
-				announcement.setRid(rs.getInt("rid"));
+				announcement.setSid(rs.getLong("sid"));
+				announcement.setRid(rs.getLong("rid"));
 				announcement.setQty(rs.getInt("qty"));
 				announcement.setPrice(rs.getFloat("price"));
 				
@@ -693,6 +698,306 @@ public class DAO {
 		}
 		
 		return announcement;
+	}
+
+	public ArrayList<Request> getAllRequests(Map<String, String> query_pairs) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "";
+		
+		if ( query_pairs == null) {
+			sql = "select * from Request";
+		}
+		else {
+			sql = "select * from Request where ";
+			int count = 1;
+			for(Entry<String, String> entry: query_pairs.entrySet()) {
+				sql = sql + entry.getKey() + " = \'" + entry.getValue() + "\'";
+				if(count<query_pairs.size()) {
+					sql = sql + " and ";
+				}
+				count++;
+			}
+		}
+		System.out.println(sql);
+		
+		Request request = new Request();
+		ArrayList<Request> requestList = new ArrayList<Request>();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				request.setReqid(rs.getLong("reqid"));
+				request.setReqdate(rs.getDate("reqdate"));
+				request.setCid(rs.getLong("cid"));
+				request.setRid(rs.getLong("rid"));
+				request.setQty(rs.getInt("qty"));
+				request.setLocid(rs.getLong("locid"));
+				
+				requestList.add(request);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return requestList;
+	}
+	
+	public Request getRequestById(int reqid) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "select * from Request where reqid = " + reqid;
+		System.out.println(sql);
+		
+		Request request = new Request();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				request.setReqid(rs.getLong("reqid"));
+				request.setReqdate(rs.getDate("reqdate"));
+				request.setCid(rs.getLong("cid"));
+				request.setRid(rs.getLong("rid"));
+				request.setQty(rs.getInt("qty"));
+				request.setLocid(rs.getLong("locid"));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return request;
+	}
+
+	public ArrayList<Location> getAllLocations(Map<String, String> query_pairs) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "";
+		
+		if ( query_pairs == null) {
+			sql = "select * from Location";
+		}
+		else {
+			sql = "select * from Location where ";
+			int count = 1;
+			for(Entry<String, String> entry: query_pairs.entrySet()) {
+				sql = sql + entry.getKey() + " = \'" + entry.getValue() + "\'";
+				if(count<query_pairs.size()) {
+					sql = sql + " and ";
+				}
+				count++;
+			}
+		}
+		System.out.println(sql);
+		
+		Location location = new Location();
+		ArrayList<Location> locationList = new ArrayList<Location>();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				location.setLocid(rs.getLong("locid"));
+				location.setLatitude(rs.getString("latitude"));
+				location.setLongitud(rs.getString("longitud"));
+				
+				locationList.add(location);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return locationList;
+	}
+
+	public Location getLocationById(int locid) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "select * from Location where locid = " + locid;
+		System.out.println(sql);
+		
+		Location location = new Location();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				location.setLocid(rs.getLong("locid"));
+				location.setLatitude(rs.getString("latitude"));
+				location.setLongitud(rs.getString("longitud"));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return location;
+	}
+
+	public ArrayList<Purchase> getAllPurchases(Map<String, String> query_pairs) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "";
+		
+		if ( query_pairs == null) {
+			sql = "select * from Purchase";
+		}
+		else {
+			sql = "select * from Purchase where ";
+			int count = 1;
+			for(Entry<String, String> entry: query_pairs.entrySet()) {
+				sql = sql + entry.getKey() + " = \'" + entry.getValue() + "\'";
+				if(count<query_pairs.size()) {
+					sql = sql + " and ";
+				}
+				count++;
+			}
+		}
+		System.out.println(sql);
+		
+		Purchase purchase = new Purchase();
+		ArrayList<Purchase> purchaseList = new ArrayList<Purchase>();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				purchase.setPurid(rs.getLong("purid"));
+				purchase.setPurdate(rs.getDate("purdate"));
+				purchase.setPurprice(rs.getFloat("purprice"));
+				purchase.setCid(rs.getLong("cid"));
+				purchase.setRid(rs.getLong("rid"));
+				purchase.setCredcardnumber(rs.getString("credcardnumber"));
+				
+				purchaseList.add(purchase);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return purchaseList;
+	}
+	
+	public Purchase getPurchaseById(int purid) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "select * from Purchase where purid = " + purid;
+		System.out.println(sql);
+		
+		Purchase purchase = new Purchase();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				purchase.setPurid(rs.getLong("purid"));
+				purchase.setPurdate(rs.getDate("purdate"));
+				purchase.setPurprice(rs.getFloat("purprice"));
+				purchase.setCid(rs.getLong("cid"));
+				purchase.setRid(rs.getLong("rid"));
+				purchase.setCredcardnumber(rs.getString("credcardnumber"));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return purchase;
+	}
+
+	public ArrayList<CreditCard> getAllCreditCards(Map<String, String> query_pairs) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "";
+		
+		if ( query_pairs == null) {
+			sql = "select * from CreditCard";
+		}
+		else {
+			sql = "select * from CreditCard where ";
+			int count = 1;
+			for(Entry<String, String> entry: query_pairs.entrySet()) {
+				sql = sql + entry.getKey() + " = \'" + entry.getValue() + "\'";
+				if(count<query_pairs.size()) {
+					sql = sql + " and ";
+				}
+				count++;
+			}
+		}
+		System.out.println(sql);
+		
+		CreditCard creditcard = new CreditCard();
+		ArrayList<CreditCard> creditcardList = new ArrayList<CreditCard>();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				creditcard.setCredcardnumber(rs.getString("credcardnumber"));
+				creditcard.setExpdate(rs.getDate("expdate"));
+				creditcard.setCvcnumber(rs.getInt("cvcnumber"));
+				creditcard.setHoldername(rs.getInt("holdername"));
+				creditcard.setCid(rs.getLong("cid"));
+				
+				creditcardList.add(creditcard);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return creditcardList;
+	}
+	
+	public CreditCard getCreditCardById(int credcardnumber) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "select * from CreditCard where credcardnumber = " + credcardnumber;
+		System.out.println(sql);
+		
+		CreditCard creditcard = new CreditCard();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				creditcard.setCredcardnumber(rs.getString("credcardnumber"));
+				creditcard.setExpdate(rs.getDate("expdate"));
+				creditcard.setCvcnumber(rs.getInt("cvcnumber"));
+				creditcard.setHoldername(rs.getInt("holdername"));
+				creditcard.setCid(rs.getLong("cid"));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return creditcard;
 	}
 
 }

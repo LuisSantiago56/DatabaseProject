@@ -25,6 +25,7 @@ import PlainObjects.Resources;
 import PlainObjects.SubCategory;
 import PlainObjects.SupplierAddress;
 import PlainObjects.Suppliers;
+import PlainObjects.Supplies;
 import handler.Handler;
 
 @RestController
@@ -168,6 +169,16 @@ public class Controller {
 	@RequestMapping("/appdb/creditcard/{credcardnumber}")
 	public CreditCard getCreditCardById(int credcardnumber) {
 		return handler.getCreditCardById(credcardnumber);
+	}
+	
+	@RequestMapping("/appdb/supplies")
+	public ArrayList<Supplies> getAllSupplies(HttpServletRequest request) throws UnsupportedEncodingException {
+		return handler.getAllSupplies(request);
+	}
+	
+	@RequestMapping("/appdb/supplies/{supid}")
+	public Supplies getSuppliesById(int supid) {
+		return handler.getSuppliesById(supid);
 	}
 	
 }

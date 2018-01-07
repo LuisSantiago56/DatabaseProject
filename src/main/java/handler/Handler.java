@@ -26,6 +26,7 @@ import PlainObjects.Resources;
 import PlainObjects.SubCategory;
 import PlainObjects.SupplierAddress;
 import PlainObjects.Suppliers;
+import PlainObjects.Supplies;
 import dao.DAO;
 import main.Controller;
 
@@ -329,6 +330,29 @@ public class Handler {
 	public CreditCard getCreditCardById(int credcardnumber) {
 		logger.info("Im on getCreditCardById Method");
 		return dao.getCreditCardById(credcardnumber);
+	}
+	
+	public ArrayList<Supplies> getAllSupplies(HttpServletRequest request) throws UnsupportedEncodingException {
+		String req = request.getQueryString();
+		Map<String, String> query_pairs = null;
+		logger.info("Im in getAllSupplies Method");
+		
+		if (req != null) {
+			query_pairs = splitQuery(request);
+			
+			for(Entry<String, String> entry: query_pairs.entrySet()) {
+				System.out.println(entry.getKey() + " : " + entry.getValue());
+			}
+		}
+		
+		ArrayList<Supplies> suppliesList = dao.getAllSupplies(query_pairs);
+		
+		return suppliesList;
+	}
+	
+	public Supplies getSuppliesById(int supid) {
+		logger.info("Im on getCreditCardById Method");
+		return dao.getSuppliesById(supid);
 	}
 	
 	//=================================================================

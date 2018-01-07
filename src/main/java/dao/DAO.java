@@ -21,6 +21,7 @@ import PlainObjects.Resources;
 import PlainObjects.SubCategory;
 import PlainObjects.SupplierAddress;
 import PlainObjects.Suppliers;
+import PlainObjects.Supplies;
 
 public class DAO {
 
@@ -35,7 +36,7 @@ public class DAO {
 			sql = "select * from Resource";
 		}
 		else {
-			sql = "select * from Resource where ";
+			sql = "select * from Resource natural inner join Category natural inner join SubCategory where ";
 			int count = 1;
 			for(Entry<String, String> entry: query_pairs.entrySet()) {
 				sql = sql + entry.getKey() + " = \'" + entry.getValue() + "\'";
@@ -78,7 +79,7 @@ public class DAO {
 	public Resources getResourcesById(int rid) {
 		
 		Connection conn = jdbc.jobServerInit();
-		String sql = "select * from Resource where rid = " + rid;
+		String sql = "select * from Resource natural inner join Category natural inner join SubCategory where rid = " + rid;
 		System.out.println(sql);
 		
 		Resources resource = new Resources();
@@ -628,10 +629,12 @@ public class DAO {
 		String sql = "";
 		
 		if ( query_pairs == null) {
-			sql = "select * from Announcement";
+			sql = "select * from Announcement natural inner join Supplier natural inner join SupplierAddress"
+					+ " natural inner join Resource";
 		}
 		else {
-			sql = "select * from Announcement where ";
+			sql = "select * from Announcement natural inner join Supplier natural inner join SupplierAddress" 
+					+ " natural inner join Resource where ";
 			int count = 1;
 			for(Entry<String, String> entry: query_pairs.entrySet()) {
 				sql = sql + entry.getKey() + " = \'" + entry.getValue() + "\'";
@@ -673,7 +676,8 @@ public class DAO {
 
 	public Announcement getAnnouncementById( int annid) {
 		Connection conn = jdbc.jobServerInit();
-		String sql = "select * from Announcement where annid = " + annid;
+		String sql = "select * from Announcement natural inner join Supplier natural inner join SupplierAddress"
+				+ " natural inner join Resource where annid = " + annid;
 		System.out.println(sql);
 		
 		Announcement announcement = new Announcement();
@@ -705,10 +709,12 @@ public class DAO {
 		String sql = "";
 		
 		if ( query_pairs == null) {
-			sql = "select * from Request";
+			sql = "select * from Request natural inner join Customer natural inner join CustomerAddress"
+					+ " natural inner join Resource natural inner join Location";
 		}
 		else {
-			sql = "select * from Request where ";
+			sql = "select * from Request natural inner join Customer natural inner join CustomerAddress"
+					+ " natural inner join Resource natural inner join Location where ";
 			int count = 1;
 			for(Entry<String, String> entry: query_pairs.entrySet()) {
 				sql = sql + entry.getKey() + " = \'" + entry.getValue() + "\'";
@@ -750,7 +756,8 @@ public class DAO {
 	
 	public Request getRequestById(int reqid) {
 		Connection conn = jdbc.jobServerInit();
-		String sql = "select * from Request where reqid = " + reqid;
+		String sql = "select * from Request natural inner join Customer natural inner join CustomerAddress"
+				+ " natural inner join Resource natural inner join Location where reqid = " + reqid;
 		System.out.println(sql);
 		
 		Request request = new Request();
@@ -853,10 +860,12 @@ public class DAO {
 		String sql = "";
 		
 		if ( query_pairs == null) {
-			sql = "select * from Purchase";
+			sql = "select * from Purchase natural inner join Resource natural inner join CreditCard"
+					+ " natural inner join Customer natural inner join CustomerAddress";
 		}
 		else {
-			sql = "select * from Purchase where ";
+			sql = "select * from Purchase natural inner join Resource natural inner join CreditCard"
+					+ " natural inner join Customer natural inner join CustomerAddress where ";
 			int count = 1;
 			for(Entry<String, String> entry: query_pairs.entrySet()) {
 				sql = sql + entry.getKey() + " = \'" + entry.getValue() + "\'";
@@ -898,7 +907,8 @@ public class DAO {
 	
 	public Purchase getPurchaseById(int purid) {
 		Connection conn = jdbc.jobServerInit();
-		String sql = "select * from Purchase where purid = " + purid;
+		String sql = "select * from Purchase natural inner join Resource natural inner join CreditCard"
+				+ " natural inner join Customer natural inner join CustomerAddress where purid = " + purid;
 		System.out.println(sql);
 		
 		Purchase purchase = new Purchase();
@@ -930,10 +940,10 @@ public class DAO {
 		String sql = "";
 		
 		if ( query_pairs == null) {
-			sql = "select * from CreditCard";
+			sql = "select * from CreditCard natural inner join Customer natural inner join CustomerAddress";
 		}
 		else {
-			sql = "select * from CreditCard where ";
+			sql = "select * from CreditCard natural inner join Customer natural inner join CustomerAddress where ";
 			int count = 1;
 			for(Entry<String, String> entry: query_pairs.entrySet()) {
 				sql = sql + entry.getKey() + " = \'" + entry.getValue() + "\'";
@@ -974,7 +984,8 @@ public class DAO {
 	
 	public CreditCard getCreditCardById(int credcardnumber) {
 		Connection conn = jdbc.jobServerInit();
-		String sql = "select * from CreditCard where credcardnumber = " + credcardnumber;
+		String sql = "select * from CreditCard natural inner join Customer natural inner join CustomerAddress"
+				+ " where credcardnumber = " + credcardnumber;
 		System.out.println(sql);
 		
 		CreditCard creditcard = new CreditCard();
@@ -1000,4 +1011,83 @@ public class DAO {
 		return creditcard;
 	}
 
+	public ArrayList<Supplies> getAllSupplies(Map<String, String> query_pairs) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "";
+		
+		if ( query_pairs == null) {
+			sql = "select * from Supplies natural inner join Supplier natural inner join SupplierAddress"
+					+ " natural inner join City natural inner join Resource";
+		}
+		else {
+			sql = "select * from Supplies natural inner join Supplier natural inner join SupplierAddress"
+					+ " natural inner join City natural inner join Resource where ";
+			int count = 1;
+			for(Entry<String, String> entry: query_pairs.entrySet()) {
+				sql = sql + entry.getKey() + " = \'" + entry.getValue() + "\'";
+				if(count<query_pairs.size()) {
+					sql = sql + " and ";
+				}
+				count++;
+			}
+		}
+		System.out.println(sql);
+		
+		Supplies supplies = new Supplies();
+		ArrayList<Supplies> suppliesList = new ArrayList<Supplies>();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				supplies.setSupid(rs.getLong("supid"));
+				supplies.setSid(rs.getLong("sid"));
+				supplies.setRid(rs.getLong("rid"));
+				supplies.setSupprice(rs.getFloat("supprice"));
+				supplies.setStock(rs.getInt("stock"));
+				supplies.setCityid(rs.getLong("cityid"));
+				
+				suppliesList.add(supplies);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return suppliesList;
+	}
+	
+	public Supplies getSuppliesById(int supid) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "select * from Supplies natural inner join Supplier natural inner join SupplierAddress"
+				+ " natural inner join City natural inner join Resource where supid = " + supid;
+		System.out.println(sql);
+		
+		Supplies supplies = new Supplies();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				supplies.setSupid(rs.getLong("supid"));
+				supplies.setSid(rs.getLong("sid"));
+				supplies.setRid(rs.getLong("rid"));
+				supplies.setSupprice(rs.getFloat("supprice"));
+				supplies.setStock(rs.getInt("stock"));
+				supplies.setCityid(rs.getLong("cityid"));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return supplies;
+	}
 }

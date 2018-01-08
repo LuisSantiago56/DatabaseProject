@@ -12,9 +12,9 @@ import main.Controller;
 public class JobServerConnection {
 
 	private final static Logger logger = LogManager.getLogger(Controller.class);
-	private String username = "appusr";
-	private String password = "appusr";
-	private String dbname = "appdb2";
+	private String username = "root";
+	private String password = "123pescao";
+	private String dbname = "drdb";
 	
 	public Connection jobServerInit() {
 		Connection conn = null;
@@ -25,7 +25,7 @@ public class JobServerConnection {
 		}
 		try {
 			return conn = DriverManager.getConnection(
-					"jdbc:postgresql://127.0.0.1:5432/" + dbname, username, password);
+					"jdbc:postgresql://dr.cewezyn180mr.us-east-2.rds.amazonaws.com:5432/" + dbname +"?user="+username+"&password="+password);
 		} catch (SQLException e) {
 			logger.info("Connection failed.");
 			return null;

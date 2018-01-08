@@ -22,6 +22,7 @@ import PlainObjects.Customers;
 import PlainObjects.Location;
 import PlainObjects.Purchase;
 import PlainObjects.Request;
+import PlainObjects.RequestSearch;
 import PlainObjects.Resources;
 import PlainObjects.SubCategory;
 import PlainObjects.SupplierAddress;
@@ -254,6 +255,23 @@ public class Handler {
 		}
 		
 		ArrayList<Request> requestList = dao.getAllRequests(query_pairs);
+		
+		return requestList;
+	}
+	
+	public ArrayList<RequestSearch> searchRequests(HttpServletRequest request) throws UnsupportedEncodingException {
+		String req = request.getQueryString();
+		String searchTerm = "";
+		logger.info("Im in searchRequests Method");
+		Map<String, String> query_pairs = null;
+		if (req != null) {
+			query_pairs = splitQuery(request);
+			if(query_pairs.containsKey("searchterm")) {
+				searchTerm = query_pairs.get("searchterm");
+			}
+		}
+		
+		ArrayList<RequestSearch> requestList = dao.searchRequests(searchTerm);
 		
 		return requestList;
 	}

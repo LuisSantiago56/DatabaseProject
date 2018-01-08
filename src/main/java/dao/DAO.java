@@ -17,6 +17,7 @@ import PlainObjects.Customers;
 import PlainObjects.Location;
 import PlainObjects.Purchase;
 import PlainObjects.Request;
+import PlainObjects.RequestSearch;
 import PlainObjects.Resources;
 import PlainObjects.SubCategory;
 import PlainObjects.SupplierAddress;
@@ -48,7 +49,6 @@ public class DAO {
 		}
 		System.out.println(sql);
 		
-		Resources resource = new Resources();
 		ArrayList<Resources> resourcesList = new ArrayList<Resources>();
 		
 		try {
@@ -56,7 +56,7 @@ public class DAO {
 			ResultSet rs = stm.executeQuery(sql);
 			
 			while(rs.next()) {
-				
+				Resources resource = new Resources();
 				resource.setId(rs.getLong("rid"));
 				resource.setName(rs.getString("rname"));
 				resource.setQtyPerPk(rs.getInt("qtyperpk"));
@@ -127,7 +127,6 @@ public class DAO {
 		}
 		System.out.println(sql);
 		
-		Suppliers supplier = new Suppliers();
 		ArrayList<Suppliers> suppliersList = new ArrayList<Suppliers>();
 		
 		try {
@@ -135,7 +134,7 @@ public class DAO {
 			ResultSet rs = stm.executeQuery(sql);
 			
 			while(rs.next()) {
-				
+				Suppliers supplier = new Suppliers();
 				supplier.setId(rs.getLong("sid"));
 				supplier.setFirstName(rs.getString("sname"));
 				supplier.setLastName(rs.getString("slastname"));
@@ -203,7 +202,7 @@ public class DAO {
 		}
 		System.out.println(sql);
 		
-		Customers customer = new Customers();
+		
 		ArrayList<Customers> customersList = new ArrayList<Customers>();
 		
 		try {
@@ -211,7 +210,7 @@ public class DAO {
 			ResultSet rs = stm.executeQuery(sql);
 			
 			while(rs.next()) {
-				
+				Customers customer = new Customers();
 				customer.setId(rs.getLong("sid"));
 				customer.setFirstName(rs.getString("sname"));
 				customer.setLastName(rs.getString("slastname"));
@@ -278,7 +277,7 @@ public class DAO {
 		}
 		System.out.println(sql);
 		
-		Category category = new Category();
+		
 		ArrayList<Category> categoryList = new ArrayList<Category>();
 		
 		try {
@@ -286,7 +285,7 @@ public class DAO {
 			ResultSet rs = stm.executeQuery(sql);
 			
 			while(rs.next()) {
-				
+				Category category = new Category();
 				category.setCategoryId(rs.getLong("catid"));
 				category.setCategoryName(rs.getString("catname"));
 				
@@ -349,7 +348,7 @@ public class DAO {
 		}
 		System.out.println(sql);
 		
-		SubCategory subcategory = new SubCategory();
+	
 		ArrayList<SubCategory> subcategoryList = new ArrayList<SubCategory>();
 		
 		try {
@@ -357,7 +356,7 @@ public class DAO {
 			ResultSet rs = stm.executeQuery(sql);
 			
 			while(rs.next()) {
-				
+				SubCategory subcategory = new SubCategory();
 				subcategory.setSubCategoryId(rs.getLong("subcatid"));
 				subcategory.setSubCategoryName(rs.getString("subcatname"));
 				
@@ -419,7 +418,7 @@ public class DAO {
 		}
 		System.out.println(sql);
 		
-		SupplierAddress supplieraddress = new SupplierAddress();
+		
 		ArrayList<SupplierAddress> supplieraddressList = new ArrayList<SupplierAddress>();
 		
 		try {
@@ -427,7 +426,7 @@ public class DAO {
 			ResultSet rs = stm.executeQuery(sql);
 			
 			while(rs.next()) {
-				
+				SupplierAddress supplieraddress = new SupplierAddress();
 				supplieraddress.setAid(rs.getLong("aid"));
 				supplieraddress.setStreet(rs.getString("street"));
 				supplieraddress.setCity(rs.getString("city"));
@@ -496,7 +495,7 @@ public class DAO {
 		}
 		System.out.println(sql);
 		
-		CustomerAddress customeraddress = new CustomerAddress();
+		
 		ArrayList<CustomerAddress> customeraddressList = new ArrayList<CustomerAddress>();
 		
 		try {
@@ -504,7 +503,7 @@ public class DAO {
 			ResultSet rs = stm.executeQuery(sql);
 			
 			while(rs.next()) {
-				
+				CustomerAddress customeraddress = new CustomerAddress();
 				customeraddress.setAid(rs.getLong("aid"));
 				customeraddress.setStreet(rs.getString("street"));
 				customeraddress.setCity(rs.getString("city"));
@@ -573,7 +572,7 @@ public class DAO {
 		}
 		System.out.println(sql);
 		
-		City city = new City();
+		
 		ArrayList<City> cityList = new ArrayList<City>();
 		
 		try {
@@ -581,7 +580,7 @@ public class DAO {
 			ResultSet rs = stm.executeQuery(sql);
 			
 			while(rs.next()) {
-				
+				City city = new City();
 				city.setCityId(rs.getLong("cityid"));
 				city.setCityName(rs.getString("cityName"));
 				city.setRegion(rs.getInt("region"));
@@ -646,7 +645,7 @@ public class DAO {
 		}
 		System.out.println(sql);
 		
-		Announcement announcement = new Announcement();
+	
 		ArrayList<Announcement> announcementList = new ArrayList<Announcement>();
 		
 		try {
@@ -654,7 +653,7 @@ public class DAO {
 			ResultSet rs = stm.executeQuery(sql);
 			
 			while(rs.next()) {
-				
+				Announcement announcement = new Announcement();
 				announcement.setAnnid(rs.getLong("annid"));
 				announcement.setAnndate(rs.getDate("anndate"));
 				announcement.setSid(rs.getLong("sid"));
@@ -726,7 +725,7 @@ public class DAO {
 		}
 		System.out.println(sql);
 		
-		Request request = new Request();
+
 		ArrayList<Request> requestList = new ArrayList<Request>();
 		
 		try {
@@ -734,13 +733,44 @@ public class DAO {
 			ResultSet rs = stm.executeQuery(sql);
 			
 			while(rs.next()) {
-				
+				Request request = new Request();
 				request.setReqid(rs.getLong("reqid"));
 				request.setReqdate(rs.getDate("reqdate"));
 				request.setCid(rs.getLong("cid"));
 				request.setRid(rs.getLong("rid"));
 				request.setQty(rs.getInt("qty"));
 				request.setLocid(rs.getLong("locid"));
+				
+				requestList.add(request);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return requestList;
+	}
+	
+	public ArrayList<RequestSearch> searchRequests(String searchTerm) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "select reqdate, cityname, rname, qty from request as req, city as c, resource as res where req.cid = c.cityid and req.rid = res.rid and (Lower(rname) LIKE Lower('%"+searchTerm+"%') or Lower(cityname) LIKE Lower('%"+searchTerm+"%'))";
+		
+		System.out.println(sql);
+
+		ArrayList<RequestSearch> requestList = new ArrayList<RequestSearch>();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				RequestSearch request = new RequestSearch();
+				request.setReqdate(rs.getDate("reqdate"));
+				request.setCityname(rs.getString("cityname"));
+				request.setRname(rs.getString("rname"));
+				request.setQty(rs.getInt("qty"));
 				
 				requestList.add(request);
 				
@@ -804,7 +834,7 @@ public class DAO {
 		}
 		System.out.println(sql);
 		
-		Location location = new Location();
+		
 		ArrayList<Location> locationList = new ArrayList<Location>();
 		
 		try {
@@ -812,7 +842,7 @@ public class DAO {
 			ResultSet rs = stm.executeQuery(sql);
 			
 			while(rs.next()) {
-				
+				Location location = new Location();
 				location.setLocid(rs.getLong("locid"));
 				location.setLatitude(rs.getString("latitude"));
 				location.setLongitud(rs.getString("longitud"));
@@ -877,7 +907,7 @@ public class DAO {
 		}
 		System.out.println(sql);
 		
-		Purchase purchase = new Purchase();
+	
 		ArrayList<Purchase> purchaseList = new ArrayList<Purchase>();
 		
 		try {
@@ -885,7 +915,7 @@ public class DAO {
 			ResultSet rs = stm.executeQuery(sql);
 			
 			while(rs.next()) {
-				
+				Purchase purchase = new Purchase();
 				purchase.setPurid(rs.getLong("purid"));
 				purchase.setPurdate(rs.getDate("purdate"));
 				purchase.setPurprice(rs.getFloat("purprice"));
@@ -955,7 +985,7 @@ public class DAO {
 		}
 		System.out.println(sql);
 		
-		CreditCard creditcard = new CreditCard();
+		
 		ArrayList<CreditCard> creditcardList = new ArrayList<CreditCard>();
 		
 		try {
@@ -963,7 +993,7 @@ public class DAO {
 			ResultSet rs = stm.executeQuery(sql);
 			
 			while(rs.next()) {
-				
+				CreditCard creditcard = new CreditCard();
 				creditcard.setCredcardnumber(rs.getString("credcardnumber"));
 				creditcard.setExpdate(rs.getDate("expdate"));
 				creditcard.setCvcnumber(rs.getInt("cvcnumber"));
@@ -1033,7 +1063,7 @@ public class DAO {
 		}
 		System.out.println(sql);
 		
-		Supplies supplies = new Supplies();
+	
 		ArrayList<Supplies> suppliesList = new ArrayList<Supplies>();
 		
 		try {
@@ -1041,7 +1071,7 @@ public class DAO {
 			ResultSet rs = stm.executeQuery(sql);
 			
 			while(rs.next()) {
-				
+				Supplies supplies = new Supplies();
 				supplies.setSupid(rs.getLong("supid"));
 				supplies.setSid(rs.getLong("sid"));
 				supplies.setRid(rs.getLong("rid"));

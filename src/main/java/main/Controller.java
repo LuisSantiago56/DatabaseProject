@@ -21,6 +21,7 @@ import PlainObjects.Customers;
 import PlainObjects.Location;
 import PlainObjects.Purchase;
 import PlainObjects.Request;
+import PlainObjects.RequestSearch;
 import PlainObjects.Resources;
 import PlainObjects.SubCategory;
 import PlainObjects.SupplierAddress;
@@ -134,6 +135,11 @@ public class Controller {
 	@RequestMapping("/appdb/request")
 	public ArrayList<Request> getAllRequests(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllRequests(request);
+	}
+	
+	@RequestMapping("/appdb/request-search")
+	public ArrayList<RequestSearch> searchRequests(HttpServletRequest request) throws UnsupportedEncodingException {
+		return handler.searchRequests(request);
 	}
 	
 	@RequestMapping("/appdb/request/{reqid}")

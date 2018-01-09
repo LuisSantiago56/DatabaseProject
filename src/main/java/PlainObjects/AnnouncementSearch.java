@@ -6,7 +6,7 @@ public class AnnouncementSearch {
 	private Date anndate;
 	private String sname;
 	private int qty;
-	private double annprice;
+	private float annprice;
 	private String rname;
 	private Date expdate;
 	
@@ -28,10 +28,10 @@ public class AnnouncementSearch {
 	public void setQty(int qty) {
 		this.qty = qty;
 	}
-	public double getAnnprice() {
+	public float getAnnprice() {
 		return annprice;
 	}
-	public void setAnnprice(double annprice) {
+	public void setAnnprice(float annprice) {
 		this.annprice = annprice;
 	}
 	public String getRname() {

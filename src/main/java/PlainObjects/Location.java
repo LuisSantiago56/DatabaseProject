@@ -4,7 +4,7 @@ public class Location {
 
 	private long locid;
 	private String latitude;
-	private String longitud;
+	private String longitude;
 	
 	public long getLocid() {
 		return locid;
@@ -18,15 +18,15 @@ public class Location {
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
-	public String getLongitud() {
-		return longitud;
+	public String getLongitude() {
+		return longitude;
 	}
-	public void setLongitud(String longitud) {
-		this.longitud = longitud;
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 	@Override
 	public String toString() {
-		return "Location [locid=" + locid + ", latitude=" + latitude + ", longitud=" + longitud + "]";
+		return "Location [locid=" + locid + ", latitude=" + latitude + ", longitude=" + longitude + "]";
 	}
 
 }

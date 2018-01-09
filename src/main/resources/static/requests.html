@@ -196,6 +196,9 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="http://localhost:8080/requests.html">Requests</a></li>
                     </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="http://localhost:8080/announcements.html">Announcements</a></li>
+                    </ul>
                 </div>
             </nav>
     <div class="loader">
@@ -217,7 +220,7 @@
     <div class="container">
         <div class="row">
             <div class="col col-sm-12 col-md-10">
-                <input id="search-input" class="form-control form-control-lg" type="text" placeholder="Search requests by resource name or city...">
+                <input id="search-input" class="form-control form-control-lg" type="text" placeholder="Search requests by resource, customer or supplier...">
             </div>
             <div class="col col-sm-12 col-md-2">
                 <button id="search-btn" type="button" class="btn btn-outline-primary btn-lg"><i class="fas fa-search"></i> Search</button>
@@ -228,9 +231,12 @@
                 <table class="table table-striped">
                     <thead class="thead-dark">
                         <th scope="col">Request Date</th>
-                        <th scope="col">City</th>
+                        <th scope="col">Customer</th>
                         <th scope="col">Resource</th>
+                        <th scope="col">Supplier</th>
                         <th scope="col">Qty</th>
+                        <th scope="col">Latitude</th>
+                        <th scope="col">Longitude</th>
                     </thead>
                     <tbody>
                         
@@ -257,7 +263,11 @@
                         var $tbody = $('.table').find('tbody');
                         $tbody.html("");
                         for(var i = 0;i< size;i++) {
-                            var html = "<tr class='resource-row' style='display:none;'><td>"+result[i].reqdate+"</td><td>"+result[i].cityname+"</td><td>"+result[i].rname+"</td><td>"+result[i].qty+"</td></tr>";
+                            var html = "<tr class='resource-row' style='display:none;'><td>"
+                            +result[i].reqdate+"</td><td>"+result[i].cname+"</td><td>"
+                            +result[i].rname+"</td><td>"+result[i].sname+"</td><td>"
+                            +result[i].qty+"</td><td>"+result[i].latitude+"</td><td>"
+                            +result[i].longitude+"</td></tr>";
                             $tbody.append(html);
                             $('.resource-row').last().fadeIn();
                         }

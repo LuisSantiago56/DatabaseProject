@@ -4,10 +4,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Requests</title>
+    <title>Disaster Relief - Requests</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
     <style>
+        nav {
+			background-color:#333333;
+		}
+		.navbar-brand {
+			color: white;
+            font-weight: bolder;
+            font-size: 1.5rem;
+		}
+		.navbar-nav li a {
+			color:white;
+		}
         .container {
             margin-top: 20px;
         }
@@ -162,6 +173,34 @@
 </head>
 
 <body>
+        <nav class="nav navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="http://localhost:8080/index.html">Disaster Relief</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="http://localhost:8080/index.html">Home</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="http://localhost:8080/customers.html">Customers</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="http://localhost:8080/suppliers.html">Suppliers</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="http://localhost:8080/resources.html">Resources</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="http://localhost:8080/purchases.html">Purchases</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="http://localhost:8080/requests.html">Requests</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="http://localhost:8080/announcements.html">Announcements</a></li>
+                    </ul>
+                </div>
+            </nav>
     <div class="loader">
             <div class="sk-fading-circle">
                     <div class="sk-circle1 sk-circle"></div>
@@ -181,7 +220,7 @@
     <div class="container">
         <div class="row">
             <div class="col col-sm-12 col-md-10">
-                <input id="search-input" class="form-control form-control-lg" type="text" placeholder="Search purchases by date resourse name, customer or supplier...">
+                <input id="search-input" class="form-control form-control-lg" type="text" placeholder="Search announcements by resource or supplier...">
             </div>
             <div class="col col-sm-12 col-md-2">
                 <button id="search-btn" type="button" class="btn btn-outline-primary btn-lg"><i class="fas fa-search"></i> Search</button>
@@ -191,15 +230,12 @@
             <div class="col">
                 <table class="table table-striped">
                     <thead class="thead-dark">
-                        <th scope="col">Purchase Date</th>
-                        <th scope="col">Purchase Price</th>
-                        <th scope="col">Resource</th>
-                        <th scope="col">Resource Price</th>
-                        <th scope="col">Credit Card</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Customer Phone</th>
+                        <th scope="col">Start Date</th>
                         <th scope="col">Supplier</th>
-                        <th scope="col">Supplier Phone</th>
+                        <th scope="col">Resource</th>
+                        <th scope="col">Qty</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Exp Date</th>
                     </thead>
                     <tbody>
                         
@@ -219,7 +255,7 @@
                     query = "?searchterm="+searchTerm;
                 }
                 $.ajax({
-                    url: "http://localhost:8080/appdb/purchase-search"+query,
+                    url: "http://localhost:8080/appdb/announcement-search"+query,
                     type: "GET",
                     success: function(result){
                         var size = result.length;
@@ -227,17 +263,15 @@
                         $tbody.html("");
                         for(var i = 0;i< size;i++) {
                             var html = "<tr class='resource-row' style='display:none;'><td>"
-                            +result[i].purdate+"</td><td>"+result[i].purprice+"</td><td>"
-                            +result[i].rname+"</td><td>"+result[i].rprice+"</td><td>"
-                            +result[i].credcardnumber+"</td><td>"+result[i].cname+"</td><td>"
-                            +result[i].cphone+"</td><td>"+result[i].sname+"</td><td>"
-                            +result[i].sphone+"</td></tr>";
+                            +result[i].anndate+"</td><td>"+result[i].sname+"</td><td>"
+                            +result[i].rname+"</td><td>"+result[i].qty"</td><td>"
+                            +result[i].annprice"</td><td>"+result[i].expdate+"</td></tr>";
                             $tbody.append(html);
                             $('.resource-row').last().fadeIn();
                         }
                     },
                     error: function(error){
-                        alert("An error occured while getting purchases...");
+                        alert("An error occured while getting announcements...");
                     },
                     complete: function(){
                         $('.loader').fadeOut();

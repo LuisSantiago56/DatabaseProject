@@ -788,6 +788,44 @@ public class DAO {
 		return announcementList;
 	}
 
+public ArrayList<AnnouncementSearch> searchAnnouncement(String searchTerm) {
+		
+		Connection conn = jdbc.jobServerInit();
+		String sql = "select anndate, sname, rname, qty, annprice, expdate"
+				+ " from announcement, resource, supplier"
+				+ " where announcement.sid = supplier.sid and announcement.rid = resource.rid"
+				+ " and (lower(sname) LIKE lower('%" +searchTerm + "%') or lower(rname) LIKE lower('%"+searchTerm+"%'))";
+		
+		System.out.println(sql);
+
+		ArrayList<AnnouncementSearch> announcementList = new ArrayList<AnnouncementSearch>();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				AnnouncementSearch announcement = new AnnouncementSearch();
+				announcement.setAnndate(rs.getDate("anndate"));
+				announcement.setRname(rs.getString("rname"));
+				announcement.setSname(rs.getString("sname"));
+				announcement.setQty(rs.getInt("qty"));
+				announcement.setAnnprice(rs.getFloat("annprice"));		
+				announcement.setExpdate(rs.getDate("expdate"));
+				
+				announcementList.add(announcement);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return announcementList;
+		
+	}
+	
 	public Announcement getAnnouncementById( int annid) {
 		Connection conn = jdbc.jobServerInit();
 		String sql = "select * from Announcement natural inner join Supplier natural inner join SupplierAddress"
@@ -824,11 +862,11 @@ public class DAO {
 		
 		if ( query_pairs == null) {
 			sql = "select * from Request natural inner join Customer natural inner join CustomerAddress"
-					+ " natural inner join Resource natural inner join Location";
+					+ " natural inner join Resource natural inner join Locations";
 		}
 		else {
 			sql = "select * from Request natural inner join Customer natural inner join CustomerAddress"
-					+ " natural inner join Resource natural inner join Location where ";
+					+ " natural inner join Resource natural inner join Locations where ";
 			int count = 1;
 			for(Entry<String, String> entry: query_pairs.entrySet()) {
 				sql = sql + entry.getKey() + " = \'" + entry.getValue() + "\'";
@@ -870,9 +908,10 @@ public class DAO {
 	
 	public ArrayList<RequestSearch> searchRequests(String searchTerm) {
 		Connection conn = jdbc.jobServerInit();
-		String sql = "select reqdate, cityname, rname, qty from request as req, city as c, resource as res"
-				+ " where req.cid = c.cityid and req.rid = res.rid and (Lower(rname) LIKE Lower('%"+searchTerm+"%')"
-						+ " or Lower(cityname) LIKE Lower('%"+searchTerm+"%'))";
+		String sql = "select reqdate, cname, rname, sname, qty, latitude, longitude"
+				+ " from request, customer, resource, supplier, locations"
+				+ " where request.cid=customer.cid and request.rid=resource.rid and request.sid=supplier.sid and request.locid=locations.locid"
+				+ " and (Lower(rname) LIKE Lower('%"+searchTerm+"%') or Lower(cname) LIKE Lower('%"+searchTerm+"%') or Lower(sname) LIKE Lower('%"+searchTerm+"%'))";
 		
 		System.out.println(sql);
 
@@ -885,9 +924,12 @@ public class DAO {
 			while(rs.next()) {
 				RequestSearch request = new RequestSearch();
 				request.setReqdate(rs.getDate("reqdate"));
-				request.setCityname(rs.getString("cityname"));
+				request.setCname(rs.getString("cname"));
 				request.setRname(rs.getString("rname"));
+				request.setSname(rs.getString("sname"));
 				request.setQty(rs.getInt("qty"));
+				request.setLatitude(rs.getString("latitude"));
+				request.setLongitude(rs.getString("longitude"));
 				
 				requestList.add(request);
 				
@@ -904,7 +946,7 @@ public class DAO {
 	public Request getRequestById(int reqid) {
 		Connection conn = jdbc.jobServerInit();
 		String sql = "select * from Request natural inner join Customer natural inner join CustomerAddress"
-				+ " natural inner join Resource natural inner join Location where reqid = " + reqid;
+				+ " natural inner join Resource natural inner join Locations where reqid = " + reqid;
 		System.out.println(sql);
 		
 		Request request = new Request();
@@ -936,10 +978,10 @@ public class DAO {
 		String sql = "";
 		
 		if ( query_pairs == null) {
-			sql = "select * from Location";
+			sql = "select * from Locations";
 		}
 		else {
-			sql = "select * from Location where ";
+			sql = "select * from Locations where ";
 			int count = 1;
 			for(Entry<String, String> entry: query_pairs.entrySet()) {
 				sql = sql + entry.getKey() + " = \'" + entry.getValue() + "\'";
@@ -962,7 +1004,7 @@ public class DAO {
 				Location location = new Location();
 				location.setLocid(rs.getLong("locid"));
 				location.setLatitude(rs.getString("latitude"));
-				location.setLongitud(rs.getString("longitud"));
+				location.setLongitude(rs.getString("longitude"));
 				
 				locationList.add(location);
 				
@@ -978,7 +1020,7 @@ public class DAO {
 
 	public Location getLocationById(int locid) {
 		Connection conn = jdbc.jobServerInit();
-		String sql = "select * from Location where locid = " + locid;
+		String sql = "select * from Locations where locid = " + locid;
 		System.out.println(sql);
 		
 		Location location = new Location();
@@ -991,7 +1033,7 @@ public class DAO {
 				
 				location.setLocid(rs.getLong("locid"));
 				location.setLatitude(rs.getString("latitude"));
-				location.setLongitud(rs.getString("longitud"));
+				location.setLongitude(rs.getString("longitude"));
 				
 			}
 		} catch (SQLException e) {
@@ -1278,39 +1320,4 @@ public class DAO {
 		return supplies;
 	}
 	
-public ArrayList<AnnouncementSearch> searchAnnouncement(String searchTerm) {
-		
-		Connection conn = jdbc.jobServerInit();
-		String sql = "select anndate, sname, slastname, qty, annprice, rname, expdate from announcement as an, resource as res, supplier as sup where an.sid = sup.sid and an.rid = res.rid and (lower(sname) LIKE lower('%" +searchTerm + "%') or lower(slastname) LIKE lower('%"+ searchTerm +"%') or lower(rname) LIKE lower('%"+searchTerm+"%'))";
-		
-		System.out.println(sql);
-
-		ArrayList<AnnouncementSearch> announcementList = new ArrayList<AnnouncementSearch>();
-		
-		try {
-			Statement stm = conn.createStatement();
-			ResultSet rs = stm.executeQuery(sql);
-			
-			while(rs.next()) {
-				AnnouncementSearch announcement = new AnnouncementSearch();
-				announcement.setAnndate(rs.getDate("anndate"));
-				announcement.setRname(rs.getString("rname"));
-				announcement.setSname(rs.getString("sname"));
-				announcement.setSlastname(rs.getString("slastname"));
-				announcement.setQty(rs.getInt("qty"));
-				announcement.setAnnprice(rs.getFloat("annprice"));		
-				announcement.setExpdate(rs.getDate("expdate"));
-				
-				announcementList.add(announcement);
-				
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		return announcementList;
-		
-	}
 }

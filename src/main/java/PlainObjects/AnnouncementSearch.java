@@ -5,7 +5,6 @@ import java.sql.Date;
 public class AnnouncementSearch {
 	private Date anndate;
 	private String sname;
-	private String slastname;
 	private int qty;
 	private double annprice;
 	private String rname;
@@ -22,12 +21,6 @@ public class AnnouncementSearch {
 	}
 	public void setSname(String sname) {
 		this.sname = sname;
-	}
-	public String getSlastname() {
-		return slastname;
-	}
-	public void setSlastname(String slastname) {
-		this.slastname = slastname;
 	}
 	public int getQty() {
 		return qty;
@@ -55,8 +48,8 @@ public class AnnouncementSearch {
 	}
 	@Override
 	public String toString() {
-		return "AnnouncementSearch [anndate=" + anndate + ", sname=" + sname + ", slastname=" + slastname + ", qty="
-				+ qty + ", annprice=" + annprice + ", rname=" + rname + ", expdate=" + expdate + "]";
+		return "AnnouncementSearch [anndate=" + anndate + ", sname=" + sname + ", qty=" + qty + ", annprice=" + annprice
+				+ ", rname=" + rname + ", expdate=" + expdate + "]";
 	}
 	
 	

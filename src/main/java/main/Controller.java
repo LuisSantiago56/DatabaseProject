@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import PlainObjects.Announcement;
+import PlainObjects.AnnouncementSearch;
 import PlainObjects.Category;
 import PlainObjects.City;
 import PlainObjects.CreditCard;
@@ -149,6 +150,11 @@ public class Controller {
 	@RequestMapping("/appdb/announcement/{annid}")
 	public Announcement getAnnouncementById(int annid) {
 		return handler.getAnnouncementById(annid);
+	}
+	
+	@RequestMapping("/appdb/announcement-search")
+	public ArrayList<AnnouncementSearch> searchAnnouncement(HttpServletRequest request) throws UnsupportedEncodingException {
+		return handler.searchAnnouncement(request);
 	}
 
 	@RequestMapping("/appdb/request")

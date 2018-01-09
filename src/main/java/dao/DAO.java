@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import PlainObjects.Announcement;
+import PlainObjects.AnnouncementSearch;
 import PlainObjects.Category;
 import PlainObjects.City;
 import PlainObjects.CreditCard;
@@ -1275,5 +1276,41 @@ public class DAO {
 		}
 		
 		return supplies;
+	}
+	
+public ArrayList<AnnouncementSearch> searchAnnouncement(String searchTerm) {
+		
+		Connection conn = jdbc.jobServerInit();
+		String sql = "select anndate, sname, slastname, qty, annprice, rname, expdate from announcement as an, resource as res, supplier as sup where an.sid = sup.sid and an.rid = res.rid and (lower(sname) LIKE lower('%" +searchTerm + "%') or lower(slastname) LIKE lower('%"+ searchTerm +"%') or lower(rname) LIKE lower('%"+searchTerm+"%'))";
+		
+		System.out.println(sql);
+
+		ArrayList<AnnouncementSearch> announcementList = new ArrayList<AnnouncementSearch>();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				AnnouncementSearch announcement = new AnnouncementSearch();
+				announcement.setAnndate(rs.getDate("anndate"));
+				announcement.setRname(rs.getString("rname"));
+				announcement.setSname(rs.getString("sname"));
+				announcement.setSlastname(rs.getString("slastname"));
+				announcement.setQty(rs.getInt("qty"));
+				announcement.setAnnprice(rs.getFloat("annprice"));		
+				announcement.setExpdate(rs.getDate("expdate"));
+				
+				announcementList.add(announcement);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return announcementList;
+		
 	}
 }

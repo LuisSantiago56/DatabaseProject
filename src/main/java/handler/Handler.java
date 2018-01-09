@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import PlainObjects.Announcement;
+import PlainObjects.AnnouncementSearch;
 import PlainObjects.Category;
 import PlainObjects.City;
 import PlainObjects.CreditCard;
@@ -289,6 +290,23 @@ public class Handler {
 		ArrayList<Announcement> announcementList = dao.getAllAnnouncements(query_pairs);
 		
 		return announcementList;
+	}
+	
+	public ArrayList<AnnouncementSearch> searchAnnouncement(HttpServletRequest request) throws UnsupportedEncodingException {
+		String req = request.getQueryString();
+		String searchTerm = "";
+		logger.info("Im in searchAnnouncement Method");
+		Map<String, String> query_pairs = null;
+		if (req != null) {
+			query_pairs = splitQuery(request);
+			if(query_pairs.containsKey("searchterm")) {
+				searchTerm = query_pairs.get("searchterm");
+			}
+		}
+		
+		ArrayList<AnnouncementSearch> annoucementsList = dao.searchAnnouncement(searchTerm);
+		
+		return annoucementsList;
 	}
 
 	public Announcement getAnnouncementById(int annid) {

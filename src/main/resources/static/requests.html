@@ -4,10 +4,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Requests</title>
+    <title>Disaster Relief - Requests</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
     <style>
+        nav {
+			background-color:#333333;
+		}
+		.navbar-brand {
+			color: white;
+            font-weight: bolder;
+            font-size: 1.5rem;
+		}
+		.navbar-nav li a {
+			color:white;
+		}
         .container {
             margin-top: 20px;
         }
@@ -162,6 +173,31 @@
 </head>
 
 <body>
+        <nav class="nav navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="http://localhost:8080/index.html">Disaster Relief</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="http://localhost:8080/index.html">Home</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="http://localhost:8080/customers.html">Customers</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="http://localhost:8080/suppliers.html">Suppliers</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="http://localhost:8080/resources.html">Resources</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="http://localhost:8080/purchases.html">Purchases</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="http://localhost:8080/requests.html">Requests</a></li>
+                    </ul>
+                </div>
+            </nav>
     <div class="loader">
             <div class="sk-fading-circle">
                     <div class="sk-circle1 sk-circle"></div>

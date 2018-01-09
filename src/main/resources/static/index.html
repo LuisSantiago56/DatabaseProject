@@ -4,11 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Disaster Relief - Resources</title>
+    <title>Disaster Relief</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
     <style>
-        nav {
+		nav {
 			background-color:#333333;
 		}
 		.navbar-brand {
@@ -174,115 +174,40 @@
 
 <body>
     <nav class="nav navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#" ng-click="hideShowInfo()">Disaster Relief</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="http://localhost:8080/index.html">Home</a></li>
-                </ul>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="http://localhost:8080/customers.html">Customers</a></li>
-                </ul>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="http://localhost:8080/suppliers.html">Suppliers</a></li>
-                </ul>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="http://localhost:8080/resources.html">Resources</a></li>
-                </ul>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="http://localhost:8080/purchases.html">Purchases</a></li>
-                </ul>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="http://localhost:8080/requests.html">Requests</a></li>
-                </ul>
-            </div>
-        </nav>
-    <div class="loader">
-            <div class="sk-fading-circle">
-                    <div class="sk-circle1 sk-circle"></div>
-                    <div class="sk-circle2 sk-circle"></div>
-                    <div class="sk-circle3 sk-circle"></div>
-                    <div class="sk-circle4 sk-circle"></div>
-                    <div class="sk-circle5 sk-circle"></div>
-                    <div class="sk-circle6 sk-circle"></div>
-                    <div class="sk-circle7 sk-circle"></div>
-                    <div class="sk-circle8 sk-circle"></div>
-                    <div class="sk-circle9 sk-circle"></div>
-                    <div class="sk-circle10 sk-circle"></div>
-                    <div class="sk-circle11 sk-circle"></div>
-                    <div class="sk-circle12 sk-circle"></div>
-                  </div>
-    </div>
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="http://localhost:8080/index.html">Disaster Relief</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="http://localhost:8080/index.html">Home</a></li>
+			</ul>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="http://localhost:8080/customers.html">Customers</a></li>
+			</ul>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="http://localhost:8080/suppliers.html">Suppliers</a></li>
+			</ul>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="http://localhost:8080/resources.html">Resources</a></li>
+			</ul>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="http://localhost:8080/purchases.html">Purchases</a></li>
+			</ul>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="http://localhost:8080/requests.html">Requests</a></li>
+			</ul>
+		</div>
+	</nav>
     <div class="container">
-        <div class="row">
-            <div class="col col-sm-12 col-md-10">
-                <input id="search-input" class="form-control form-control-lg" type="text" placeholder="Search resources by name, category or subcategory...">
-            </div>
-            <div class="col col-sm-12 col-md-2">
-                <button id="search-btn" type="button" class="btn btn-outline-primary btn-lg"><i class="fas fa-search"></i> Search</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <table class="table table-striped">
-                    <thead class="thead-dark">
-                        <th scope="col">Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Qty/Pack</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Subcategory</th>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+			<div class="container" align="center">
+				<img class="img-responsive" src="../img/databases.jpg" alt="DB" style="width: 51%", "height: 38%">
+			</div>
+			<div class="container" align="center">
+				<p>
+					This project was made as a class project by Stephanie Garcia and Luis Santiago
+				</p>
+			</div>
+		</div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#search-btn').on('click', function(){
-                $('.loader').fadeIn();
-                var searchTerm = $('#search-input').val();
-                var query = "";
-                if(searchTerm) {
-                    query = "?searchterm="+searchTerm;
-                }
-                $.ajax({
-                    url: "http://localhost:8080/appdb/resource-search"+query,
-                    type: "GET",
-                    success: function(result){
-                        var size = result.length;
-                        var $tbody = $('.table').find('tbody');
-                        $tbody.html("");
-                        for(var i = 0;i< size;i++) {
-                            var html = "<tr class='resource-row' style='display:none;'><td>"+result[i].rname+"</td><td>$"+result[i].rprice+"</td><td>"+result[i].qtyperpk+"</td><td>"+result[i].catname+"</td><td>"+result[i].subcatname+"</td></tr>";
-                            $tbody.append(html);
-                            $('.resource-row').last().fadeIn();
-                        }
-                    },
-                    error: function(error){
-                        alert("An error occured while getting resources...");
-                    },
-                    complete: function(){
-                        $('.loader').fadeOut();
-                    }
-                });
-            });
-
-            $('#search-input').bind("enterKey",function(e){
-                $('#search-btn').click();  
-            });
-            $('#search-input').keyup(function(e){
-                if(e.keyCode == 13)
-                {
-                    $(this).trigger("enterKey");
-                }
-            });
-            $('#search-btn').click();            
-        });
-    </script>
 </body>
 </html>

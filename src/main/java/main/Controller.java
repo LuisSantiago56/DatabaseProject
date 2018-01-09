@@ -17,14 +17,18 @@ import PlainObjects.Category;
 import PlainObjects.City;
 import PlainObjects.CreditCard;
 import PlainObjects.CustomerAddress;
+import PlainObjects.CustomerSearch;
 import PlainObjects.Customers;
 import PlainObjects.Location;
 import PlainObjects.Purchase;
+import PlainObjects.PurchaseSearch;
 import PlainObjects.Request;
 import PlainObjects.RequestSearch;
+import PlainObjects.ResourceSearch;
 import PlainObjects.Resources;
 import PlainObjects.SubCategory;
 import PlainObjects.SupplierAddress;
+import PlainObjects.SupplierSearch;
 import PlainObjects.Suppliers;
 import PlainObjects.Supplies;
 import handler.Handler;
@@ -36,11 +40,11 @@ public class Controller {
 	HttpServletRequest request;
 	Handler handler = new Handler();
 	
-	@RequestMapping("/")
-	public String Home() {
-		logger.info("Im in Home Page");
-		return "Hello, this is the Disaster Relief DB App!";
-	}
+//	@RequestMapping("/")
+//	public String Home() {
+//		logger.info("Im in Home Page");
+//		return "Hello, this is the Disaster Relief DB App!";
+//	}
 	
 	@RequestMapping("/appdb/resources")
 	public ArrayList<Resources> getAllResources(HttpServletRequest request) throws UnsupportedEncodingException, SQLException {
@@ -52,9 +56,19 @@ public class Controller {
 		return handler.getResourceById(rid);
 	}
 	
+	@RequestMapping("/appdb/resource-search")
+	public ArrayList<ResourceSearch> searchResource(HttpServletRequest request) throws UnsupportedEncodingException {
+		return handler.searchResource(request);
+	}
+	
 	@RequestMapping("/appdb/suppliers")
 	public 	ArrayList<Suppliers> getAllSuppliers(HttpServletRequest request) throws UnsupportedEncodingException, SQLException {
 		return handler.getAllSuppliers(request);
+	}
+	
+	@RequestMapping("/appdb/suppliers-search")
+	public ArrayList<SupplierSearch> searchSupplier(HttpServletRequest request) throws UnsupportedEncodingException {
+		return handler.searchSupplier(request);
 	}
 	
 	@RequestMapping("/appdb/suppliers/{sid}")
@@ -65,6 +79,11 @@ public class Controller {
 	@RequestMapping("appdb/customers")
 	public ArrayList<Customers> getAllCustomers(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllCustomers(request);
+	}
+	
+	@RequestMapping("/appdb/customers-search")
+	public ArrayList<CustomerSearch> searchCustomer(HttpServletRequest request) throws UnsupportedEncodingException {
+		return handler.searchCustomer(request);
 	}
 	
 	@RequestMapping("appdb/customer/{cid}")
@@ -160,6 +179,11 @@ public class Controller {
 	@RequestMapping("/appdb/purchase")
 	public ArrayList<Purchase> getAllPurchases(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllPurchases(request);
+	}
+	
+	@RequestMapping("/appdb/purchase-search")
+	public ArrayList<PurchaseSearch> searchPurchase(HttpServletRequest request) throws UnsupportedEncodingException {
+		return handler.searchPurcahses(request);
 	}
 	
 	@RequestMapping("/appdb/purchase/{purid}")

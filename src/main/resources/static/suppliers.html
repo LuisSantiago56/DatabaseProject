@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Resources</title>
+    <title>Requests</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
     <style>
@@ -181,7 +181,7 @@
     <div class="container">
         <div class="row">
             <div class="col col-sm-12 col-md-10">
-                <input id="search-input" class="form-control form-control-lg" type="text" placeholder="Search resources by name, category or subcategory...">
+                <input id="search-input" class="form-control form-control-lg" type="text" placeholder="Search suppliers by name, last name, city, state, zip code...">
             </div>
             <div class="col col-sm-12 col-md-2">
                 <button id="search-btn" type="button" class="btn btn-outline-primary btn-lg"><i class="fas fa-search"></i> Search</button>
@@ -192,10 +192,12 @@
                 <table class="table table-striped">
                     <thead class="thead-dark">
                         <th scope="col">Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Qty/Pack</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Subcategory</th>
+                        <th scope="col">Last name</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Street</th>
+                        <th scope="col">City</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Zip Code</th>
                     </thead>
                     <tbody>
                         
@@ -215,20 +217,24 @@
                     query = "?searchterm="+searchTerm;
                 }
                 $.ajax({
-                    url: "http://localhost:8080/appdb/resource-search"+query,
+                    url: "http://localhost:8080/appdb/suppliers-search"+query,
                     type: "GET",
                     success: function(result){
                         var size = result.length;
                         var $tbody = $('.table').find('tbody');
                         $tbody.html("");
                         for(var i = 0;i< size;i++) {
-                            var html = "<tr class='resource-row' style='display:none;'><td>"+result[i].rname+"</td><td>$"+result[i].rprice+"</td><td>"+result[i].qtyperpk+"</td><td>"+result[i].catname+"</td><td>"+result[i].subcatname+"</td></tr>";
+                            var html = "<tr class='resource-row' style='display:none;'><td>"
+                            +result[i].sname+"</td><td>"+result[i].slastname+"</td><td>"
+                            +result[i].sphone+"</td><td>"+result[i].street+"</td><td>"
+                            +result[i].city+"</td><td>"+result[i].state+"</td><td>"
+                            +result[i].zcode+"</td></tr>";
                             $tbody.append(html);
                             $('.resource-row').last().fadeIn();
                         }
                     },
                     error: function(error){
-                        alert("An error occured while getting resources...");
+                        alert("An error occured while getting suppliers...");
                     },
                     complete: function(){
                         $('.loader').fadeOut();

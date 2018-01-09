@@ -13,14 +13,18 @@ import PlainObjects.Category;
 import PlainObjects.City;
 import PlainObjects.CreditCard;
 import PlainObjects.CustomerAddress;
+import PlainObjects.CustomerSearch;
 import PlainObjects.Customers;
 import PlainObjects.Location;
 import PlainObjects.Purchase;
+import PlainObjects.PurchaseSearch;
 import PlainObjects.Request;
 import PlainObjects.RequestSearch;
+import PlainObjects.ResourceSearch;
 import PlainObjects.Resources;
 import PlainObjects.SubCategory;
 import PlainObjects.SupplierAddress;
+import PlainObjects.SupplierSearch;
 import PlainObjects.Suppliers;
 import PlainObjects.Supplies;
 
@@ -74,6 +78,42 @@ public class DAO {
 		
 		
 		return resourcesList;
+	}
+
+	public ArrayList<ResourceSearch> searchResource(String searchTerm) {
+		
+		Connection conn = jdbc.jobServerInit();
+		String sql = "select rname, catname, subcatname, qtyperpk, rprice from resource as res, category as cat, subcategory as subcat"
+				+ " where res.catid=cat.catid and res.subcatid=subcat.subcatid and (Lower(rname) LIKE Lower('%"+searchTerm+"%')"
+				+ " or Lower(catname) LIKE Lower('%"+searchTerm+"%') or Lower(subcatname) LIKE Lower('%"+searchTerm+"%'))";
+		
+		System.out.println(sql);
+
+		ArrayList<ResourceSearch> resourceList = new ArrayList<ResourceSearch>();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				ResourceSearch resource = new ResourceSearch();
+				resource.setRname(rs.getString("rname"));
+				resource.setCatname(rs.getString("catname"));
+				resource.setSubcatname(rs.getString("subcatname"));
+				resource.setQtyperpk(rs.getInt("qtyperpk"));
+				resource.setRprice(rs.getFloat("rprice"));				
+				
+				resourceList.add(resource);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return resourceList;
+		
 	}
 	
 	public Resources getResourcesById(int rid) {
@@ -152,6 +192,43 @@ public class DAO {
 		return suppliersList;
 	}
 	
+	public ArrayList<SupplierSearch> searchSuppliers(String searchTerm) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "select sname, slastname, sphone, street, city, state, zcode from supplier, supplieraddress as address"
+				+ " where supplier.sid=address.sid and (Lower(sname) LIKE Lower('%"+searchTerm+"%') or Lower(slastname) LIKE"
+						+ " Lower('%"+searchTerm+"%') or Lower(city) LIKE Lower('%"+searchTerm+"%') or Lower(state) LIKE "
+								+ "Lower('%"+searchTerm+"%') or Lower(zcode) LIKE Lower('%"+searchTerm+"%'))";
+		
+		System.out.println(sql);
+
+		ArrayList<SupplierSearch> supplierList = new ArrayList<SupplierSearch>();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				SupplierSearch supplier = new SupplierSearch();
+				supplier.setSname(rs.getString("sname"));
+				supplier.setSlastname(rs.getString("slastname"));
+				supplier.setSphone(rs.getString("sphone"));
+				supplier.setStreet(rs.getString("street"));
+				supplier.setCity(rs.getString("city"));
+				supplier.setState(rs.getString("state"));
+				supplier.setZcode(rs.getString("zcode"));
+				
+				supplierList.add(supplier);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return supplierList;
+	}
+	
 	public Suppliers getSupplierById(int sid) {
 		
 		Connection conn = jdbc.jobServerInit();
@@ -226,6 +303,43 @@ public class DAO {
 		
 		
 		return customersList;
+	}
+	
+	public ArrayList<CustomerSearch> searchCustomers(String searchTerm) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "select cname, clastname, cphone, street, city, state, zcode from customer, customeraddress as address"
+				+ " where customer.cid=address.cid and (Lower(cname) LIKE Lower('%"+searchTerm+"%') or Lower(clastname) LIKE"
+						+ " Lower('%"+searchTerm+"%') or Lower(city) LIKE Lower('%"+searchTerm+"%') or Lower(state) LIKE "
+								+ "Lower('%"+searchTerm+"%') or Lower(zcode) LIKE Lower('%"+searchTerm+"%'))";
+		
+		System.out.println(sql);
+
+		ArrayList<CustomerSearch> customerList = new ArrayList<CustomerSearch>();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				CustomerSearch customer = new CustomerSearch();
+				customer.setCname(rs.getString("cname"));
+				customer.setClastname(rs.getString("clastname"));
+				customer.setCphone(rs.getString("cphone"));
+				customer.setStreet(rs.getString("street"));
+				customer.setCity(rs.getString("city"));
+				customer.setState(rs.getString("state"));
+				customer.setZcode(rs.getString("zcode"));
+				
+				customerList.add(customer);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return customerList;
 	}
 
 	public Customers getCustomerById(int cid) {
@@ -755,7 +869,9 @@ public class DAO {
 	
 	public ArrayList<RequestSearch> searchRequests(String searchTerm) {
 		Connection conn = jdbc.jobServerInit();
-		String sql = "select reqdate, cityname, rname, qty from request as req, city as c, resource as res where req.cid = c.cityid and req.rid = res.rid and (Lower(rname) LIKE Lower('%"+searchTerm+"%') or Lower(cityname) LIKE Lower('%"+searchTerm+"%'))";
+		String sql = "select reqdate, cityname, rname, qty from request as req, city as c, resource as res"
+				+ " where req.cid = c.cityid and req.rid = res.rid and (Lower(rname) LIKE Lower('%"+searchTerm+"%')"
+						+ " or Lower(cityname) LIKE Lower('%"+searchTerm+"%'))";
 		
 		System.out.println(sql);
 
@@ -922,6 +1038,46 @@ public class DAO {
 				purchase.setCid(rs.getLong("cid"));
 				purchase.setRid(rs.getLong("rid"));
 				purchase.setCredcardnumber(rs.getString("credcardnumber"));
+				
+				purchaseList.add(purchase);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return purchaseList;
+	}
+	
+	public ArrayList<PurchaseSearch> searchPurchase(String searchTerm) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "select purdate, purprice, rname, rprice, credcardnumber, cname, cphone, sname, sphone"
+				+ " from purchase, customer, supplier, resource"
+				+ " where purchase.cid=customer.cid and purchase.sid=supplier.sid and purchase.rid=resource.rid"
+				+ " and (Lower(rname) LIKE Lower('%"+searchTerm+"%')"
+				+ " or Lower(cname) LIKE Lower('%"+searchTerm+"%') or Lower(sname) LIKE Lower('%"+searchTerm+"%'))";
+		
+		System.out.println(sql);
+
+		ArrayList<PurchaseSearch> purchaseList = new ArrayList<PurchaseSearch>();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+			
+			while(rs.next()) {
+				PurchaseSearch purchase = new PurchaseSearch();
+				purchase.setPurdate(rs.getDate("purdate"));
+				purchase.setPurprice(rs.getFloat("purprice"));
+				purchase.setRname(rs.getString("rname"));
+				purchase.setRprice(rs.getFloat("rprice"));
+				purchase.setCredcardnumber(rs.getString("credcardnumber"));
+				purchase.setCname(rs.getString("cname"));
+				purchase.setCphone(rs.getString("cphone"));
+				purchase.setSname(rs.getString("sname"));
+				purchase.setSphone(rs.getString("sphone"));
 				
 				purchaseList.add(purchase);
 				

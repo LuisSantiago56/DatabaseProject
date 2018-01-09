@@ -18,14 +18,18 @@ import PlainObjects.Category;
 import PlainObjects.City;
 import PlainObjects.CreditCard;
 import PlainObjects.CustomerAddress;
+import PlainObjects.CustomerSearch;
 import PlainObjects.Customers;
 import PlainObjects.Location;
 import PlainObjects.Purchase;
+import PlainObjects.PurchaseSearch;
 import PlainObjects.Request;
 import PlainObjects.RequestSearch;
+import PlainObjects.ResourceSearch;
 import PlainObjects.Resources;
 import PlainObjects.SubCategory;
 import PlainObjects.SupplierAddress;
+import PlainObjects.SupplierSearch;
 import PlainObjects.Suppliers;
 import PlainObjects.Supplies;
 import dao.DAO;
@@ -54,12 +58,29 @@ public class Handler {
 		return resourcesList;
 	}
 	
+	public ArrayList<ResourceSearch> searchResource(HttpServletRequest request) throws UnsupportedEncodingException {
+		String req = request.getQueryString();
+		String searchTerm = "";
+		logger.info("Im in searchResources Method");
+		Map<String, String> query_pairs = null;
+		if (req != null) {
+			query_pairs = splitQuery(request);
+			if(query_pairs.containsKey("searchterm")) {
+				searchTerm = query_pairs.get("searchterm");
+			}
+		}
+		
+		ArrayList<ResourceSearch> resourceList = dao.searchResource(searchTerm);
+		
+		return resourceList;
+	}
+	
 	public Resources getResourceById(@PathVariable int rid) {
 		logger.info("Im in getResourcesById Method");
 		return dao.getResourcesById(rid);
 	}
 	
-	public ArrayList<Suppliers> getAllSuppliers(HttpServletRequest request) throws UnsupportedEncodingException, SQLException {
+	public ArrayList<Suppliers> getAllSuppliers(HttpServletRequest request) throws UnsupportedEncodingException {
 		String req = request.getQueryString();
 		Map<String, String> query_pairs = null;
 		logger.info("Im in getAllSuppliers Method");
@@ -74,6 +95,23 @@ public class Handler {
 			ArrayList<Suppliers> supplierList = dao.getAllSuppliers(query_pairs);
 			
 			return supplierList;
+	}
+	
+	public ArrayList<SupplierSearch> searchSupplier(HttpServletRequest request) throws UnsupportedEncodingException {
+		String req = request.getQueryString();
+		String searchTerm = "";
+		logger.info("Im in searchSuppliers Method");
+		Map<String, String> query_pairs = null;
+		if (req != null) {
+			query_pairs = splitQuery(request);
+			if(query_pairs.containsKey("searchterm")) {
+				searchTerm = query_pairs.get("searchterm");
+			}
+		}
+		
+		ArrayList<SupplierSearch> supplierList = dao.searchSuppliers(searchTerm);
+		
+		return supplierList;
 	}
 
 	public Suppliers getSupplierById(int sid) {
@@ -96,6 +134,23 @@ public class Handler {
 		ArrayList<Customers> customersList = dao.getAllCustomers(query_pairs);
 		
 		return customersList;
+	}
+	
+	public ArrayList<CustomerSearch> searchCustomer(HttpServletRequest request) throws UnsupportedEncodingException {
+		String req = request.getQueryString();
+		String searchTerm = "";
+		logger.info("Im in searchCustomer Method");
+		Map<String, String> query_pairs = null;
+		if (req != null) {
+			query_pairs = splitQuery(request);
+			if(query_pairs.containsKey("searchterm")) {
+				searchTerm = query_pairs.get("searchterm");
+			}
+		}
+		
+		ArrayList<CustomerSearch> customerList = dao.searchCustomers(searchTerm);
+		
+		return customerList;
 	}
 
 	public Customers getCustomerById(int cid) {
@@ -166,7 +221,7 @@ public class Handler {
 		
 		return supplieraddressList;
 	}
-
+	
 	public SupplierAddress getSupplierAddressById(int supadd_id) {
 		logger.info("Im on getSupplierAddressById Method");
 		return dao.getSupplierAddressById(supadd_id);
@@ -318,6 +373,23 @@ public class Handler {
 		}
 		
 		ArrayList<Purchase> purchaseList = dao.getAllPurchases(query_pairs);
+		
+		return purchaseList;
+	}
+	
+	public ArrayList<PurchaseSearch> searchPurcahses(HttpServletRequest request) throws UnsupportedEncodingException {
+		String req = request.getQueryString();
+		String searchTerm = "";
+		logger.info("Im in searchPurchases Method");
+		Map<String, String> query_pairs = null;
+		if (req != null) {
+			query_pairs = splitQuery(request);
+			if(query_pairs.containsKey("searchterm")) {
+				searchTerm = query_pairs.get("searchterm");
+			}
+		}
+		
+		ArrayList<PurchaseSearch> purchaseList = dao.searchPurchase(searchTerm);
 		
 		return purchaseList;
 	}

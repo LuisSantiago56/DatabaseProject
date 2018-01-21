@@ -78,142 +78,142 @@ public class Controller {
 		return handler.getSupplierById(sid);
 	}
 	
-	@RequestMapping("appdb/customers")
+	@RequestMapping(value="/appdb/customers", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<Customers> getAllCustomers(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllCustomers(request);
 	}
 	
-	@RequestMapping("/appdb/customers-search")
+	@RequestMapping(value="/appdb/customers-search", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<CustomerSearch> searchCustomer(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.searchCustomer(request);
 	}
 	
-	@RequestMapping("appdb/customer/{cid}")
+	@RequestMapping(value="/appdb/customer/{cid}", method={RequestMethod.GET,RequestMethod.POST})
 	public Customers getCustomerById(@PathVariable int cid) {
 		return handler.getCustomerById(cid);
 	}
 	
-	@RequestMapping("appdb/category")
+	@RequestMapping(value="/appdb/category", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<Category> getAllCategories(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllCategories(request);
 	}
 	
-	@RequestMapping("appdb/category/{cat_id}")
+	@RequestMapping(value="/appdb/category/{cat_id}", method={RequestMethod.GET,RequestMethod.POST})
 	public Category getCategoryById(@PathVariable int cat_id) {
 		return handler.getCategoryById(cat_id);
 	}
 	
-	@RequestMapping("appdb/subcategory")
+	@RequestMapping(value="/appdb/subcategory", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<SubCategory> getAllSubCategories(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllSubCategories(request);
 	}
 	
-	@RequestMapping("appdb/subcategory/{subcatid}")
+	@RequestMapping(value="/appdb/subcategory/{subcatid}", method={RequestMethod.GET,RequestMethod.POST})
 	public SubCategory getSubCategoryById(@PathVariable int subcat_id) {
 		return handler.getSubCategoryById(subcat_id);
 	}
 
-	@RequestMapping("appdb/supplieraddress")
+	@RequestMapping(value="/appdb/supplieraddress", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<SupplierAddress> getAllSupplierAddress(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllSupplierAddress(request);
 	}
 	
-	@RequestMapping("appdb/supplieraddress/{supadd_id}")
+	@RequestMapping(value="/appdb/supplieraddress/{supadd_id}", method={RequestMethod.GET,RequestMethod.POST})
 	public SupplierAddress getSupplierAddressById(@PathVariable int supadd_id) {
 		return handler.getSupplierAddressById(supadd_id);
 	}
 
-	@RequestMapping("appdb/customeraddress")
+	@RequestMapping(value="/appdb/customeraddress", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<CustomerAddress> getAllCustomerAddress(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllCustomerAddress(request);
 	}
 	
-	@RequestMapping("appdb/customeraddress/{cusadd_id}")
+	@RequestMapping(value="/appdb/customeraddress/{cusadd_id}", method={RequestMethod.GET,RequestMethod.POST})
 	public CustomerAddress getCustomerAddressById(@PathVariable int cusadd_id) {
 		return handler.getCustomerAddressById(cusadd_id);
 	}
 
-	@RequestMapping("appdb/city")
+	@RequestMapping(value="/appdb/city", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<City> getAllCities(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllCities(request);
 	}
 	
-	@RequestMapping("appdb/city/{cityid}")
+	@RequestMapping(value="/appdb/city/{cityid}", method={RequestMethod.GET,RequestMethod.POST})
 	public City getCityById(@PathVariable int cityId) {
 		return handler.getCityById(cityId);
 	}
 
-	@RequestMapping("/appdb/announcement")
+	@RequestMapping(value="/appdb/announcement", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<Announcement> getAllAnnouncements(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllAnnouncements(request);
 	}
 	
-	@RequestMapping("/appdb/announcement/{annid}")
+	@RequestMapping(value="/appdb/announcement/{annid}", method={RequestMethod.GET,RequestMethod.POST})
 	public Announcement getAnnouncementById(int annid) {
 		return handler.getAnnouncementById(annid);
 	}
 	
-	@RequestMapping("/appdb/announcement-search")
+	@RequestMapping(value="/appdb/announcement-search", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<AnnouncementSearch> searchAnnouncement(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.searchAnnouncement(request);
 	}
 
-	@RequestMapping("/appdb/request")
+	@RequestMapping(value="/appdb/request", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<Request> getAllRequests(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllRequests(request);
 	}
 	
-	@RequestMapping("/appdb/request-search")
+	@RequestMapping(value="/appdb/request-search", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<RequestSearch> searchRequests(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.searchRequests(request);
 	}
 	
-	@RequestMapping("/appdb/request/{reqid}")
+	@RequestMapping(value="/appdb/request/{reqid}", method={RequestMethod.GET,RequestMethod.POST})
 	public Request getRequestById(int reqid) {
 		return handler.getRequestById(reqid);
 	}
 
-	@RequestMapping("/appdb/location")
+	@RequestMapping(value="/appdb/location", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<Location> getAllLocations(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllLocations(request);
 	}
 	
-	@RequestMapping("/appdb/location/{locid}")
+	@RequestMapping(value="/appdb/location/{locid}", method={RequestMethod.GET,RequestMethod.POST})
 	public Location getLocationById(int locid) {
 		return handler.getLocationById(locid);
 	}
 
-	@RequestMapping("/appdb/purchase")
+	@RequestMapping(value="/appdb/purchase", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<Purchase> getAllPurchases(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllPurchases(request);
 	}
 	
-	@RequestMapping("/appdb/purchase-search")
+	@RequestMapping(value="/appdb/purchase-search", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<PurchaseSearch> searchPurchase(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.searchPurcahses(request);
 	}
 	
-	@RequestMapping("/appdb/purchase/{purid}")
+	@RequestMapping(value="/appdb/purchase/{purid}", method={RequestMethod.GET,RequestMethod.POST})
 	public Purchase getPurchaseById(int purid) {
 		return handler.getPurchaseById(purid);
 	}
 	
-	@RequestMapping("/appdb/creditcard")
+	@RequestMapping(value="/appdb/creditcard", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<CreditCard> getAllCreditCards(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllCreditCards(request);
 	}
 	
-	@RequestMapping("/appdb/creditcard/{credcardnumber}")
+	@RequestMapping(value="/appdb/creditcard/{credcardnumber}", method={RequestMethod.GET,RequestMethod.POST})
 	public CreditCard getCreditCardById(int credcardnumber) {
 		return handler.getCreditCardById(credcardnumber);
 	}
 	
-	@RequestMapping("/appdb/supplies")
+	@RequestMapping(value="/appdb/supplies", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<Supplies> getAllSupplies(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.getAllSupplies(request);
 	}
 	
-	@RequestMapping("/appdb/supplies/{supid}")
+	@RequestMapping(value="/appdb/supplies/{supid}", method={RequestMethod.GET,RequestMethod.POST})
 	public Supplies getSuppliesById(int supid) {
 		return handler.getSuppliesById(supid);
 	}

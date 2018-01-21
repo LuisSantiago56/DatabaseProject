@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import PlainObjects.Announcement;
@@ -47,32 +48,32 @@ public class Controller {
 //		return "Hello, this is the Disaster Relief DB App!";
 //	}
 	
-	@RequestMapping("/appdb/resources")
+	@RequestMapping(value="/appdb/resources", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<Resources> getAllResources(HttpServletRequest request) throws UnsupportedEncodingException, SQLException {
 		return handler.getAllResources(request);
 	}
 	
-	@RequestMapping("/appdb/resources/{rid}")
+	@RequestMapping(value="/appdb/resources/{rid}", method={RequestMethod.GET,RequestMethod.POST})
 	public Resources getResourceById(@PathVariable int rid) {
 		return handler.getResourceById(rid);
 	}
 	
-	@RequestMapping("/appdb/resource-search")
+	@RequestMapping(value="/appdb/resource-search", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<ResourceSearch> searchResource(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.searchResource(request);
 	}
 	
-	@RequestMapping("/appdb/suppliers")
+	@RequestMapping(value="/appdb/suppliers", method={RequestMethod.GET,RequestMethod.POST})
 	public 	ArrayList<Suppliers> getAllSuppliers(HttpServletRequest request) throws UnsupportedEncodingException, SQLException {
 		return handler.getAllSuppliers(request);
 	}
 	
-	@RequestMapping("/appdb/suppliers-search")
+	@RequestMapping(value="/appdb/suppliers-search", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<SupplierSearch> searchSupplier(HttpServletRequest request) throws UnsupportedEncodingException {
 		return handler.searchSupplier(request);
 	}
 	
-	@RequestMapping("/appdb/suppliers/{sid}")
+	@RequestMapping(value="/appdb/suppliers/{sid}", method={RequestMethod.GET,RequestMethod.POST})
 	public Suppliers getSupplierById(@PathVariable int sid) {
 		return handler.getSupplierById(sid);
 	}

@@ -81,6 +81,29 @@ public class Handler {
 		return dao.getResourcesById(rid);
 	}
 	
+	public Resources updateResource(int rid) {
+		if (dao.getResourcesById(rid) == null) {
+			//jsonify error Response http
+			System.out.println("No resources with that id.");
+		}
+		else {
+			if(true) {
+				//length of data inserted is not equal to the number of columns
+			}
+			else {
+				Resources resource = new Resources();
+				
+//				resource.setName("rname");
+//				resource.setQtyPerPk("qtyperpk");
+//				resource.setPrice("rprice");
+//				resource.setCatId("catid");
+//				resource.setSubCatId("subcatid");
+			}
+			
+		}
+		return null;
+	}
+	
 	public ArrayList<Suppliers> getAllSuppliers(HttpServletRequest request) throws UnsupportedEncodingException {
 		String req = request.getQueryString();
 		Map<String, String> query_pairs = null;

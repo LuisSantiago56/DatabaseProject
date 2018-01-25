@@ -81,6 +81,46 @@ public class Handler {
 		return dao.getResourcesById(rid);
 	}
 	
+	public Resources updateResource(int rid) {
+		if (dao.getResourcesById(rid) == null) {
+			//jsonify error Response http
+			System.out.println("No resource with that id.");
+		}
+		else {
+			if(true) {
+				//length of data inserted is not equal to the number of columns
+			}
+			else {
+				Resources resource = new Resources();
+				
+//				resource.setName("rname");
+//				resource.setQtyPerPk("qtyperpk");
+//				resource.setPrice("rprice");
+//				resource.setCatId("catid");
+//				resource.setSubCatId("subcatid");
+			}
+			
+		}
+		return null;
+	}
+	
+	public Resources insertResource(int rid) {
+		if(true) {
+			//length of data inserted is not equal to the number of columns
+		}
+		else {
+			Resources resource = new Resources();
+			
+//				resource.setName("rname");
+//				resource.setQtyPerPk("qtyperpk");
+//				resource.setPrice("rprice");
+//				resource.setCatId("catid");
+//				resource.setSubCatId("subcatid");
+		}
+			
+		return null;
+	}
+	
 	public ArrayList<Suppliers> getAllSuppliers(HttpServletRequest request) throws UnsupportedEncodingException {
 		String req = request.getQueryString();
 		Map<String, String> query_pairs = null;
@@ -120,6 +160,42 @@ public class Handler {
 		return dao.getSupplierById(sid);
 	}
 	
+	public Suppliers updateSupplier(int rid) {
+		if (dao.getSupplierById(rid) == null) {
+			//jsonify error Response http
+			System.out.println("No supplier with that id.");
+		}
+		else {
+			if(true) {
+				//length of data inserted is not equal to the number of columns
+			}
+			else {
+				Suppliers supplier = new Suppliers();
+				
+//				supplier.setName("rname");
+			}
+			
+		}
+		return null;
+	}
+	
+	public Suppliers insertSupplier(int rid) {
+		if(true) {
+			//length of data inserted is not equal to the number of columns
+		}
+		else {
+			Suppliers supplier = new Suppliers();
+			
+//				supplier.setName("rname");
+//				supplier.setQtyPerPk("qtyperpk");
+//				supplier.setPrice("rprice");
+//				supplier.setCatId("catid");
+//				supplier.setSubCatId("subcatid");
+		}
+			
+		return null;
+	}
+	
 	public ArrayList<Customers> getAllCustomers(HttpServletRequest request) throws UnsupportedEncodingException {
 		String req = request.getQueryString();
 		Map<String, String> query_pairs = null;
@@ -157,6 +233,42 @@ public class Handler {
 	public Customers getCustomerById(int cid) {
 		logger.info("Im in getCustomerById Method");
 		return dao.getCustomerById(cid);
+	}
+	
+	public Customers updateCustomers(int rid) {
+		if (dao.getCustomerById(rid) == null) {
+			//jsonify error Response http
+			System.out.println("No customer with that id.");
+		}
+		else {
+			if(true) {
+				//length of data inserted is not equal to the number of columns
+			}
+			else {
+				Customers customer = new Customers();
+				
+//				customer.setName("rname");
+			}
+			
+		}
+		return null;
+	}
+	
+	public Customers insertCustomer(int rid) {
+		if(true) {
+			//length of data inserted is not equal to the number of columns
+		}
+		else {
+			Customers customer = new Customers();
+			
+//				customer.setName("rname");
+//				customer.setQtyPerPk("qtyperpk");
+//				customer.setPrice("rprice");
+//				customer.setCatId("catid");
+//				customer.setSubCatId("subcatid");
+		}
+			
+		return null;
 	}
 
 	public ArrayList<Category> getAllCategories(HttpServletRequest request) throws UnsupportedEncodingException {
@@ -204,7 +316,7 @@ public class Handler {
 		logger.info("Im on getSubCategoryById Method");
 		return dao.getSubCategoryById(subcat_id);
 	}
-
+	
 	public ArrayList<SupplierAddress> getAllSupplierAddress(HttpServletRequest request) throws UnsupportedEncodingException {
 		String req = request.getQueryString();
 		Map<String, String> query_pairs = null;
@@ -227,7 +339,43 @@ public class Handler {
 		logger.info("Im on getSupplierAddressById Method");
 		return dao.getSupplierAddressById(supadd_id);
 	}
+	
+	public SupplierAddress updateSupplierAddress(int rid) {
+		if (dao.getSupplierAddressById(rid) == null) {
+			//jsonify error Response http
+			System.out.println("No Supplier Address with that id.");
+		}
+		else {
+			if(true) {
+				//length of data inserted is not equal to the number of columns
+			}
+			else {
+				SupplierAddress supplieraddress = new SupplierAddress();
+				
+//				supplieraddress.setName("rname");
+			}
+			
+		}
+		return null;
+	}
 
+	public SupplierAddress insertSupplierAddress(int rid) {
+		if(true) {
+			//length of data inserted is not equal to the number of columns
+		}
+		else {
+			SupplierAddress SupplierAddress = new SupplierAddress();
+			
+//				SupplierAddress.setName("rname");
+//				SupplierAddress.setQtyPerPk("qtyperpk");
+//				SupplierAddress.setPrice("rprice");
+//				SupplierAddress.setCatId("catid");
+//				SupplierAddress.setSubCatId("subcatid");
+		}
+			
+		return null;
+	}
+	
 	public ArrayList<CustomerAddress> getAllCustomerAddress(HttpServletRequest request) throws UnsupportedEncodingException {
 		String req = request.getQueryString();
 		Map<String, String> query_pairs = null;
@@ -250,7 +398,43 @@ public class Handler {
 		logger.info("Im on getCustomerAddressById Method");
 		return dao.getCustomerAddressById(cusadd_id);
 	}
+	
+	public CustomerAddress updateCustomerAddress(int rid) {
+		if (dao.getCustomerAddressById(rid) == null) {
+			//jsonify error Response http
+			System.out.println("No Customer Address with that id.");
+		}
+		else {
+			if(true) {
+				//length of data inserted is not equal to the number of columns
+			}
+			else {
+				CustomerAddress customeraddress = new CustomerAddress();
+				
+//				customeraddress.setName("rname");
+			}
+			
+		}
+		return null;
+	}
 
+	public CustomerAddress insertCustomerAddress(int rid) {
+		if(true) {
+			//length of data inserted is not equal to the number of columns
+		}
+		else {
+			CustomerAddress CustomerAddress = new CustomerAddress();
+			
+//				CustomerAddress.setName("rname");
+//				CustomerAddress.setQtyPerPk("qtyperpk");
+//				CustomerAddress.setPrice("rprice");
+//				CustomerAddress.setCatId("catid");
+//				CustomerAddress.setSubCatId("subcatid");
+		}
+			
+		return null;
+	}
+	
 	public ArrayList<City> getAllCities(HttpServletRequest request) throws UnsupportedEncodingException {
 		String req = request.getQueryString();
 		Map<String, String> query_pairs = null;
@@ -313,7 +497,43 @@ public class Handler {
 		logger.info("Im on getAnnouncementById Method");
 		return dao.getAnnouncementById(annid);
 	}
+	
+	public Announcement updateAnnouncement(int rid) {
+		if (dao.getAnnouncementById(rid) == null) {
+			//jsonify error Response http
+			System.out.println("No Announcement with that id.");
+		}
+		else {
+			if(true) {
+				//length of data inserted is not equal to the number of columns
+			}
+			else {
+				Announcement announcement = new Announcement();
+				
+//				announcement.setName("rname");
+			}
+			
+		}
+		return null;
+	}
 
+	public Announcement insertAnnouncement(int rid) {
+		if(true) {
+			//length of data inserted is not equal to the number of columns
+		}
+		else {
+			Announcement Announcement = new Announcement();
+			
+//				Announcement.setName("rname");
+//				Announcement.setQtyPerPk("qtyperpk");
+//				Announcement.setPrice("rprice");
+//				Announcement.setCatId("catid");
+//				Announcement.setSubCatId("subcatid");
+		}
+			
+		return null;
+	}
+	
 	public ArrayList<Request> getAllRequests(HttpServletRequest request) throws UnsupportedEncodingException {
 		String req = request.getQueryString();
 		Map<String, String> query_pairs = null;
@@ -353,7 +573,43 @@ public class Handler {
 		logger.info("Im on getRequestById Method");
 		return dao.getRequestById(reqid);
 	}
+	
+	public Request updateRequest(int rid) {
+		if (dao.getRequestById(rid) == null) {
+			//jsonify error Response http
+			System.out.println("No Request with that id.");
+		}
+		else {
+			if(true) {
+				//length of data inserted is not equal to the number of columns
+			}
+			else {
+				Request request = new Request();
+				
+//				request.setName("rname");
+			}
+			
+		}
+		return null;
+	}
 
+	public Request insertRequest(int rid) {
+		if(true) {
+			//length of data inserted is not equal to the number of columns
+		}
+		else {
+			Request Request = new Request();
+			
+//				Request.setName("rname");
+//				Request.setQtyPerPk("qtyperpk");
+//				Request.setPrice("rprice");
+//				Request.setCatId("catid");
+//				Request.setSubCatId("subcatid");
+		}
+			
+		return null;
+	}
+	
 	public ArrayList<Location> getAllLocations(HttpServletRequest request) throws UnsupportedEncodingException {
 		String req = request.getQueryString();
 		Map<String, String> query_pairs = null;
@@ -376,7 +632,44 @@ public class Handler {
 		logger.info("Im on getLocationsById Method");
 		return dao.getLocationById(locid);
 	}
+	
+	public Location updateLocation(int rid) {
+		if (dao.getLocationById(rid) == null) {
+			//jsonify error Response http
+			System.out.println("No Location with that id.");
+		}
+		else {
+			if(true) {
+				//length of data inserted is not equal to the number of columns
+			}
+			else {
+				Location location = new Location();
+				
+//				location.setLatitude("Latitude");
+//				location.setLongitude("Longitude");
+			}
+			
+		}
+		return null;
+	}
 
+	public Location insertLocation(int rid) {
+		if(true) {
+			//length of data inserted is not equal to the number of columns
+		}
+		else {
+			Location Location = new Location();
+			
+//				Location.setName("rname");
+//				Location.setQtyPerPk("qtyperpk");
+//				Location.setPrice("rprice");
+//				Location.setCatId("catid");
+//				Location.setSubCatId("subcatid");
+		}
+			
+		return null;
+	}
+	
 	public ArrayList<Purchase> getAllPurchases(HttpServletRequest request) throws UnsupportedEncodingException {
 		String req = request.getQueryString();
 		Map<String, String> query_pairs = null;
@@ -416,7 +709,43 @@ public class Handler {
 		logger.info("Im on getPurchaseById Method");
 		return dao.getPurchaseById(purid);
 	}
+	
+	public Purchase updatePurchase(int rid) {
+		if (dao.getPurchaseById(rid) == null) {
+			//jsonify error Response http
+			System.out.println("No Purchase with that id.");
+		}
+		else {
+			if(true) {
+				//length of data inserted is not equal to the number of columns
+			}
+			else {
+				Purchase purchase = new Purchase();
+				
+//				purchase.setName("rname");
+			}
+			
+		}
+		return null;
+	}
 
+	public Purchase insertPurchase(int rid) {
+		if(true) {
+			//length of data inserted is not equal to the number of columns
+		}
+		else {
+			Purchase Purchase = new Purchase();
+			
+//				Purchase.setName("rname");
+//				Purchase.setQtyPerPk("qtyperpk");
+//				Purchase.setPrice("rprice");
+//				Purchase.setCatId("catid");
+//				Purchase.setSubCatId("subcatid");
+		}
+			
+		return null;
+	}
+	
 	public ArrayList<CreditCard> getAllCreditCards(HttpServletRequest request) throws UnsupportedEncodingException {
 		String req = request.getQueryString();
 		Map<String, String> query_pairs = null;
@@ -438,6 +767,42 @@ public class Handler {
 	public CreditCard getCreditCardById(int credcardnumber) {
 		logger.info("Im on getCreditCardById Method");
 		return dao.getCreditCardById(credcardnumber);
+	}
+	
+	public CreditCard updateCreditCard(int rid) {
+		if (dao.getCreditCardById(rid) == null) {
+			//jsonify error Response http
+			System.out.println("No Credit Card with that id.");
+		}
+		else {
+			if(true) {
+				//length of data inserted is not equal to the number of columns
+			}
+			else {
+				CreditCard creditcard = new CreditCard();
+				
+//				creditcard.setName("rname");
+			}
+			
+		}
+		return null;
+	}
+	
+	public CreditCard insertCreditCard(int rid) {
+		if(true) {
+			//length of data inserted is not equal to the number of columns
+		}
+		else {
+			CreditCard CreditCard = new CreditCard();
+			
+//				CreditCard.setName("rname");
+//				CreditCard.setQtyPerPk("qtyperpk");
+//				CreditCard.setPrice("rprice");
+//				CreditCard.setCatId("catid");
+//				CreditCard.setSubCatId("subcatid");
+		}
+			
+		return null;
 	}
 	
 	public ArrayList<Supplies> getAllSupplies(HttpServletRequest request) throws UnsupportedEncodingException {

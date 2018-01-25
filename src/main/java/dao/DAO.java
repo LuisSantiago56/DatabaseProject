@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -148,6 +149,21 @@ public class DAO {
 		return resource;
 	}
 
+	public Resources insertResource(Resources resource) {
+		
+		Connection conn = jdbc.jobServerInit();
+		String name = resource.getName();
+		int qtyperpk = resource.getQtyPerPk();
+		long catid = resource.getCatId();
+		long subcatid = resource.getSubCatId();
+		float price = resource.getPrice();
+		
+		String sql = "";
+		System.out.println(sql);
+		
+		return null;
+	}
+	
 	public 	ArrayList<Suppliers> getAllSuppliers(Map<String, String> query_pairs) {
 		
 		Connection conn = jdbc.jobServerInit();
@@ -259,6 +275,19 @@ public class DAO {
 		return supplier;
 	}
 
+	public Suppliers insertSuppliers(Suppliers supplier) {
+		
+		Connection conn = jdbc.jobServerInit();
+		String firstname = supplier.getFirstName();
+		String lastname = supplier.getLastName();
+		String phone = supplier.getPhone();
+		
+		String sql = "";
+		System.out.println(sql);
+		
+		return null;
+	}
+	
 	public ArrayList<Customers> getAllCustomers(Map<String, String> query_pairs) {
 		
 		
@@ -372,6 +401,19 @@ public class DAO {
 		return customer;
 	}
 
+	public Customers insertCustomers(Customers customer) {
+		
+		Connection conn = jdbc.jobServerInit();
+		String firstname = customer.getFirstName();
+		String lastname = customer.getLastName();
+		String phone = customer.getPhone();
+		
+		String sql = "";
+		System.out.println(sql);
+		
+		return null;
+	}
+	
 	public ArrayList<Category> getAllCategories(Map<String, String> query_pairs) {
 		
 		Connection conn = jdbc.jobServerInit();
@@ -591,6 +633,21 @@ public class DAO {
 		return supplieraddress;
 	}
 
+	public SupplierAddress insertSupplierAddress(SupplierAddress SupplierAddress) {
+		
+		Connection conn = jdbc.jobServerInit();
+		String city = SupplierAddress.getCity();
+		String state = SupplierAddress.getState();
+		String street = SupplierAddress.getStreet();
+		String zcode = SupplierAddress.getZcode();
+		long sid = SupplierAddress.getSid();
+		
+		String sql = "";
+		System.out.println(sql);
+		
+		return null;
+	}
+	
 	public ArrayList<CustomerAddress> getAllCustomerAddress(Map<String, String> query_pairs) {
 		Connection conn = jdbc.jobServerInit();
 		String sql = "";
@@ -668,6 +725,21 @@ public class DAO {
 		return customeraddress;
 	}
 
+	public SupplierAddress insertCustomerAddress(CustomerAddress CustomerAddress) {
+		
+		Connection conn = jdbc.jobServerInit();
+		String city = CustomerAddress.getCity();
+		String state = CustomerAddress.getState();
+		String street = CustomerAddress.getStreet();
+		String zcode = CustomerAddress.getZcode();
+		long cid = CustomerAddress.getCid();
+		
+		String sql = "";
+		System.out.println(sql);
+		
+		return null;
+	}
+	
 	public ArrayList<City> getAllCities(Map<String, String> query_pairs) {
 		Connection conn = jdbc.jobServerInit();
 		String sql = "";
@@ -789,7 +861,7 @@ public class DAO {
 		return announcementList;
 	}
 
-public ArrayList<AnnouncementSearch> searchAnnouncement(String searchTerm) {
+	public ArrayList<AnnouncementSearch> searchAnnouncement(String searchTerm) {
 		
 		Connection conn = jdbc.jobServerInit();
 		String sql = "select anndate, sname, rname, qty, annprice, expdate"
@@ -857,6 +929,21 @@ public ArrayList<AnnouncementSearch> searchAnnouncement(String searchTerm) {
 		return announcement;
 	}
 
+	public Announcement insertAnnouncement(Announcement Announcement) {
+		
+		Connection conn = jdbc.jobServerInit();
+		Date anndate = Announcement.getAnndate();
+		float price = Announcement.getPrice();
+		int qty = Announcement.getQty();
+		long rid = Announcement.getRid();
+		long sid = Announcement.getSid();
+		
+		String sql = "";
+		System.out.println(sql);
+		
+		return null;
+	}
+	
 	public ArrayList<Request> getAllRequests(Map<String, String> query_pairs) {
 		Connection conn = jdbc.jobServerInit();
 		String sql = "";
@@ -974,6 +1061,21 @@ public ArrayList<AnnouncementSearch> searchAnnouncement(String searchTerm) {
 		return request;
 	}
 
+	public Request insertRequest(Request Request) {
+		
+		Connection conn = jdbc.jobServerInit();
+		Date reqdate = Request.getReqdate();
+		int qty = Request.getQty();
+		long rid = Request.getRid();
+		long cid = Request.getCid();
+		long locid = Request.getLocid();
+		
+		String sql = "";
+		System.out.println(sql);
+		
+		return null;
+	}
+	
 	public ArrayList<Location> getAllLocations(Map<String, String> query_pairs) {
 		Connection conn = jdbc.jobServerInit();
 		String sql = "";
@@ -1045,6 +1147,18 @@ public ArrayList<AnnouncementSearch> searchAnnouncement(String searchTerm) {
 		return location;
 	}
 
+	public Location insertLocation(Location Location) {
+		
+		Connection conn = jdbc.jobServerInit();
+		String latitude = Location.getLatitude();
+		String longitude = Location.getLongitude();
+		
+		String sql = "";
+		System.out.println(sql);
+		
+		return null;
+	}
+	
 	public ArrayList<Purchase> getAllPurchases(Map<String, String> query_pairs) {
 		Connection conn = jdbc.jobServerInit();
 		String sql = "";
@@ -1165,6 +1279,21 @@ public ArrayList<AnnouncementSearch> searchAnnouncement(String searchTerm) {
 		return purchase;
 	}
 
+	public Purchase insertPurchase(Purchase Purchase) {
+		
+		Connection conn = jdbc.jobServerInit();
+		String credcardnumber = Purchase.getCredcardnumber();
+		long cid = Purchase.getCid();
+		Date purdate = Purchase.getPurdate();
+		float price = Purchase.getPurprice();
+		long rid = Purchase.getRid();
+		
+		String sql = "";
+		System.out.println(sql);
+		
+		return null;
+	}
+	
 	public ArrayList<CreditCard> getAllCreditCards(Map<String, String> query_pairs) {
 		Connection conn = jdbc.jobServerInit();
 		String sql = "";
@@ -1241,6 +1370,21 @@ public ArrayList<AnnouncementSearch> searchAnnouncement(String searchTerm) {
 		return creditcard;
 	}
 
+	public CreditCard insertCreditCard(CreditCard CreditCard) {
+		
+		Connection conn = jdbc.jobServerInit();
+		String credcardnumber = CreditCard.getCredcardnumber();
+		long cid = CreditCard.getCid();
+		int cvcnumber = CreditCard.getCvcnumber();
+		Date expdate = CreditCard.getExpdate();
+		int holdername = CreditCard.getHoldername();
+		
+		String sql = "";
+		System.out.println(sql);
+		
+		return null;
+	}
+	
 	public ArrayList<Supplies> getAllSupplies(Map<String, String> query_pairs) {
 		Connection conn = jdbc.jobServerInit();
 		String sql = "";

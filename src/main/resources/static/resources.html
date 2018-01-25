@@ -275,6 +275,57 @@
         </div>
       </div>
 
+      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Resource</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                    <input style="display:none;" type="text" id="rIdBoxEdit">
+                    <label for="example-text-input" class="col-2 col-form-label">Name:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter resource name..." id="rNameBoxEdit">
+                    </div>
+                    <label for="example-text-input" class="col-2 col-form-label">Price:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter resource price..." id="rPriceBoxEdit">
+                    </div>
+                    <label for="example-text-input" class="col-2 col-form-label">Quantity:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter resource quantity..." id="rQtyBoxEdit">
+                    </div>
+                    <label for="example-text-input" class="col-2 col-form-label">Category:</label>
+                    <select id="cat-listEdit" class="custom-select">
+                        <div class="col-10">
+                            <option selected>Choose category...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </div>
+                    </select>
+                    <label for="example-text-input" class="col-2 col-form-label">Subcategory:</label>
+                    <select id="scat-listEdit" class="custom-select">
+                        <div class="col-10">
+                            <option selected>Choose subcategory...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </div>
+                    </select>
+                   
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary edit-save-btn">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     <div class="container">
         <div class="row">
             <div class="col col-sm-12 col-md-8">
@@ -329,11 +380,20 @@
 
             $('.save-btn').on('click', function(){
                 $('.loader').fadeIn();
+                var resource = {
+                        name: $('#rNameBox').val(),
+                        qtyperpk: $('#rQtyBox').val(),
+                        price: $('#rPriceBox').val(),
+                        catid: $('#cat-list').val(),
+                        subcatid: $('#scat-list').val()
+                    };
+                    debugger;
                 $.ajax({
-                    url: "http://localhost:8080/appdb/",
-                    data: {},
+                    url: "http://localhost:8080/appdb/resources",
+                    data: resource,
                     type: "POST",
                     success: function(result){
+                        $("#addModal").modal('hide');
                         $('#search-btn').click();  
                     },
                     error: function(error){
@@ -341,7 +401,36 @@
                         $('.loader').fadeOut();
                     },
                     complete: function(){
-                        
+                        $('#rNameBox').val("");
+                        $('#rQtyBox').val("");
+                        $('#rPriceBox').val("");
+                    }
+                });
+            });
+
+            $("#edit-save-btn").on("click", function(){ 
+                $('.loader').fadeIn();
+                var resource = {
+                        id: $('#rIdBox').val(),
+                        name: $('#rNameBox').val(),
+                        qtyperpk: $('#rQtyBox').val(),
+                        price: $('#rPriceBox').val(),
+                        catid: $('#cat-list').val(),
+                        subcatid: $('#scat-list').val()
+                    };
+                $.ajax({
+                    url: "http://localhost:8080/appdb/resource/"+resource.id,
+                    data: resource,
+                    type: "PUT",
+                    success: function(result){
+                        $("#editModal").modal('hide');
+                        $('#search-btn').click();  
+                    },
+                    error: function(error){
+                        alert("An error occured while updating the resource...");
+                        $('.loader').fadeOut();
+                    },
+                    complete: function(){
                     }
                 });
             });
@@ -361,7 +450,7 @@
                         var $tbody = $('.table').find('tbody');
                         $tbody.html("");
                         for(var i = 0;i< size;i++) {
-                            var html = "<tr class='resource-row' style='display:none;'><td>"+result[i].rname+"</td><td>$"+result[i].rprice+"</td><td>"+result[i].qtyperpk+"</td><td>"+result[i].catname+"</td><td>"+result[i].subcatname+"</td><td><button class='btn btn-primary edit-btn' data-id='"+ result[i].rid +"'><i class='fas fa-pencil'></i> Edit</button></td></tr>";
+                            var html = "<tr class='resource-row' style='display:none;'><td>"+result[i].rname+"</td><td>$"+result[i].rprice+"</td><td>"+result[i].qtyperpk+"</td><td>"+result[i].catname+"</td><td>"+result[i].subcatname+"</td><td><button type='button' class='btn btn-primary edit-btn' data-id='"+ result[i].rid +"'><i class='fas fa-plus'></i> Edit</button></td></tr>";
                             $tbody.append(html);
                             $('.resource-row').last().fadeIn();
                         }
@@ -371,6 +460,41 @@
                     },
                     complete: function(){
                         $('.loader').fadeOut();
+                        $('.edit-btn').on('click', function(){
+                debugger;
+                $('.loader').fadeIn();
+                var size = categories.length;
+                var $select = $('#cat-listEdit');
+                $select.html("<option selected>Choose category...</option>");
+                for(var i = 0;i< size;i++) {
+                    $select.append("<option value='"+ categories[i].categoryId +"'>"+ categories[i].categoryName +"</option>");
+                }
+                $select = $('#scat-listEdit');
+                $select.html("<option selected>Choose subcategory...</option>");
+                for(var i = 0;i< size;i++) {
+                    $select.append("<option value='"+ subcategories[i].subCategoryId +"'>"+ subcategories[i].subCategoryName +"</option>");
+                }
+                var rid = $(this).data("id");
+                $.ajax({
+                    url: "http://localhost:8080/appdb/resources/"+rid,
+                    type: "GET",
+                    success: function(result){
+                        $('#rIdBoxEdit').val(result.id);
+                        $('#rNameBoxEdit').val(result.name);
+                        $('#rQtyBoxEdit').val(result.qtyperpk);
+                        $('#rPriceBoxEdit').val(result.price);
+                        $('#cat-listEdit').val(result.catid)
+                        $('#scat-listEdit').val(result.subcatid)
+                        $("#editModal").modal('show');
+                    },
+                    error: function(error){
+                        alert("An error occured while getting the resource...");
+                    },
+                    complete: function(){
+                        $('.loader').fadeOut();
+                    }
+                });
+            });
                     }
                 });
             });

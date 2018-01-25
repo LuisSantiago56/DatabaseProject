@@ -80,7 +80,10 @@ public class Handler {
 		logger.info("Im in getResourcesById Method");
 		return dao.getResourcesById(rid);
 	}
-	
+	/*
+	 * En el update no tengo que incluir todas las columnas, por lo que
+	 * en el if puedo probar que columnas no son null y solo añadir esas
+	 */
 	public Resources updateResource(int rid) {
 		if (dao.getResourcesById(rid) == null) {
 			//jsonify error Response http
@@ -93,7 +96,7 @@ public class Handler {
 			else {
 				Resources resource = new Resources();
 				
-//				resource.setName("rname");
+//				resource.setName("form.getName");
 //				resource.setQtyPerPk("qtyperpk");
 //				resource.setPrice("rprice");
 //				resource.setCatId("catid");
@@ -103,15 +106,19 @@ public class Handler {
 		}
 		return null;
 	}
-	
-	public Resources insertResource(int rid) {
+	/*
+	 * En el insert se tienen que proveer todas las columnas
+	 * En vez de verificar el length de la data inserted puedo
+	 * probar if(col1!=null && col2!=null && ... )
+	 */
+	public Resources insertResource(Object form) {
 		if(true) {
 			//length of data inserted is not equal to the number of columns
 		}
 		else {
 			Resources resource = new Resources();
 			
-//				resource.setName("rname");
+//				resource.setName("form.getName");
 //				resource.setQtyPerPk("qtyperpk");
 //				resource.setPrice("rprice");
 //				resource.setCatId("catid");
@@ -160,6 +167,10 @@ public class Handler {
 		return dao.getSupplierById(sid);
 	}
 	
+	/*
+	 * En el update no tengo que incluir todas las columnas, por lo que
+	 * en el if puedo probar que columnas no son null y solo añadir esas
+	 */
 	public Suppliers updateSupplier(int rid) {
 		if (dao.getSupplierById(rid) == null) {
 			//jsonify error Response http
@@ -178,8 +189,13 @@ public class Handler {
 		}
 		return null;
 	}
-	
-	public Suppliers insertSupplier(int rid) {
+		
+	/*
+	 * En el insert se tienen que proveer todas las columnas
+	 * En vez de verificar el length de la data inserted puedo
+	 * probar if(col1!=null && col2!=null && ... )
+	 */
+	public Suppliers insertSupplier(Object form) {
 		if(true) {
 			//length of data inserted is not equal to the number of columns
 		}
@@ -187,10 +203,6 @@ public class Handler {
 			Suppliers supplier = new Suppliers();
 			
 //				supplier.setName("rname");
-//				supplier.setQtyPerPk("qtyperpk");
-//				supplier.setPrice("rprice");
-//				supplier.setCatId("catid");
-//				supplier.setSubCatId("subcatid");
 		}
 			
 		return null;
@@ -235,6 +247,10 @@ public class Handler {
 		return dao.getCustomerById(cid);
 	}
 	
+	/*
+	 * En el update no tengo que incluir todas las columnas, por lo que
+	 * en el if puedo probar que columnas no son null y solo añadir esas
+	 */
 	public Customers updateCustomers(int rid) {
 		if (dao.getCustomerById(rid) == null) {
 			//jsonify error Response http
@@ -254,7 +270,12 @@ public class Handler {
 		return null;
 	}
 	
-	public Customers insertCustomer(int rid) {
+	/*
+	 * En el insert se tienen que proveer todas las columnas
+	 * En vez de verificar el length de la data inserted puedo
+	 * probar if(col1!=null && col2!=null && ... )
+	 */
+	public Customers insertCustomer(Object form) {
 		if(true) {
 			//length of data inserted is not equal to the number of columns
 		}
@@ -262,10 +283,6 @@ public class Handler {
 			Customers customer = new Customers();
 			
 //				customer.setName("rname");
-//				customer.setQtyPerPk("qtyperpk");
-//				customer.setPrice("rprice");
-//				customer.setCatId("catid");
-//				customer.setSubCatId("subcatid");
 		}
 			
 		return null;
@@ -340,6 +357,10 @@ public class Handler {
 		return dao.getSupplierAddressById(supadd_id);
 	}
 	
+	/*
+	 * En el update no tengo que incluir todas las columnas, por lo que
+	 * en el if puedo probar que columnas no son null y solo añadir esas
+	 */
 	public SupplierAddress updateSupplierAddress(int rid) {
 		if (dao.getSupplierAddressById(rid) == null) {
 			//jsonify error Response http
@@ -358,8 +379,13 @@ public class Handler {
 		}
 		return null;
 	}
-
-	public SupplierAddress insertSupplierAddress(int rid) {
+	
+	/*
+	 * En el insert se tienen que proveer todas las columnas
+	 * En vez de verificar el length de la data inserted puedo
+	 * probar if(col1!=null && col2!=null && ... )
+	 */
+	public SupplierAddress insertSupplierAddress(Object form) {
 		if(true) {
 			//length of data inserted is not equal to the number of columns
 		}
@@ -367,10 +393,6 @@ public class Handler {
 			SupplierAddress SupplierAddress = new SupplierAddress();
 			
 //				SupplierAddress.setName("rname");
-//				SupplierAddress.setQtyPerPk("qtyperpk");
-//				SupplierAddress.setPrice("rprice");
-//				SupplierAddress.setCatId("catid");
-//				SupplierAddress.setSubCatId("subcatid");
 		}
 			
 		return null;
@@ -399,6 +421,10 @@ public class Handler {
 		return dao.getCustomerAddressById(cusadd_id);
 	}
 	
+	/*
+	 * En el update no tengo que incluir todas las columnas, por lo que
+	 * en el if puedo probar que columnas no son null y solo añadir esas
+	 */
 	public CustomerAddress updateCustomerAddress(int rid) {
 		if (dao.getCustomerAddressById(rid) == null) {
 			//jsonify error Response http
@@ -417,8 +443,13 @@ public class Handler {
 		}
 		return null;
 	}
-
-	public CustomerAddress insertCustomerAddress(int rid) {
+	
+	/*
+	 * En el insert se tienen que proveer todas las columnas
+	 * En vez de verificar el length de la data inserted puedo
+	 * probar if(col1!=null && col2!=null && ... )
+	 */
+	public CustomerAddress insertCustomerAddress(Object form) {
 		if(true) {
 			//length of data inserted is not equal to the number of columns
 		}
@@ -426,10 +457,6 @@ public class Handler {
 			CustomerAddress CustomerAddress = new CustomerAddress();
 			
 //				CustomerAddress.setName("rname");
-//				CustomerAddress.setQtyPerPk("qtyperpk");
-//				CustomerAddress.setPrice("rprice");
-//				CustomerAddress.setCatId("catid");
-//				CustomerAddress.setSubCatId("subcatid");
 		}
 			
 		return null;
@@ -498,6 +525,10 @@ public class Handler {
 		return dao.getAnnouncementById(annid);
 	}
 	
+	/*
+	 * En el update no tengo que incluir todas las columnas, por lo que
+	 * en el if puedo probar que columnas no son null y solo añadir esas
+	 */
 	public Announcement updateAnnouncement(int rid) {
 		if (dao.getAnnouncementById(rid) == null) {
 			//jsonify error Response http
@@ -516,8 +547,13 @@ public class Handler {
 		}
 		return null;
 	}
-
-	public Announcement insertAnnouncement(int rid) {
+	
+	/*
+	 * En el insert se tienen que proveer todas las columnas
+	 * En vez de verificar el length de la data inserted puedo
+	 * probar if(col1!=null && col2!=null && ... )
+	 */
+	public Announcement insertAnnouncement(Object form) {
 		if(true) {
 			//length of data inserted is not equal to the number of columns
 		}
@@ -525,10 +561,6 @@ public class Handler {
 			Announcement Announcement = new Announcement();
 			
 //				Announcement.setName("rname");
-//				Announcement.setQtyPerPk("qtyperpk");
-//				Announcement.setPrice("rprice");
-//				Announcement.setCatId("catid");
-//				Announcement.setSubCatId("subcatid");
 		}
 			
 		return null;
@@ -574,6 +606,10 @@ public class Handler {
 		return dao.getRequestById(reqid);
 	}
 	
+	/*
+	 * En el update no tengo que incluir todas las columnas, por lo que
+	 * en el if puedo probar que columnas no son null y solo añadir esas
+	 */
 	public Request updateRequest(int rid) {
 		if (dao.getRequestById(rid) == null) {
 			//jsonify error Response http
@@ -592,8 +628,13 @@ public class Handler {
 		}
 		return null;
 	}
-
-	public Request insertRequest(int rid) {
+	
+	/*
+	 * En el insert se tienen que proveer todas las columnas
+	 * En vez de verificar el length de la data inserted puedo
+	 * probar if(col1!=null && col2!=null && ... )
+	 */
+	public Request insertRequest(Object form) {
 		if(true) {
 			//length of data inserted is not equal to the number of columns
 		}
@@ -601,10 +642,6 @@ public class Handler {
 			Request Request = new Request();
 			
 //				Request.setName("rname");
-//				Request.setQtyPerPk("qtyperpk");
-//				Request.setPrice("rprice");
-//				Request.setCatId("catid");
-//				Request.setSubCatId("subcatid");
 		}
 			
 		return null;
@@ -633,6 +670,10 @@ public class Handler {
 		return dao.getLocationById(locid);
 	}
 	
+	/*
+	 * En el update no tengo que incluir todas las columnas, por lo que
+	 * en el if puedo probar que columnas no son null y solo añadir esas
+	 */
 	public Location updateLocation(int rid) {
 		if (dao.getLocationById(rid) == null) {
 			//jsonify error Response http
@@ -652,19 +693,21 @@ public class Handler {
 		}
 		return null;
 	}
-
-	public Location insertLocation(int rid) {
+	
+	/*
+	 * En el insert se tienen que proveer todas las columnas
+	 * En vez de verificar el length de la data inserted puedo
+	 * probar if(col1!=null && col2!=null && ... )
+	 */
+	public Location insertLocation(Object form) {
 		if(true) {
 			//length of data inserted is not equal to the number of columns
 		}
 		else {
 			Location Location = new Location();
 			
-//				Location.setName("rname");
-//				Location.setQtyPerPk("qtyperpk");
-//				Location.setPrice("rprice");
-//				Location.setCatId("catid");
-//				Location.setSubCatId("subcatid");
+//			location.setLatitude("Latitude");
+//			location.setLongitude("Longitude");
 		}
 			
 		return null;
@@ -710,6 +753,10 @@ public class Handler {
 		return dao.getPurchaseById(purid);
 	}
 	
+	/*
+	 * En el update no tengo que incluir todas las columnas, por lo que
+	 * en el if puedo probar que columnas no son null y solo añadir esas
+	 */
 	public Purchase updatePurchase(int rid) {
 		if (dao.getPurchaseById(rid) == null) {
 			//jsonify error Response http
@@ -728,8 +775,13 @@ public class Handler {
 		}
 		return null;
 	}
-
-	public Purchase insertPurchase(int rid) {
+	
+	/*
+	 * En el insert se tienen que proveer todas las columnas
+	 * En vez de verificar el length de la data inserted puedo
+	 * probar if(col1!=null && col2!=null && ... )
+	 */
+	public Purchase insertPurchase(Object form) {
 		if(true) {
 			//length of data inserted is not equal to the number of columns
 		}
@@ -737,10 +789,6 @@ public class Handler {
 			Purchase Purchase = new Purchase();
 			
 //				Purchase.setName("rname");
-//				Purchase.setQtyPerPk("qtyperpk");
-//				Purchase.setPrice("rprice");
-//				Purchase.setCatId("catid");
-//				Purchase.setSubCatId("subcatid");
 		}
 			
 		return null;
@@ -769,6 +817,10 @@ public class Handler {
 		return dao.getCreditCardById(credcardnumber);
 	}
 	
+	/*
+	 * En el update no tengo que incluir todas las columnas, por lo que
+	 * en el if puedo probar que columnas no son null y solo añadir esas
+	 */
 	public CreditCard updateCreditCard(int rid) {
 		if (dao.getCreditCardById(rid) == null) {
 			//jsonify error Response http
@@ -788,7 +840,12 @@ public class Handler {
 		return null;
 	}
 	
-	public CreditCard insertCreditCard(int rid) {
+	/*
+	 * En el insert se tienen que proveer todas las columnas
+	 * En vez de verificar el length de la data inserted puedo
+	 * probar if(col1!=null && col2!=null && ... )
+	 */
+	public CreditCard insertCreditCard(Object form) {
 		if(true) {
 			//length of data inserted is not equal to the number of columns
 		}
@@ -796,10 +853,6 @@ public class Handler {
 			CreditCard CreditCard = new CreditCard();
 			
 //				CreditCard.setName("rname");
-//				CreditCard.setQtyPerPk("qtyperpk");
-//				CreditCard.setPrice("rprice");
-//				CreditCard.setCatId("catid");
-//				CreditCard.setSubCatId("subcatid");
 		}
 			
 		return null;

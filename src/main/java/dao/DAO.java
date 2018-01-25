@@ -84,7 +84,7 @@ public class DAO {
 	public ArrayList<ResourceSearch> searchResource(String searchTerm) {
 		
 		Connection conn = jdbc.jobServerInit();
-		String sql = "select rname, catname, subcatname, qtyperpk, rprice from resource as res, category as cat, subcategory as subcat"
+		String sql = "select rid, rname, catname, subcatname, qtyperpk, rprice from resource as res, category as cat, subcategory as subcat"
 				+ " where res.catid=cat.catid and res.subcatid=subcat.subcatid and (Lower(rname) LIKE Lower('%"+searchTerm+"%')"
 				+ " or Lower(catname) LIKE Lower('%"+searchTerm+"%') or Lower(subcatname) LIKE Lower('%"+searchTerm+"%'))";
 		
@@ -98,6 +98,7 @@ public class DAO {
 			
 			while(rs.next()) {
 				ResourceSearch resource = new ResourceSearch();
+				resource.setId(rs.getInt("rid"));
 				resource.setRname(rs.getString("rname"));
 				resource.setCatname(rs.getString("catname"));
 				resource.setSubcatname(rs.getString("subcatname"));

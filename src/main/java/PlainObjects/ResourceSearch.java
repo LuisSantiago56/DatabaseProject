@@ -1,13 +1,20 @@
 package PlainObjects;
 
 public class ResourceSearch {
-
+	private int rid;
 	private String rname;
 	private String catname;
 	private String subcatname;
 	private int qtyperpk;
 	private float rprice;
 	
+	public int getRid() {
+		return rid;
+	}
+	
+	public void setId(int rid) {
+		this.rid = rid;
+	}
 	public String getRname() {
 		return rname;
 	}

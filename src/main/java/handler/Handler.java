@@ -123,10 +123,11 @@ public class Handler {
 //			query_pairs = splitQuery(request);
 //			System.out.println(query_pairs);
 //		}
-		
+
 		
 		if(true) {
 			//length of data inserted is not equal to the number of columns
+			
 		}
 		else {
 			Resources resource = new Resources();

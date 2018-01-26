@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Disaster Relief - Suppliers</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-    <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+      <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
+        <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>-->
+        <link rel="stylesheet" href="bootstrap.min.css">    
+        <script defer src="all.js"></script>
     <style>
         nav {
 			background-color:#333333;
@@ -224,14 +226,68 @@
                     <div class="sk-circle12 sk-circle"></div>
                   </div>
     </div>
+      <!-- Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add New Supplier</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                    <label for="example-text-input" class="col-2 col-form-label">Name:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter name..." id="sNameBox">
+                    </div>
+                    <label for="example-text-input" class="col-4 col-form-label">Last Name:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter last name..." id="sLastBox">
+                    </div>
+                    <label for="example-text-input" class="col-2 col-form-label">Phone:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter phone..." id="sPhoneBox">
+                    </div>
+                    <label for="example-text-input" class="col-2 col-form-label">Street:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter street name..." id="sStreetBox">
+                    </div>
+                    <label for="example-text-input" class="col-2 col-form-label">City:</label>
+                    <select id="cityDD" class="custom-select">
+                        <div class="col-10">
+                            <option selected>Choose city...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </div>
+                    </select>
+                    <label for="example-text-input" class="col-2 col-form-label">State:</label>
+                    <div class="col-10"></div>                   
+                      <input class="form-control" type="text" placeholder="Enter state..." id="sStateBox">
+                    </div>
+                    <label for="example-text-input" class="col-4 col-form-label">Zip Code:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter zip code..." id="sZipBox">
+                    </div>  
+                    <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary save-btn">Save changes</button>
+                          </div>                 
+            </div>        
+          </div>
+        </div>   
     <div class="container">
         <div class="row">
-            <div class="col col-sm-12 col-md-10">
+            <div class="col col-sm-12 col-md-8">
                 <input id="search-input" class="form-control form-control-lg" type="text" placeholder="Search suppliers by name, last name, city, state, zip code...">
             </div>
             <div class="col col-sm-12 col-md-2">
                 <button id="search-btn" type="button" class="btn btn-outline-primary btn-lg"><i class="fas fa-search"></i> Search</button>
             </div>
+            <div class="col col-sm-12 col-md-2">
+                    <button id="add-btn" type="button" class="btn btn-primary btn-lg"><i class="fas fa-plus"></i> Add</button>
+                </div>
         </div>
         <div class="row">
             <div class="col">
@@ -252,9 +308,59 @@
             </div>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+    <script src="jquery.min.js"></script>
+    <script src="popper.min.js" ></script>
+    <script src="bootstrap.min.js" ></script>
     <script>
         $(document).ready(function () {
+            var cities = [];
+            $('#add-btn').on('click', function(){
+                var size = cities.length;
+                var $select = $('#cityDD');
+                $select.html("<option selected>Choose city...</option>");
+                for(var i = 0;i< size;i++) {
+                    $select.append("<option value='"+ cities[i].cityId +"'>"+ cities[i].cityName +"</option>");
+                }
+                $("#addModal").modal('show');
+            });
+            debugger;
+            $('.save-btn').on('click', function(){
+                $('.loader').fadeIn();
+                var supplier = {
+                        sname: $('#sNameBox').val(),
+                        slastname: $('#sLastBox').val(),
+                        sphone: $('#sPhoneBox').val(),
+                        street: $('#sStreetBox').val(),
+                        city: $('#cityDD').val(),
+                        state: $('#sStateBox').val(),
+                        zcode: $('#sZipCodeBox').val(),
+                    };
+                  //  debugger;
+                $.ajax({
+                    url: "http://localhost:8080/appdb/suppliers",
+                    data: supplier,
+                    type: "POST",
+                    success: function(result){
+                        $("#addModal").modal('hide');
+                        $('#search-btn').click();  
+                    },
+                    error: function(error){
+                        alert("An error occured while adding the supplier...");
+                        $('.loader').fadeOut();
+                    },
+                    complete: function(){
+                        $('#sNameBox').val("");
+                        $('#sLastBox').val("");
+                        $('#sPhoneBox').val("");
+                        $('#sStreetBox').val("");
+                        $('#sStateBox').val("");
+                        $('#sZipCodeBox').val("");
+                    }
+                });
+            });
             $('#search-btn').on('click', function(){
                 $('.loader').fadeIn();
                 var searchTerm = $('#search-input').val();
@@ -287,7 +393,19 @@
                     }
                 });
             });
-
+            
+            $.ajax({
+                url: "http://localhost:8080/appdb/city",
+                type: "GET",
+                success: function(result){
+                    cities = result;
+                },
+                error: function(error){
+                    alert("An error occured while getting cities...");
+                },
+                complete: function(){
+                }
+            });
             $('#search-input').bind("enterKey",function(e){
                 $('#search-btn').click();  
             });

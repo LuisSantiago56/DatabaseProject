@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Disaster Relief - Purchases</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-    <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
+        <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>-->
+        <link rel="stylesheet" href="bootstrap.min.css">    
+        <script defer src="all.js"></script>
     <style>
         nav {
 			background-color:#333333;
@@ -217,13 +219,72 @@
                     <div class="sk-circle12 sk-circle"></div>
                   </div>
     </div>
+
+       <!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add New Customer</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                    <label for="example-text-input" class="col-2 col-form-label">Name:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter name..." id="pNameBox">
+                    </div>
+                    <label for="example-text-input" class="col-4 col-form-label">Credit Card:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter credit card number..." id="pCredCardBox">
+                    </div>
+                    <label for="example-text-input" class="col-2 col-form-label">Phone:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter phone..." id="pPhoneBox">
+                    </div>
+                    <label for="example-text-input" class="col-2 col-form-label">Supplier:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter supplier name..." id="cStreetBox">
+                    </div>
+                    <label for="example-text-input" class="col-2 col-form-label">Resource:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter resource name..." id="cStreetBox">
+                    </div>
+                    <label for="example-text-input" class="col-2 col-form-label">City:</label>
+                    <select id="cityDD" class="custom-select">
+                        <div class="col-10">
+                            <option selected>Choose city...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </div>
+                    </select>
+                    <label for="example-text-input" class="col-2 col-form-label">State:</label>
+                    <div class="col-10"></div>                   
+                      <input class="form-control" type="text" placeholder="Enter state..." id="cStateBox">
+                    </div>
+                    <label for="example-text-input" class="col-4 col-form-label">Zip Code:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter zip code..." id="cZipBox">
+                    </div>  
+                    <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary save-btn">Save changes</button>
+                          </div>                 
+            </div>        
+          </div>
+        </div>  
     <div class="container">
         <div class="row">
-            <div class="col col-sm-12 col-md-10">
+            <div class="col col-sm-12 col-md-8">
                 <input id="search-input" class="form-control form-control-lg" type="text" placeholder="Search purchases by date resourse name, customer or supplier...">
             </div>
             <div class="col col-sm-12 col-md-2">
                 <button id="search-btn" type="button" class="btn btn-outline-primary btn-lg"><i class="fas fa-search"></i> Search</button>
+            </div>
+            <div class="col col-sm-12 col-md-2">
+                    <button id="add-btn" type="button" class="btn btn-primary btn-lg"><i class="fas fa-plus"></i> New</button>
             </div>
         </div>
         <div class="row">
@@ -247,7 +308,12 @@
             </div>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+    <script src="jquery.min.js"></script>
+    <script src="popper.min.js" ></script>
+    <script src="bootstrap.min.js" ></script>
     <script>
         $(document).ready(function () {
             $('#search-btn').on('click', function(){

@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Disaster Relief - Customers</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
+        <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>-->
+        <link rel="stylesheet" href="bootstrap.min.css">    
+        <script defer src="all.js"></script>
     <style>
         nav {
 			background-color:#333333;
@@ -222,7 +224,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add New Resource</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Add New Customer</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -230,40 +232,42 @@
             <div class="modal-body">
                     <label for="example-text-input" class="col-2 col-form-label">Name:</label>
                     <div class="col-10">
-                      <input class="form-control" type="text" placeholder="Enter resource name..." id="rNameBox">
+                      <input class="form-control" type="text" placeholder="Enter name..." id="cNameBox">
                     </div>
-                    <label for="example-text-input" class="col-2 col-form-label">Price:</label>
+                    <label for="example-text-input" class="col-4 col-form-label">Last Name:</label>
                     <div class="col-10">
-                      <input class="form-control" type="text" placeholder="Enter resource price..." id="rPriceBox">
+                      <input class="form-control" type="text" placeholder="Enter last name..." id="cLastBox">
                     </div>
-                    <label for="example-text-input" class="col-2 col-form-label">Quantity:</label>
+                    <label for="example-text-input" class="col-2 col-form-label">Phone:</label>
                     <div class="col-10">
-                      <input class="form-control" type="text" placeholder="Enter resource quantity..." id="rQtyBox">
+                      <input class="form-control" type="text" placeholder="Enter phone..." id="cPhoneBox">
                     </div>
-                    <label for="example-text-input" class="col-2 col-form-label">Category:</label>
-                    <select class="custom-select">
+                    <label for="example-text-input" class="col-2 col-form-label">Street:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter street name..." id="cStreetBox">
+                    </div>
+                    <label for="example-text-input" class="col-2 col-form-label">City:</label>
+                    <select id="cityDD" class="custom-select">
                         <div class="col-10">
-                            <option selected>Choose category...</option>
+                            <option selected>Choose city...</option>
                             <option value="1">One</option>
                             <option value="2">Two</option>
                             <option value="3">Three</option>
                         </div>
                     </select>
-                    <label for="example-text-input" class="col-2 col-form-label">Subcategory:</label>
-                    <select class="custom-select">
-                        <div class="col-10">
-                            <option selected>Choose subcategory...</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </div>
-                    </select>
-                   
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+                    <label for="example-text-input" class="col-2 col-form-label">State:</label>
+                    <div class="col-10"></div>                   
+                      <input class="form-control" type="text" placeholder="Enter state..." id="cStateBox">
+                    </div>
+                    <label for="example-text-input" class="col-4 col-form-label">Zip Code:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter zip code..." id="cZipBox">
+                    </div>  
+                    <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary save-btn">Save changes</button>
+                          </div>                 
+            </div>        
           </div>
         </div>
       </div>
@@ -277,7 +281,7 @@
             </div>
             <div class="col col-sm-12 col-md-2">
                     <button id="add-btn" type="button" class="btn btn-primary btn-lg"><i class="fas fa-plus"></i> Add</button>
-                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col">
@@ -298,15 +302,59 @@
             </div>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+    <script src="jquery.min.js"></script>
+    <script src="popper.min.js" ></script>
+    <script src="bootstrap.min.js" ></script>
     <script>
         $(document).ready(function () {
+            var cities = [];
             $('#add-btn').on('click', function(){
+                var size = cities.length;
+                var $select = $('#cityDD');
+                $select.html("<option selected>Choose city...</option>");
+                for(var i = 0;i< size;i++) {
+                    $select.append("<option value='"+ cities[i].cityId +"'>"+ cities[i].cityName +"</option>");
+                }
                 $("#addModal").modal('show');
             });
-            
+
+            $('.save-btn').on('click', function(){
+                $('.loader').fadeIn();
+                var customer = {
+                        cname: $('#cNameBox').val(),
+                        clastname: $('#cLastBox').val(),
+                        cphone: $('#cPhoneBox').val(),
+                        street: $('#cStreetBox').val(),
+                        city: $('#cityDD').val(),
+                        state: $('#cStateBox').val(),
+                        zcode: $('#cZipCodeBox').val(),
+                    };
+                  //  debugger;
+                $.ajax({
+                    url: "http://localhost:8080/appdb/customers",
+                    data: customer,
+                    type: "POST",
+                    success: function(result){
+                        $("#addModal").modal('hide');
+                        $('#search-btn').click();  
+                    },
+                    error: function(error){
+                        alert("An error occured while adding the customer...");
+                        $('.loader').fadeOut();
+                    },
+                    complete: function(){
+                        $('#cNameBox').val("");
+                        $('#cLastBox').val("");
+                        $('#cPhoneBox').val("");
+                        $('#cStreetBox').val("");
+                        $('#cStateBox').val("");
+                        $('#cZipCodeBox').val("");
+                    }
+                });
+            });
             $('#search-btn').on('click', function(){
                 $('.loader').fadeIn();
                 var searchTerm = $('#search-input').val();
@@ -338,6 +386,19 @@
                         $('.loader').fadeOut();
                     }
                 });
+            });
+
+            $.ajax({
+                url: "http://localhost:8080/appdb/city",
+                type: "GET",
+                success: function(result){
+                    cities = result;
+                },
+                error: function(error){
+                    alert("An error occured while getting cities...");
+                },
+                complete: function(){
+                }
             });
 
             $('#search-input').bind("enterKey",function(e){

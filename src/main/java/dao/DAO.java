@@ -319,10 +319,14 @@ public class DAO {
 			
 			while(rs.next()) {
 				Customers customer = new Customers();
-				customer.setId(rs.getLong("sid"));
-				customer.setFirstName(rs.getString("sname"));
-				customer.setLastName(rs.getString("slastname"));
-				customer.setPhone(rs.getString("sphone"));
+				customer.setId(rs.getLong("cid"));
+				customer.setFirstName(rs.getString("cname"));
+				customer.setLastName(rs.getString("clastname"));
+				customer.setPhone(rs.getString("cphone"));
+				customer.setPhone(rs.getString("street"));
+				customer.setPhone(rs.getString("city"));
+				customer.setPhone(rs.getString("state"));
+				customer.setPhone(rs.getString("zcode"));
 				
 				customersList.add(customer);
 				

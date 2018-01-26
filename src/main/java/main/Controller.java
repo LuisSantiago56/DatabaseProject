@@ -1,5 +1,6 @@
 package main;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -49,10 +50,11 @@ public class Controller {
 //	}
 	
 	@RequestMapping(value="/appdb/resources", method={RequestMethod.GET,RequestMethod.POST})
-	public ArrayList<Resources> getAllResources(HttpServletRequest request) throws UnsupportedEncodingException, SQLException {
+	public ArrayList<Resources> getAllResources(HttpServletRequest request) throws SQLException, IOException {
+		
+		System.out.println("Metodo es: " + request.getMethod());
 		if (request.getMethod().equals("POST")) {
-			Object form = null;
-			handler.insertResource(form);
+			handler.insertResource(request);
 			return null;
 		}
 		else {
@@ -104,8 +106,7 @@ public class Controller {
 	@RequestMapping(value="/appdb/suppliers", method={RequestMethod.GET,RequestMethod.POST})
 	public 	ArrayList<Suppliers> getAllSuppliers(HttpServletRequest request) throws UnsupportedEncodingException, SQLException {
 		if ( request.getMethod().equals("POST")) {
-			Object form = null;
-			handler.insertSupplier(form);
+			handler.insertSupplier(request);
 			return null;
 		}
 		else {

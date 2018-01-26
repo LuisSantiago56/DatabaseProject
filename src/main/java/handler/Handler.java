@@ -1,11 +1,13 @@
 package handler;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -111,7 +113,18 @@ public class Handler {
 	 * En vez de verificar el length de la data inserted puedo
 	 * probar if(col1!=null && col2!=null && ... )
 	 */
-	public Resources insertResource(Object form) {
+	public Resources insertResource(HttpServletRequest request) throws IOException {
+		
+		String req = request.getReader().readLine();
+		
+		System.out.println("Estoy aqui: " + req);
+//		Map<String, String> query_pairs = null;
+//		if (req != null) {
+//			query_pairs = splitQuery(request);
+//			System.out.println(query_pairs);
+//		}
+		
+		
 		if(true) {
 			//length of data inserted is not equal to the number of columns
 		}
@@ -195,7 +208,11 @@ public class Handler {
 	 * En vez de verificar el length de la data inserted puedo
 	 * probar if(col1!=null && col2!=null && ... )
 	 */
-	public Suppliers insertSupplier(Object form) {
+	public Suppliers insertSupplier(HttpServletRequest request) {
+		
+		String req = request.getQueryString();
+		System.out.println(req);
+		
 		if(true) {
 			//length of data inserted is not equal to the number of columns
 		}

@@ -51,8 +51,7 @@ public class Controller {
 	@RequestMapping(value="/appdb/resources", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<Resources> getAllResources(HttpServletRequest request) throws UnsupportedEncodingException, SQLException {
 		if (request.getMethod().equals("POST")) {
-			Object form = null;
-			handler.insertResource(form);
+			handler.insertResource(request);
 			return null;
 		}
 		else {

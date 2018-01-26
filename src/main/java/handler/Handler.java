@@ -1,11 +1,13 @@
 package handler;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -111,9 +113,20 @@ public class Handler {
 	 * En vez de verificar el length de la data inserted puedo
 	 * probar if(col1!=null && col2!=null && ... )
 	 */
-	public Resources insertResource(Object form) {
+	public Resources insertResource(HttpServletRequest request) {
+		
+		String req;
+		try {
+			req = request.getReader().readLine();
+			System.out.println(req);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		if(true) {
 			//length of data inserted is not equal to the number of columns
+			
 		}
 		else {
 			Resources resource = new Resources();

@@ -25,8 +25,8 @@ public class JobServerConnection {
 		}
 		try {
 			return conn = DriverManager.getConnection(
-					//"jdbc:postgresql://dr.cewezyn180mr.us-east-2.rds.amazonaws.com:5432/" + dbname +"?user="+username+"&password="+password);
-					"jdbc:postgresql://localhost:5432/" + dbname +"?user="+username+"&password="+password);
+					"jdbc:postgresql://dr.cewezyn180mr.us-east-2.rds.amazonaws.com:5432/" + dbname +"?user="+username+"&password="+password);
+					//"jdbc:postgresql://localhost:5432/" + dbname +"?user="+username+"&password="+password);
 		} catch (SQLException e) {
 			logger.info("Connection failed.");
 			return null;

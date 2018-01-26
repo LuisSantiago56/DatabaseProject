@@ -61,7 +61,7 @@ public class Controller {
 	}
 	
 	@RequestMapping(value="/appdb/resources/{rid}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
-	public Resources getResourceById(@PathVariable int rid) {
+	public Resources getResourceById(@PathVariable int rid,HttpServletRequest request) {
 		if ( request.getMethod().equals("GET")) {
 			return handler.getResourceById(rid);
 		}

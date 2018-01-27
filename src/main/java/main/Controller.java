@@ -63,12 +63,12 @@ public class Controller {
 	}
 	
 	@RequestMapping(value="/appdb/resources/{rid}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
-	public Resources getResourceById(@PathVariable int rid,HttpServletRequest request) {
+	public Resources getResourceById(@PathVariable int rid,HttpServletRequest request) throws IOException {
 		if ( request.getMethod().equals("GET")) {
 			return handler.getResourceById(rid);
 		}
 		else if ( request.getMethod().equals("PUT")) {
-			return handler.updateResource(rid);
+			return handler.updateResource(request);
 		}
 		else if ( request.getMethod().equals("DELETE")) {
 			return null;
@@ -104,7 +104,7 @@ public class Controller {
 	}
 	
 	@RequestMapping(value="/appdb/suppliers", method={RequestMethod.GET,RequestMethod.POST})
-	public 	ArrayList<Suppliers> getAllSuppliers(HttpServletRequest request) throws UnsupportedEncodingException, SQLException {
+	public 	ArrayList<Suppliers> getAllSuppliers(HttpServletRequest request) throws SQLException, IOException {
 		if ( request.getMethod().equals("POST")) {
 			handler.insertSupplier(request);
 			return null;
@@ -151,10 +151,10 @@ public class Controller {
 	}
 	
 	@RequestMapping(value="/appdb/customers", method={RequestMethod.GET,RequestMethod.POST})
-	public ArrayList<Customers> getAllCustomers(HttpServletRequest request) throws UnsupportedEncodingException {
+	public ArrayList<Customers> getAllCustomers(HttpServletRequest request) throws IOException {
 		if ( request.getMethod().equals("POST")) {
 			Object form = null;
-			handler.insertCustomer(form);
+			handler.insertCustomer(request);
 			return null;
 		}
 		else {
@@ -257,14 +257,7 @@ public class Controller {
 
 	@RequestMapping(value="/appdb/supplieraddress", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<SupplierAddress> getAllSupplierAddress(HttpServletRequest request) throws UnsupportedEncodingException {
-		if ( request.getMethod().equals("POST")) {
-			Object form = null;
-			handler.insertSupplierAddress(form);
-			return null;
-		}
-		else {
 			return handler.getAllSupplierAddress(request);
-		}
 	}
 	
 	@RequestMapping(value="/appdb/supplieraddress/{supadd_id}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
@@ -285,14 +278,7 @@ public class Controller {
 
 	@RequestMapping(value="/appdb/customeraddress", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<CustomerAddress> getAllCustomerAddress(HttpServletRequest request) throws UnsupportedEncodingException {
-		if ( request.getMethod().equals("POST")) {
-			Object form = null;
-			handler.insertCustomerAddress(form);
-			return null;
-		}
-		else {
 			return handler.getAllCustomerAddress(request);
-		}
 	}
 	
 	@RequestMapping(value="/appdb/customeraddress/{cusadd_id}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
@@ -338,10 +324,9 @@ public class Controller {
 	}
 
 	@RequestMapping(value="/appdb/announcement", method={RequestMethod.GET,RequestMethod.POST})
-	public ArrayList<Announcement> getAllAnnouncements(HttpServletRequest request) throws UnsupportedEncodingException {
+	public ArrayList<Announcement> getAllAnnouncements(HttpServletRequest request) throws IOException {
 		if ( request.getMethod().equals("POST")) {
-			Object form = null;
-			handler.insertAnnouncement(form);
+			handler.insertAnnouncement(request);
 			return null;
 		}
 		else {
@@ -386,10 +371,9 @@ public class Controller {
 	}
 
 	@RequestMapping(value="/appdb/request", method={RequestMethod.GET,RequestMethod.POST})
-	public ArrayList<Request> getAllRequests(HttpServletRequest request) throws UnsupportedEncodingException {
+	public ArrayList<Request> getAllRequests(HttpServletRequest request) throws IOException {
 		if ( request.getMethod().equals("POST")) {
-			Object form = null;
-			handler.insertRequest(form);
+			handler.insertRequest(request);
 			return null;
 		}
 		else {
@@ -435,14 +419,7 @@ public class Controller {
 
 	@RequestMapping(value="/appdb/location", method={RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<Location> getAllLocations(HttpServletRequest request) throws UnsupportedEncodingException {
-		if ( request.getMethod().equals("POST")) {
-			Object form = null;
-			handler.insertLocation(form);
-			return null;
-		}
-		else {
 			return handler.getAllLocations(request);
-		}
 	}
 	
 	@RequestMapping(value="/appdb/location/{locid}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
@@ -462,10 +439,9 @@ public class Controller {
 	}
 
 	@RequestMapping(value="/appdb/purchase", method={RequestMethod.GET,RequestMethod.POST})
-	public ArrayList<Purchase> getAllPurchases(HttpServletRequest request) throws UnsupportedEncodingException {
+	public ArrayList<Purchase> getAllPurchases(HttpServletRequest request) throws IOException {
 		if ( request.getMethod().equals("POST")) {
-			Object form = null;
-			handler.insertPurchase(form);
+			handler.insertPurchase(request);
 			return null;
 		}
 		else { 
@@ -513,7 +489,7 @@ public class Controller {
 	public ArrayList<CreditCard> getAllCreditCards(HttpServletRequest request) throws UnsupportedEncodingException {
 		if ( request.getMethod().equals("POST")) {
 			Object form = null;
-			handler.insertCreditCard(form);
+			handler.insertCreditCard(request);
 			return null;
 		}
 		else {
@@ -522,7 +498,7 @@ public class Controller {
 	}
 	
 	@RequestMapping(value="/appdb/creditcard/{credcardnumber}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
-	public CreditCard getCreditCardById(int credcardnumber) {
+	public CreditCard getCreditCardById(String credcardnumber) {
 		if ( request.getMethod().equals("GET")) {
 			return handler.getCreditCardById(credcardnumber);
 		}

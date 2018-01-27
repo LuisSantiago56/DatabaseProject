@@ -4,11 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Disaster Relief - Purchases</title>
-  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
-        <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>-->
-        <link rel="stylesheet" href="bootstrap.min.css">    
-        <script defer src="all.js"></script>
+    <title>Disaster Relief - Requests</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
     <style>
         nav {
 			background-color:#333333;
@@ -219,87 +217,47 @@
                     <div class="sk-circle12 sk-circle"></div>
                   </div>
     </div>
-
-       <!-- Modal -->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Add New Customer</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                    <label for="example-text-input" class="col-2 col-form-label">Name:</label>
-                    <div class="col-10">
-                      <input class="form-control" type="text" placeholder="Enter name..." id="pNameBox">
-                    </div>
-                    <label for="example-text-input" class="col-4 col-form-label">Credit Card:</label>
-                    <div class="col-10">
-                      <input class="form-control" type="text" placeholder="Enter credit card number..." id="pCredCardBox">
-                    </div>
-                    <label for="example-text-input" class="col-2 col-form-label">Phone:</label>
-                    <div class="col-10">
-                      <input class="form-control" type="text" placeholder="Enter phone..." id="pPhoneBox">
-                    </div>
-                    <label for="example-text-input" class="col-2 col-form-label">Supplier:</label>
-                    <div class="col-10">
-                      <input class="form-control" type="text" placeholder="Enter supplier name..." id="cStreetBox">
-                    </div>
-                    <label for="example-text-input" class="col-2 col-form-label">Resource:</label>
-                    <div class="col-10">
-                      <input class="form-control" type="text" placeholder="Enter resource name..." id="cStreetBox">
-                    </div>
-                    <label for="example-text-input" class="col-2 col-form-label">City:</label>
-                    <select id="cityDD" class="custom-select">
-                        <div class="col-10">
-                            <option selected>Choose city...</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </div>
-                    </select>
-                    <label for="example-text-input" class="col-2 col-form-label">State:</label>
-                    <div class="col-10"></div>                   
-                      <input class="form-control" type="text" placeholder="Enter state..." id="cStateBox">
-                    </div>
-                    <label for="example-text-input" class="col-4 col-form-label">Zip Code:</label>
-                    <div class="col-10">
-                      <input class="form-control" type="text" placeholder="Enter zip code..." id="cZipBox">
-                    </div>  
-                    <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary save-btn">Save changes</button>
-                          </div>                 
-            </div>        
-          </div>
-        </div>  
     <div class="container">
         <div class="row">
+            <div class="col col-sm-12 col-md-6">
+                <div class="form-group">
+                    <label for="customerSelect">Select Customer</label>
+                    <select class="form-control" id="customerSelect">
+                        
+                    </select>
+                </div>
+            </div>
+            <div class="col col-sm-12 col-md-6">
+                <div class="form-group">
+                    <label for="locationSelect">Select Location</label>
+                    <select class="form-control" id="locationSelect">
+                        
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col col-sm-12 col-md-8">
-                <input id="search-input" class="form-control form-control-lg" type="text" placeholder="Search purchases by date resourse name, customer or supplier...">
+                <input id="search-input" class="form-control form-control-lg" type="text" placeholder="Search requests by resource, customer or supplier...">
             </div>
             <div class="col col-sm-12 col-md-2">
                 <button id="search-btn" type="button" class="btn btn-outline-primary btn-lg"><i class="fas fa-search"></i> Search</button>
             </div>
             <div class="col col-sm-12 col-md-2">
-                <a href="http://localhost:8080/addPurchase.html" class="btn btn-outline-primary btn-lg"><i class="fas fa-plus"></i> Add</a>
+                <button id="save-btn" class="btn btn-outline-primary btn-lg"><i class="fas fa-save"></i> Save</button>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <table class="table table-striped">
                     <thead class="thead-dark">
-                        <th scope="col">Purchase Date</th>
-                        <th scope="col">Purchase Price</th>
-                        <th scope="col">Resource</th>
-                        <th scope="col">Resource Price</th>
-                        <th scope="col">Credit Card</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Customer Phone</th>
-                        <th scope="col">Supplier</th>
-                        <th scope="col">Supplier Phone</th>
+                        <th scope="col"></th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Qty/Pack</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Subcategory</th>
+                        <th scope="col"></th>
                     </thead>
                     <tbody>
                         
@@ -308,48 +266,77 @@
             </div>
         </div>
     </div>
-      <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
-    <script src="jquery.min.js"></script>
-    <script src="popper.min.js" ></script>
-    <script src="bootstrap.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#search-btn').on('click', function(){
-                $('.loader').fadeIn();
-                var searchTerm = $('#search-input').val();
-                var query = "";
-                if(searchTerm) {
-                    query = "?searchterm="+searchTerm;
-                }
-                $.ajax({
-                    url: "http://localhost:8080/appdb/purchase-search"+query,
-                    type: "GET",
-                    success: function(result){
-                        var size = result.length;
-                        var $tbody = $('.table').find('tbody');
-                        $tbody.html("");
-                        for(var i = 0;i< size;i++) {
-                            var html = "<tr class='resource-row' style='display:none;'><td>"
-                            +result[i].purdate+"</td><td>"+result[i].purprice+"</td><td>"
-                            +result[i].rname+"</td><td>"+result[i].rprice+"</td><td>"
-                            +result[i].credcardnumber+"</td><td>"+result[i].cname+"</td><td>"
-                            +result[i].cphone+"</td><td>"+result[i].sname+"</td><td>"
-                            +result[i].sphone+"</td></tr>";
-                            $tbody.append(html);
-                            $('.resource-row').last().fadeIn();
-                        }
-                    },
-                    error: function(error){
-                        alert("An error occured while getting purchases...");
-                    },
-                    complete: function(){
-                        $('.loader').fadeOut();
+            var resources = [];
+            $.ajax({
+                url: "http://localhost:8080/appdb/customers",
+                type: "GET",
+                success: function(result){
+                    var size = result.length;
+                    var $select = $('#customerSelect');
+                    for(var i = 0;i< size;i++) {
+                        $select.append("<option value='"+ result[i].id +"'>"+ result[i].firstname + " " + result[i].lastname +"</option>");
                     }
-                });
+                },
+                error: function(error){
+                    alert("An error occured while getting customers...");
+                },
             });
-
+            $.ajax({
+                url: "http://localhost:8080/appdb/location",
+                type: "GET",
+                success: function(result){
+                    var size = result.length;
+                    var $select = $('#locationSelect');
+                    for(var i = 0;i< size;i++) {
+                        $select.append("<option value='"+ result[i].locid +"'>"+ result[i].latitude + ", " + result[i].longitude +"</option>");
+                    }
+                },
+                error: function(error){
+                    alert("An error occured while getting locations...");
+                },
+            });
+            $.ajax({
+                url: "http://localhost:8080/appdb/request-search",
+                type: "GET",
+                success: function(result){
+                    resources = result;
+                    var size = result.length;
+                    var $tbody = $('.table').find('tbody');
+                    $tbody.html("");
+                    for(var i = 0;i< size;i++) {
+                        var html = "<tr class='resource-row' style='display:none;'><td><div class='form-check'><label class='form-check-label'><input data-id='"+result[i].rid+"' type='checkbox' class='check form-check-input'></label></div></td>";
+                        html += "<td>"+result[i].rname+"</td><td>$"+result[i].rprice+"</td><td>"+result[i].qtyperpk+"</td><td>"+result[i].catname+"</td><td>"+result[i].subcatname+"</td>";
+                        html += "<td><input class='qty form-control' type='number' value='1'></td></tr>";
+                        $tbody.append(html);
+                        $('.resource-row').last().fadeIn();
+                    }
+                },
+                error: function(error){
+                    alert("An error occured while getting resources...");
+                },
+                complete: function(){
+                    $('.loader').fadeOut();
+                }
+            });
+            $('#search-btn').on('click', function(){
+                var searchTerm = $('#search-input').val().toUpperCase();
+                tr = table.getElementsByTagName("tr");
+                for (var i = 0; i < tr.length; i++) {
+                    var td = tr[i].getElementsByTagName("td")[1];
+                    var td2 = tr[i].getElementsByTagName("td")[2];
+                    var td3 = tr[i].getElementsByTagName("td")[3];
+                    var td4 = tr[i].getElementsByTagName("td")[4];
+                    var td5 = tr[i].getElementsByTagName("td")[5];
+                    if (td.innerHTML.toUpperCase().indexOf(searchTerm) > -1 || td2.innerHTML.toUpperCase().indexOf(searchTerm) > -1 || td3.innerHTML.toUpperCase().indexOf(searchTerm) > -1 || td4.innerHTML.toUpperCase().indexOf(searchTerm) > -1 || td5.innerHTML.toUpperCase().indexOf(searchTerm) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            });
             $('#search-input').bind("enterKey",function(e){
                 $('#search-btn').click();  
             });
@@ -359,7 +346,32 @@
                     $(this).trigger("enterKey");
                 }
             });
-            $('#search-btn').click();            
+            $('#save-btn').on('click', function(){
+                $('.loader').fadeIn();
+                var customerId = $('#customerSelect').val();
+                var locationId = $('#locationSelect').val();
+                var rows = $('tr');
+                for(var i = 0; i < rows.length; i++) {
+                    if(rows[i].find('.check').prop('checked')) {
+                        var qty = rows[i].find('.qty').val();
+                        var rid = rows[i].find('.check').data('id');
+                        var date = "";
+                        var request = {
+                            locid: locationId,
+                            cid: customerId,
+                            qty: qty,
+                            rid: rid,
+                            reqdate: date
+                        };
+                        $.ajax({
+                            url: "http://localhost:8080/appdb/request",
+                            type: "POST",
+                            'data': request,
+                        });
+                    }
+                }
+                window.location.href = "http://localhost:8080/requests.html";
+            });           
         });
     </script>
 </body>

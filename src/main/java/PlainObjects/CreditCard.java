@@ -7,7 +7,7 @@ public class CreditCard {
 	private String credcardnumber;
 	private Date expdate;
 	private int cvcnumber;
-	private int holdername;
+	private String holdername;
 	private long cid;
 	
 	public String getCredcardnumber() {
@@ -28,10 +28,10 @@ public class CreditCard {
 	public void setCvcnumber(int cvcnumber) {
 		this.cvcnumber = cvcnumber;
 	}
-	public int getHoldername() {
+	public String getHoldername() {
 		return holdername;
 	}
-	public void setHoldername(int holdername) {
+	public void setHoldername(String holdername) {
 		this.holdername = holdername;
 	}
 	public long getCid() {

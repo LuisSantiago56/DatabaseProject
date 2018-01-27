@@ -10,6 +10,7 @@ public class Purchase {
 	private long cid;
 	private long rid;
 	private String credcardnumber;
+	private int qty;
 	
 	public long getPurid() {
 		return purid;
@@ -47,9 +48,15 @@ public class Purchase {
 	public void setCredcardnumber(String credcardnumber) {
 		this.credcardnumber = credcardnumber;
 	}
+	public int getQty() {
+		return qty;
+	}
+	public void setQty(int qty) {
+		this.qty = qty;
+	}
 	@Override
 	public String toString() {
 		return "Purchase [purid=" + purid + ", purdate=" + purdate + ", purprice=" + purprice + ", cid=" + cid
-				+ ", rid=" + rid + ", credcardnumber=" + credcardnumber + "]";
+				+ ", rid=" + rid + ", credcardnumber=" + credcardnumber + ", qty=" + qty + "]";
 	}
 }

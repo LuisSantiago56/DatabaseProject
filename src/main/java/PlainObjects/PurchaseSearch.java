@@ -13,8 +13,15 @@ public class PurchaseSearch {
 	private String cphone;
 	private String sname;
 	private String sphone;
+	private long sid;
 	
 	
+	public long getSid() {
+		return sid;
+	}
+	public void setSid(long sid) {
+		this.sid = sid;
+	}
 	public Date getPurdate() {
 		return purdate;
 	}

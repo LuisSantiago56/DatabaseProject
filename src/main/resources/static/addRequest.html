@@ -219,7 +219,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col col-sm-12 col-md-6">
+            <div class="col col-sm-12 col-md-4">
                 <div class="form-group">
                     <label for="customerSelect">Select Customer</label>
                     <select class="form-control" id="customerSelect">
@@ -227,12 +227,16 @@
                     </select>
                 </div>
             </div>
-            <div class="col col-sm-12 col-md-6">
-                <div class="form-group">
-                    <label for="locationSelect">Select Location</label>
-                    <select class="form-control" id="locationSelect">
-                        
-                    </select>
+            <div class="col col-sm-12 col-md-4">
+                <label for="longitude" class="col-2 col-form-label">Longitude:</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" placeholder="Enter longitude..." id="longitude">
+                </div>
+            </div>
+            <div class="col col-sm-12 col-md-4">
+                <label for="latitude" class="col-2 col-form-label">Latitude:</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" placeholder="Enter latitude..." id="latitude">
                 </div>
             </div>
         </div>
@@ -259,7 +263,7 @@
                         <th scope="col">Subcategory</th>
                         <th scope="col"></th>
                     </thead>
-                    <tbody>
+                    <tbody id="searchTable">
                         
                     </tbody>
                 </table>
@@ -270,6 +274,7 @@
     <script>
         $(document).ready(function () {
             var resources = [];
+            //$('#date').datepicker();
             $.ajax({
                 url: "http://localhost:8080/appdb/customers",
                 type: "GET",
@@ -277,29 +282,29 @@
                     var size = result.length;
                     var $select = $('#customerSelect');
                     for(var i = 0;i< size;i++) {
-                        $select.append("<option value='"+ result[i].id +"'>"+ result[i].firstname + " " + result[i].lastname +"</option>");
+                        $select.append("<option value='"+ result[i].id +"'>"+ result[i].firstName + " " + result[i].lastName +"</option>");
                     }
                 },
                 error: function(error){
                     alert("An error occured while getting customers...");
                 },
             });
+            // $.ajax({
+            //     url: "http://localhost:8080/appdb/location",
+            //     type: "GET",
+            //     success: function(result){
+            //         var size = result.length;
+            //         var $select = $('#locationSelect');
+            //         for(var i = 0;i< size;i++) {
+            //             $select.append("<option value='"+ result[i].locid +"'>"+ result[i].latitude + ", " + result[i].longitude +"</option>");
+            //         }
+            //     },
+            //     error: function(error){
+            //         alert("An error occured while getting locations...");
+            //     },
+            // });
             $.ajax({
-                url: "http://localhost:8080/appdb/location",
-                type: "GET",
-                success: function(result){
-                    var size = result.length;
-                    var $select = $('#locationSelect');
-                    for(var i = 0;i< size;i++) {
-                        $select.append("<option value='"+ result[i].locid +"'>"+ result[i].latitude + ", " + result[i].longitude +"</option>");
-                    }
-                },
-                error: function(error){
-                    alert("An error occured while getting locations...");
-                },
-            });
-            $.ajax({
-                url: "http://localhost:8080/appdb/request-search",
+                url: "http://localhost:8080/appdb/resource-search",
                 type: "GET",
                 success: function(result){
                     resources = result;
@@ -323,6 +328,7 @@
             });
             $('#search-btn').on('click', function(){
                 var searchTerm = $('#search-input').val().toUpperCase();
+                var table = document.getElementById("searchTable");
                 tr = table.getElementsByTagName("tr");
                 for (var i = 0; i < tr.length; i++) {
                     var td = tr[i].getElementsByTagName("td")[1];
@@ -349,15 +355,18 @@
             $('#save-btn').on('click', function(){
                 $('.loader').fadeIn();
                 var customerId = $('#customerSelect').val();
-                var locationId = $('#locationSelect').val();
+                var date = $('#date').val();
+                //var locationId = $('#locationSelect').val();
                 var rows = $('tr');
                 for(var i = 0; i < rows.length; i++) {
-                    if(rows[i].find('.check').prop('checked')) {
-                        var qty = rows[i].find('.qty').val();
-                        var rid = rows[i].find('.check').data('id');
-                        var date = "";
+                    var jqueryObject = jQuery(rows[i]);
+                    if(jqueryObject.find('.check').prop('checked')) {
+                        debugger;
+                        var qty = jqueryObject.find('.qty').val();
+                        var rid = jqueryObject.find('.check').data('id');
                         var request = {
-                            locid: locationId,
+                            longitude: $('#longitude').val(),
+                            latitude: $('#latitude').val(),
                             cid: customerId,
                             qty: qty,
                             rid: rid,
@@ -366,11 +375,17 @@
                         $.ajax({
                             url: "http://localhost:8080/appdb/request",
                             type: "POST",
-                            'data': request,
+                            data: JSON.stringify(request),
+                            contentType: "application/json",
+                            error: function(error) {
+                                debugger;
+                                console.log(error);
+                            }
                         });
                     }
                 }
-                window.location.href = "http://localhost:8080/requests.html";
+                $('.loader').fadeOut();
+                //window.location.href = "http://localhost:8080/requests.html";
             });           
         });
     </script>

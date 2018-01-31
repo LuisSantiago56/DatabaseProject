@@ -11,7 +11,14 @@ public class Purchase {
 	private long rid;
 	private String credcardnumber;
 	private int qty;
+	private long sid;
 	
+	public long getSid() {
+		return sid;
+	}
+	public void setSid(long sid) {
+		this.sid = sid;
+	}
 	public long getPurid() {
 		return purid;
 	}

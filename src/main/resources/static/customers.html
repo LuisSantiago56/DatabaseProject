@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Disaster Relief - Customers</title>
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
-        <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>-->
+   <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
+        <script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script> -->
         <link rel="stylesheet" href="bootstrap.min.css">    
         <script defer src="all.js"></script>
     <style>
@@ -263,6 +263,18 @@
                     <div class="col-10">
                       <input class="form-control" type="text" placeholder="Enter zip code..." id="cZipBox">
                     </div>  
+                    <label for="cCardNumBox" class="col-2 col-form-label">Card Number:</label>
+                    <div class="col-10">
+                            <input class="form-control" type="text" placeholder="Enter card number..." id="cCardNumBox">
+                          </div>
+                          <label for="cCvcBox" class="col-2 col-form-label">Card CVC:</label>
+                    <div class="col-10">
+                            <input class="form-control" type="text" placeholder="Enter card cvc..." id="cCardCvcBox">
+                          </div>
+                          <label for="cExpBox" class="col-2 col-form-label">Card Exp Date:</label>
+                    <div class="col-10">
+                            <input class="form-control" type="date" placeholder="Enter card expiration date..." id="cCardExpBox">
+                          </div>
                     <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary save-btn">Save changes</button>
@@ -270,6 +282,72 @@
             </div>        
           </div>
         </div>
+
+<!-- Modal Edit -->
+
+      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Resource</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                    <input style="display:none;" type="text" id="cIdBoxEdit">
+                    <label for="example-text-input" class="col-2 col-form-label">Name:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter name..." id="cNameBoxEdit">
+                    </div>
+                    <label for="example-text-input" class="col-4 col-form-label">Last Name:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter last name..." id="cLastBoxEdit">
+                    </div>
+                    <label for="example-text-input" class="col-2 col-form-label">Phone:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter phone..." id="cPhoneBoxEdit">
+                    </div>
+                    <label for="example-text-input" class="col-2 col-form-label">Street:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter street name..." id="cStreetBoxEdit">
+                    </div>
+                    <label for="example-text-input" class="col-2 col-form-label">City:</label>
+                    <select id="cityDDEdit" class="custom-select">
+                        <div class="col-10">
+                            <option selected>Choose city...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </div>
+                    </select>
+                    <label for="example-text-input" class="col-2 col-form-label">State:</label>
+                    <div class="col-10"></div>                   
+                      <input class="form-control" type="text" placeholder="Enter state..." id="cStateBoxEdit">
+                    </div>
+                    <label for="example-text-input" class="col-4 col-form-label">Zip Code:</label>
+                    <div class="col-10">
+                      <input class="form-control" type="text" placeholder="Enter zip code..." id="cZipBoxEdit">
+                    </div>  
+                    <label for="cCardNumBoxEdit" class="col-2 col-form-label">Card Number:</label>
+                    <div class="col-10">
+                            <input class="form-control" type="text" placeholder="Enter card number..." id="cCardNumBoxEdit">
+                          </div>
+                          <label for="cCvcBoxEdit" class="col-2 col-form-label">Card CVC:</label>
+                    <div class="col-10">
+                            <input class="form-control" type="text" placeholder="Enter card cvc..." id="cCardCvcBoxEdit">
+                          </div>
+                          <label for="cExpBoxEdit" class="col-2 col-form-label">Card Exp Date:</label>
+                    <div class="col-10">
+                            <input class="form-control" type="date" placeholder="Enter card expiration date..." id="cCardExpBoxEdit">
+                          </div>
+                    <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary edit-save-btn">Save changes</button>
+                          </div>                 
+          </div>
+        </div>
+      </div>
       </div>
     <div class="container">
         <div class="row">
@@ -294,6 +372,7 @@
                         <th scope="col">City</th>
                         <th scope="col">State</th>
                         <th scope="col">Zip Code</th>
+                        <th scope="col"></th>
                     </thead>
                     <tbody>
                         
@@ -302,7 +381,7 @@
             </div>
         </div>
     </div>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
     <script src="jquery.min.js"></script>
@@ -324,26 +403,31 @@
             $('.save-btn').on('click', function(){
                 $('.loader').fadeIn();
                 var customer = {
-                        cname: $('#cNameBox').val(),
-                        clastname: $('#cLastBox').val(),
-                        cphone: $('#cPhoneBox').val(),
-                        street: $('#cStreetBox').val(),
-                        city: $('#cityDD').val(),
-                        state: $('#cStateBox').val(),
-                        zcode: $('#cZipCodeBox').val(),
+                        "cname": $('#cNameBox').val(),
+                        "clastname": $('#cLastBox').val(),
+                        "cphone": $('#cPhoneBox').val(),
+                        "street": $('#cStreetBox').val(),
+                        "city": $('#cityDD').val(),
+                        "state": $('#cStateBox').val(),
+                        "zcode": $('#cZipBox').val(),
+                        "credcardnumber": $('#cCardNumBox').val(),
+                        "cvcnumber": $('#cCardCvcBox').val(),
+                        "expdate": $('#cCardExpBox').val()
                     };
-                  //  debugger;
+            
                 $.ajax({
                     url: "http://localhost:8080/appdb/customers",
-                    data: customer,
+                    data: JSON.stringify(customer),
+                    contentType: "application/json",
                     type: "POST",
                     success: function(result){
+                        debugger;
                         $("#addModal").modal('hide');
                         $('#search-btn').click();  
                     },
                     error: function(error){
+                        debugger;
                         alert("An error occured while adding the customer...");
-                        $('.loader').fadeOut();
                     },
                     complete: function(){
                         $('#cNameBox').val("");
@@ -351,7 +435,56 @@
                         $('#cPhoneBox').val("");
                         $('#cStreetBox').val("");
                         $('#cStateBox').val("");
-                        $('#cZipCodeBox').val("");
+                        $('#cZipBox').val("");
+                        $('#cCardNumBox').val("");
+                        $('#cCvcBox').val("");
+                        $('#cExpBox').val("");
+                        $('.loader').fadeOut();
+                    }
+                });
+            });
+            $('.edit-save-btn').on('click', function(){
+                $('.loader').fadeIn();
+                debugger;
+                var customer = {
+                        id: $('#cIdBoxEdit').val(),
+                        cname: $('#cNameBoxEdit').val(),
+                        clastname: $('#cLastBoxEdit').val(),
+                        cphone: $('#cPhoneBoxEdit').val(),
+                        street: $('#cStreetBoxEdit').val(),
+                        city: $('#cityDDEdit').val(),
+                        state: $('#cStateBoxEdit').val(),
+                        zcode: $('#cZipBoxEdit').val(),
+                        credcardnumber: $('#cCardNumBoxEdit').val(),
+                        cvcnumber: $('#cCardCvcBoxEdit').val(),
+                        expdate: $('#cCardExpBoxEdit').val()
+                    };
+                $.ajax({
+                    url: "http://localhost:8080/appdb/customer/"+customer.id,
+                    data: JSON.stringify(customer),
+                    contentType: "application/json",
+                    method: "PUT",
+                    success: function(result){
+                        debugger;
+                        $("#editModal").modal('hide');
+                        $('#search-btn').click();  
+                    },
+                    error: function(error){
+                        debugger;
+                        alert("An error occured while editing the customer...");
+                        $('.loader').fadeOut();
+                    },
+                    complete: function(){
+                        debugger;
+                        $('#cNameBoxEdit').val("");
+                        $('#cLastBoxEdit').val("");
+                        $('#cPhoneBoxEdit').val("");
+                        $('#cStreetBoxEdit').val("");
+                        $('#cStateBoxEdit').val("");
+                        $('#cZipBoxEdit').val("");
+                        $('#cCardNumBoxEdit').val("");
+                        $('#cCvcBoxEdit').val("");
+                        $('#cExpBoxEdit').val("");
                     }
                 });
             });
@@ -371,10 +504,14 @@
                         $tbody.html("");
                         for(var i = 0;i< size;i++) {
                         		var html = "<tr class='resource-row' style='display:none;'><td>"
-                             +result[i].cname+"</td><td>"+result[i].clastname+"</td><td>"
-                             +result[i].cphone+"</td><td>"+result[i].street+"</td><td>"
-                             +result[i].city+"</td><td>"+result[i].state+"</td><td>"
-                             +result[i].zcode+"</td></tr>";
+                             +result[i].cname+"</td><td>"
+                             +result[i].clastname+"</td><td>"
+                             +result[i].cphone+"</td><td>"
+                             +result[i].street+"</td><td>"
+                             +result[i].city+"</td><td>"
+                             +result[i].state+"</td><td>"
+                             +result[i].zcode+"</td><td><button type='button' class='btn btn-primary edit-btn' data-id='"
+                             + result[i].cid +"'><i class='fas fa-plus'></i> Edit</button></td></tr>";
                             $tbody.append(html);
                             $('.resource-row').last().fadeIn();
                         }
@@ -384,6 +521,62 @@
                     },
                     complete: function(){
                         $('.loader').fadeOut();
+                        $('.edit-btn').on('click', function(){
+                            $('.loader').fadeIn();
+                            var size = cities.length;
+                            var $select = $('#cityDDEdit');
+                            $select.html("<option selected>Choose city...</option>");
+                            for(var i = 0;i< size;i++) {
+                                $select.append("<option value='"+ cities[i].cityId +"'>"+ cities[i].cityName +"</option>");
+                            }
+                            var cid = $(this).data("id");
+                            debugger;
+                            $.ajax({
+                                url: "http://localhost:8080/appdb/customer/"+cid,
+                                type: "GET",
+                                success: function(result){
+                                    debugger;
+                                    $('#cIdBoxEdit').val(result.id);
+                                    $('#cNameBoxEdit').val(result.firstName);
+                                    $('#cLastBoxEdit').val(result.lastName);
+                                    $('#cPhoneBoxEdit').val(result.phone);
+
+                                    $.ajax({
+                                        url: "http://localhost:8080/appdb/customer/"+cid +"/customeraddress",
+                                        type: "GET",
+                                        success: function(result) {
+                                            $('#cStreetBoxEdit').val(result.street);
+                                            $('#cStateBoxEdit').val(result.state);
+                                            $('#cZipBoxEdit').val(result.zcode);
+                                            $('#cityDDEdit').val(result.city)
+
+                                            $.ajax({
+                                                url:"http://localhost:8080/appdb/customer/"+cid+"/creditcard",
+                                                type: "GET",
+                                                success: function(result){
+                                                    $('#cCardNumBoxEdit').val(result.credcardnumber);
+                                                    $('#cCardCvcBoxEdit').val(result.cvcnumber);
+                                                    $('#cCardExpBoxEdit').val(result.expdate);
+                                                    $("#editModal").modal('show');
+                                                },
+                                                error: function() {
+                                                    alert("An error occured while getting the customer credit card...");
+                                                }
+                                            });
+                                        },
+                                        error: function(error){
+                                            alert("An error occured while getting the customer address...");
+                                        }
+                                    });
+                                },
+                                error: function(error){
+                                    alert("An error occured while getting the customer...");
+                                },
+                                complete: function(){
+                                    $('.loader').fadeOut();
+                                }
+                            });
+                        });
                     }
                 });
             });

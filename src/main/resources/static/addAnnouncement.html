@@ -219,20 +219,18 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col col-sm-12 col-md-6">
+            <div class="col col-sm-6">
                 <div class="form-group">
-                    <label for="customerSelect">Select Customer</label>
-                    <select class="form-control" id="customerSelect">
+                    <label for="customerSelect">Select Supplier</label>
+                    <select class="form-control" id="supplierSelect">
                         
                     </select>
                 </div>
             </div>
-            <div class="col col-sm-12 col-md-12">
-                <div class="form-group">
-                    <label for="locationSelect">Select Location</label>
-                    <select class="form-control" id="locationSelect">
-                        
-                    </select>
+            <div class="col col-sm-6">
+                <label for="ExpBox" class="col-2 col-form-label">Exp Date:</label>
+                <div class="col-10">
+                    <input class="form-control" type="date" placeholder="Enter expiration date..." id="ExpBox">
                 </div>
             </div>
         </div>
@@ -260,7 +258,7 @@
                         <th scope="col"></th>
                         <th scope="col"></th>
                     </thead>
-                    <tbody>
+                    <tbody id="searchTable">
                         
                     </tbody>
                 </table>
@@ -278,7 +276,7 @@
                     var size = result.length;
                     var $select = $('#supplierSelect');
                     for(var i = 0;i< size;i++) {
-                        $select.append("<option value='"+ result[i].id +"'>"+ result[i].firstname + " " + result[i].lastname +"</option>");
+                        $select.append("<option value='"+ result[i].id +"'>"+ result[i].firstName + " " + result[i].lastName +"</option>");
                     }
                 },
                 error: function(error){
@@ -286,7 +284,7 @@
                 },
             });
             $.ajax({
-                url: "http://localhost:8080/appdb/request-search",
+                url: "http://localhost:8080/appdb/resource-search",
                 type: "GET",
                 success: function(result){
                     resources = result;
@@ -311,6 +309,7 @@
             });
             $('#search-btn').on('click', function(){
                 var searchTerm = $('#search-input').val().toUpperCase();
+                var table = document.getElementById("searchTable");
                 tr = table.getElementsByTagName("tr");
                 for (var i = 0; i < tr.length; i++) {
                     var td = tr[i].getElementsByTagName("td")[1];
@@ -338,14 +337,16 @@
                 $('.loader').fadeIn();
                 var supplierId = $('#supplierSelect').val();
                 var rows = $('tr');
+                var date = $("#ExpBox").val();
                 for(var i = 0; i < rows.length; i++) {
-                    if(rows[i].find('.check').prop('checked')) {
-                        var qty = rows[i].find('.qty').val();
-                        var rid = rows[i].find('.check').data('id');
-                        var price = rows[i].find('.price').val();
-                        var date = "";
+                    var jqueryObject = jQuery(rows[i]);
+                    if(jqueryObject.find('.check').prop('checked')) {
+                        debugger;
+                        var qty = jqueryObject.find('.qty').val();
+                        var rid = jqueryObject.find('.check').data('id');
+                        var price = jqueryObject.find('.price').val();
                         var announcement = {
-                            anndate: date,
+                            expdate: date,
                             sid: supplierId,
                             qty: qty,
                             rid: rid,
@@ -353,12 +354,17 @@
                         };
                         $.ajax({
                             url: "http://localhost:8080/appdb/announcement",
+                            contentType: "application/json",
                             type: "POST",
-                            'data': announcement,
+                            data: JSON.stringify(announcement),
+                            success: function(result) {
+
+                            }
                         });
                     }
                 }
-                window.location.href = "http://localhost:8080/announcements.html";
+                $('.loader').fadeOut();
+                //window.location.href = "http://localhost:8080/announcements.html";
             });           
         });
     </script>

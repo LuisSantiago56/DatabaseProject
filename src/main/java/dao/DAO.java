@@ -122,7 +122,11 @@ public class DAO {
 	public Resources getResourcesById(long rid) {
 
 		Connection conn = jdbc.jobServerInit();
-		String sql = "select * from Resource natural inner join Category natural inner join SubCategory where rid = " + rid;
+		//String sql = "select * from Resource natural inner join Category natural inner join SubCategory where rid = " + rid;
+		
+		String sql = "select rid, rname, res.catid, res.subcatid, qtyperpk, rprice from resource as res, category as cat, subcategory as subcat"
+				+ " where res.catid=cat.catid and res.subcatid=subcat.subcatid and res.rid =" +rid;
+		
 		System.out.println(sql);
 
 		Resources resource = new Resources();
@@ -160,14 +164,14 @@ public class DAO {
 		long rid = resource.getId();
 
 		String sql = "Update resource"
-				+ "set rname = " + "'"+name+"'" + ", qtyperpk = " + qtyperpk + ", rprice = " + price
-				+ ", catid = " + catid + ", subcatid = " + subcatid + "where rid = " + rid;
+				+ " set rname = " + "'"+name+"'" + ", qtyperpk = " + qtyperpk + ", rprice = " + price
+				+ ", catid = " + catid + ", subcatid = " + subcatid + " where rid = " + rid;
 		System.out.println(sql);
 		Statement stm;
 		ResultSet rs = null;
 		try {
 			stm = conn.createStatement();
-			rs = stm.executeQuery(sql);
+			stm.execute(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -186,13 +190,13 @@ public class DAO {
 		float price = resource.getPrice();
 
 		String sql = "Insert into resource(rname, qtyperpk, rprice, catid, subcatid) values"
-				+ " ("+ "'"+name+ "'" +","+ qtyperpk +","+ price +","+ catid +","+ subcatid+")";
+				+ " ("+ "'"+name+"'" +","+ qtyperpk +","+ price +","+ catid +","+ subcatid+")";
 		System.out.println(sql);
 		Statement stm;
 		ResultSet rs = null;
 		try {
 			stm = conn.createStatement();
-			rs = stm.executeQuery(sql);
+			stm.execute(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -250,7 +254,7 @@ public class DAO {
 
 	public ArrayList<SupplierSearch> searchSuppliers(String searchTerm) {
 		Connection conn = jdbc.jobServerInit();
-		String sql = "select sname, slastname, sphone, street, city, state, zcode from supplier, supplieraddress as address"
+		String sql = "select supplier.sid, sname, slastname, sphone, street, city, state, zcode from supplier, supplieraddress as address"
 				+ " where supplier.sid=address.sid and (Lower(sname) LIKE Lower('%"+searchTerm+"%') or Lower(slastname) LIKE"
 				+ " Lower('%"+searchTerm+"%') or Lower(city) LIKE Lower('%"+searchTerm+"%') or Lower(state) LIKE "
 				+ "Lower('%"+searchTerm+"%') or Lower(zcode) LIKE Lower('%"+searchTerm+"%'))";
@@ -265,6 +269,7 @@ public class DAO {
 
 			while(rs.next()) {
 				SupplierSearch supplier = new SupplierSearch();
+				supplier.setSid(rs.getInt("sid"));
 				supplier.setSname(rs.getString("sname"));
 				supplier.setSlastname(rs.getString("slastname"));
 				supplier.setSphone(rs.getString("sphone"));
@@ -326,20 +331,20 @@ public class DAO {
 		long sid = supplier.getId();
 
 		String sql = "Update supplier"
-				+ "set sname = " + "'"+firstname+"'" + ", slastname = " + "'"+lastname+"'" + ", sphone = " + "'"+phone+"'"
-				+ "where sid = " + sid;
+				+ " set sname = " + "'"+firstname+"'" + ", slastname = " + "'"+lastname+"'" + ", sphone = " + "'"+phone+"'"
+				+ " where sid = " + sid;
 		System.out.println(sql);
 		
 		String sql2 = "Update supplieraddress"
-				+ "set street = " + "'"+street+"'" + ", city = " + "'"+city+"'" + ", state = " + "'"+state+"'" + ", zcode = " + "'"+zcode+"'"
-				+ "where sid = " + sid;
+				+ " set street = " + "'"+street+"'" + ", city = " + "'"+city+"'" + ", state = " + "'"+state+"'" + ", zcode = " + "'"+zcode+"'"
+				+ " where sid = " + sid;
 		
 		Statement stm;
 		ResultSet rs = null;
 		try {
 			stm = conn.createStatement();
-			rs = stm.executeQuery(sql);
-			rs = stm.executeQuery(sql2);
+			stm.execute(sql);
+			stm.execute(sql2);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -356,7 +361,7 @@ public class DAO {
 		String phone = supplier.getPhone();
 
 		String sql = "Insert into supplier(sname,slastname,sphone) values"
-				+ " ("+ "'"+firstname+ "'" +","+ "'"+lastname+ "'" +","+ "'"+phone+ "'" +")";
+				+ " ("+ "'"+firstname+"'" +","+ "'"+lastname+"'" +","+ "'"+phone+"'" +")";
 		System.out.println(sql);
 		Statement stm;
 		try {
@@ -423,7 +428,7 @@ public class DAO {
 
 	public ArrayList<CustomerSearch> searchCustomers(String searchTerm) {
 		Connection conn = jdbc.jobServerInit();
-		String sql = "select cname, clastname, cphone, street, city, state, zcode from customer, customeraddress as address"
+		String sql = "select customer.cid, cname, clastname, cphone, street, city, state, zcode from customer, customeraddress as address"
 				+ " where customer.cid=address.cid and (Lower(cname) LIKE Lower('%"+searchTerm+"%') or Lower(clastname) LIKE"
 				+ " Lower('%"+searchTerm+"%') or Lower(city) LIKE Lower('%"+searchTerm+"%') or Lower(state) LIKE "
 				+ "Lower('%"+searchTerm+"%') or Lower(zcode) LIKE Lower('%"+searchTerm+"%'))";
@@ -438,6 +443,7 @@ public class DAO {
 
 			while(rs.next()) {
 				CustomerSearch customer = new CustomerSearch();
+				customer.setCid(rs.getInt("cid"));
 				customer.setCname(rs.getString("cname"));
 				customer.setClastname(rs.getString("clastname"));
 				customer.setCphone(rs.getString("cphone"));
@@ -494,12 +500,12 @@ public class DAO {
 		String phone = customer.getPhone();
 
 		String sql = "Insert into customer(cname,clastname,cphone) values"
-				+ " ("+ "'"+firstname+ "'" +","+ "'"+lastname+ "'" +","+ "'"+phone+ "'" +")";
+				+ " ("+ "'"+firstname+"'" +","+ "'"+lastname+"'" +","+ "'"+phone+"'" +")";
 		System.out.println(sql);
 		Statement stm;
 		try {
 			stm = conn.createStatement();
-			stm.executeQuery(sql);
+			stm.execute(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -520,20 +526,20 @@ public class DAO {
 		long cid = customer.getId();
 
 		String sql = "Update customer"
-				+ "set sname = " + "'"+firstname+"'" + ", slastname = " + "'"+lastname+"'" + ", sphone = " + "'"+phone+"'"
-				+ "where cid = " + cid;
+				+ " set cname = " + "'"+firstname+"'" + ", clastname = " + "'"+lastname+"'" + ", cphone = " + "'"+phone+"'"
+				+ " where cid = " + cid;
 		System.out.println(sql);
 		
 		String sql2 = "Update customeraddress"
-				+ "set street = " + "'"+street+"'" + ", city = " + "'"+city+"'" + ", state = " + "'"+state+"'" + ", zcode = " + "'"+zcode+"'"
-				+ "where cid = " + cid;
+				+ " set street = " + "'"+street+"'" + ", city = " + "'"+city+"'" + ", state = " + "'"+state+"'" + ", zcode = " + "'"+zcode+"'"
+				+ " where cid = " + cid;
 		
 		Statement stm;
 		ResultSet rs = null;
 		try {
 			stm = conn.createStatement();
-			rs = stm.executeQuery(sql);
-			rs = stm.executeQuery(sql2);
+			stm.execute(sql);
+			stm.execute(sql2);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -760,6 +766,35 @@ public class DAO {
 
 		return supplieraddress;
 	}
+	
+	public SupplierAddress getSupplierAddressBySupplierId(long sid) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "select * from SupplierAddress where sid = " + sid;
+		System.out.println(sql);
+
+		SupplierAddress supplieraddress = new SupplierAddress();
+
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+
+			while(rs.next()) {
+
+				supplieraddress.setAid(rs.getLong("aid"));
+				supplieraddress.setStreet(rs.getString("street"));
+				supplieraddress.setCity(rs.getString("city"));
+				supplieraddress.setState(rs.getString("state"));
+				supplieraddress.setZcode(rs.getString("zcode"));
+				supplieraddress.setSid(rs.getLong("sid"));
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return supplieraddress;
+	}
 
 	public SupplierAddress insertSupplierAddress(SupplierAddress SupplierAddress, Suppliers supplier) {
 
@@ -771,13 +806,14 @@ public class DAO {
 		long sid = 0;
 
 		String sql1 = "select sid from Supplier where sname = " + "'"+supplier.getFirstName()+"'" 
-		+ "slastname = " + "'"+supplier.getLastName()+"'" + "sphone = " + "'"+supplier.getPhone()+"'";
+		+ " and slastname = " + "'"+supplier.getLastName()+"'" + " and sphone = " + "'"+supplier.getPhone()+"'";
 		System.out.println(sql1);
 
 		Statement stm;
 		try {
 			stm = conn.createStatement();
 			ResultSet rs = stm.executeQuery(sql1);
+			rs.next();
 			sid = Integer.parseInt(rs.getString("sid"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -873,6 +909,35 @@ public class DAO {
 
 		return customeraddress;
 	}
+	
+	public CustomerAddress getCustomerAddressByCustomerId(long cid) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "select * from CustomerAddress where cid = " + cid;
+		System.out.println(sql);
+
+		CustomerAddress customeraddress = new CustomerAddress();
+
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+
+			while(rs.next()) {
+
+				customeraddress.setAid(rs.getLong("aid"));
+				customeraddress.setStreet(rs.getString("street"));
+				customeraddress.setCity(rs.getString("city"));
+				customeraddress.setState(rs.getString("state"));
+				customeraddress.setZcode(rs.getString("zcode"));
+				customeraddress.setCid(rs.getLong("cid"));
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return customeraddress;
+	}
 
 	public SupplierAddress insertCustomerAddress(CustomerAddress CustomerAddress, Customers customer) {
 
@@ -884,13 +949,14 @@ public class DAO {
 		long cid = 0;
 		
 		String sql1 = "select cid from Customer where cname = " + "'"+customer.getFirstName() +"'"
-		+ "slastname = " + "'"+customer.getLastName()+"'" + "sphone = " + "'"+customer.getPhone()+"'";
+		+ " and clastname = " + "'"+customer.getLastName()+"'" + " and cphone = " + "'"+customer.getPhone()+"'";
 		System.out.println(sql1);
 
 		Statement stm;
 		try {
 			stm = conn.createStatement();
 			ResultSet rs = stm.executeQuery(sql1);
+			rs.next();
 			cid = Integer.parseInt(rs.getString("cid"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1107,15 +1173,15 @@ public class DAO {
 		int qty = Announcement.getQty();
 		long rid = Announcement.getRid();
 		long sid = Announcement.getSid();
-		long annid = Announcement.getAnnid();
+		Date expdate = Announcement.getExpdate();
 
-		String sql = "Insert into announcement(annid,anndate,sid,rid,price,qty) values"
-				+ " ("+ annid +","+ anndate +","+ sid +","+ rid +"," + price +"," + qty +")";
+		String sql = "Insert into announcement(anndate,sid,rid,annprice,qty, expdate) values"
+				+ " (" +" now()" +","+ sid +","+ rid +"," + price +"," + qty + ", '" + expdate + "')";
 		System.out.println(sql);
 		Statement stm;
 		try {
 			stm = conn.createStatement();
-			stm.executeQuery(sql);
+			stm.execute(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1175,10 +1241,10 @@ public class DAO {
 
 	public ArrayList<RequestSearch> searchRequests(String searchTerm) {
 		Connection conn = jdbc.jobServerInit();
-		String sql = "select reqdate, cname, rname, sname, qty, latitude, longitude"
-				+ " from request, customer, resource, supplier, locations"
-				+ " where request.cid=customer.cid and request.rid=resource.rid and request.sid=supplier.sid and request.locid=locations.locid"
-				+ " and (Lower(rname) LIKE Lower('%"+searchTerm+"%') or Lower(cname) LIKE Lower('%"+searchTerm+"%') or Lower(sname) LIKE Lower('%"+searchTerm+"%'))";
+		String sql = "select reqdate, cname, rname, qty, latitude, longitude"
+				+ " from request as req, customer as cus, resource as res, locations as loc"
+				+ " where req.cid=cus.cid and req.rid=res.rid and req.locid=loc.locid"
+				+ " and (Lower(rname) LIKE Lower('%"+searchTerm+"%') or Lower(cname) LIKE Lower('%"+searchTerm+"%'))";
 
 		System.out.println(sql);
 
@@ -1193,7 +1259,6 @@ public class DAO {
 				request.setReqdate(rs.getDate("reqdate"));
 				request.setCname(rs.getString("cname"));
 				request.setRname(rs.getString("rname"));
-				request.setSname(rs.getString("sname"));
 				request.setQty(rs.getInt("qty"));
 				request.setLatitude(rs.getString("latitude"));
 				request.setLongitude(rs.getString("longitude"));
@@ -1253,27 +1318,28 @@ public class DAO {
 		Statement stm;
 		ResultSet rs = null;
 		
-		String sql = "Insert into location(latitude, longitude) values" + " ("+ "'"+latitude+ "'" +","+ "'"+longitude+"'" +")";
+		String sql = "Insert into locations(latitude, longitude) values" + " ("+ "'"+latitude+ "'" +","+ "'"+longitude+"'" +")";
 		System.out.println(sql);
 		
-		String sql2 = "Select locid where latitude = " + "'"+latitude+"'" + " and longitude = " + "'"+longitude+"'";
+		String sql2 = "Select locid from locations where latitude = " + "'"+latitude+"'" + " and longitude = " + "'"+longitude+"'";
 		System.out.println(sql2);
 		
 		try {
 			stm = conn.createStatement();
-			stm.executeQuery(sql);
+			stm.execute(sql);
 			rs = stm.executeQuery(sql2);
+			rs.next();
 			locid = rs.getLong("locid");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String sql3 = "Insert into request(reqdate, qty, rid, cid, locid) values"
-				+ " ("+ reqdate +","+ qty +","+ rid +","+ cid +","+ locid+")";
+				+ " ( now()" +","+ qty +","+ rid +","+ cid +","+ locid+")";
 		System.out.println(sql3);
 		try {
 			stm = conn.createStatement();
-			rs = stm.executeQuery(sql3);
+			stm.execute(sql3);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1406,7 +1472,7 @@ public class DAO {
 
 	public ArrayList<PurchaseSearch> searchPurchase(String searchTerm) {
 		Connection conn = jdbc.jobServerInit();
-		String sql = "select purdate, purprice, rname, rprice, credcardnumber, cname, cphone, sname, sphone"
+		String sql = "select purdate, purprice, rname, rprice, credcardnumber, cname, cphone, sname, sphone, resource.rid, supplier.sid"
 				+ " from purchase, customer, supplier, resource"
 				+ " where purchase.cid=customer.cid and purchase.sid=supplier.sid and purchase.rid=resource.rid"
 				+ " and (Lower(rname) LIKE Lower('%"+searchTerm+"%')"
@@ -1431,6 +1497,7 @@ public class DAO {
 				purchase.setCphone(rs.getString("cphone"));
 				purchase.setSname(rs.getString("sname"));
 				purchase.setSphone(rs.getString("sphone"));
+				purchase.setSid(rs.getLong("sid"));
 
 				purchaseList.add(purchase);
 
@@ -1480,20 +1547,21 @@ public class DAO {
 		String credcardnumber = Purchase.getCredcardnumber();
 		long cid = Purchase.getCid();
 		Date purdate = Purchase.getPurdate();
-		float price = Purchase.getPurprice();
+		double price = Purchase.getPurprice();
 		long rid = Purchase.getRid();
 		int qty = Purchase.getQty();
+		long sid = Purchase.getSid();
 
 		Statement stm;
 		ResultSet rs = null;
 		
-		String sql = "Insert into purchase(credcardnumber, cid, purdate, purprice, rid, qty) values"
-				+ " ("+ "'"+credcardnumber+ "'" +","+ cid +","+ purdate +","+ price +","+ rid +","+ qty +")";
+		String sql = "Insert into purchase(credcardnumber, cid, purdate, purprice, rid, qty, sid) values"
+				+ " ("+ "'"+credcardnumber+ "'" +","+ cid +", now()" +","+ price +","+ rid +","+ qty + "," + sid +")";
 		System.out.println(sql);
 		
 		try {
 			stm = conn.createStatement();
-			rs = stm.executeQuery(sql);
+			stm.execute(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1577,8 +1645,37 @@ public class DAO {
 
 		return creditcard;
 	}
+	
+	public CreditCard getCreditCardByCustomerId(long cid) {
+		Connection conn = jdbc.jobServerInit();
+		String sql = "select * from CreditCard natural inner join Customer natural inner join CustomerAddress"
+				+ " where cid = " + cid;
+		System.out.println(sql);
 
-	public CreditCard insertCreditCard(CreditCard CreditCard) {
+		CreditCard creditcard = new CreditCard();
+
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs = stm.executeQuery(sql);
+
+			while(rs.next()) {
+
+				creditcard.setCredcardnumber(rs.getString("credcardnumber"));
+				creditcard.setExpdate(rs.getDate("expdate"));
+				creditcard.setCvcnumber(rs.getInt("cvcnumber"));
+				creditcard.setHoldername(rs.getString("holdername"));
+				creditcard.setCid(rs.getLong("cid"));
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return creditcard;
+	}
+
+	public CreditCard insertCreditCard(CreditCard CreditCard, Customers customer) {
 
 		Connection conn = jdbc.jobServerInit();
 		String credcardnumber = CreditCard.getCredcardnumber();
@@ -1590,13 +1687,29 @@ public class DAO {
 		Statement stm;
 		ResultSet rs = null;
 		
+		String sql1 = "select cid from Customer where cname = " + "'"+customer.getFirstName() +"'"
+				+ " and clastname = " + "'"+customer.getLastName()+"'" + " and cphone = " + "'"+customer.getPhone()+"'";
+		System.out.println(sql1);
+
+		try {
+			stm = conn.createStatement();
+			rs = stm.executeQuery(sql1);
+			rs.next();
+			cid = Integer.parseInt(rs.getString("cid"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		
 		String sql = "Insert into creditcard(credcardnumber, cid, cvcnumber, expdate, holdername) values"
-				+ " ("+ "'"+credcardnumber+ "'" +","+ cid +","+ cvcnumber +","+ expdate +","+ "'"+ holdername +"'" +")";
+				+ " ("+ "'"+credcardnumber+ "'" +","+ cid +","+ cvcnumber +", '"+ expdate +"' ,"+ "'"+ holdername +"'" +")";
 		System.out.println(sql);
 		
 		try {
 			stm = conn.createStatement();
-			rs = stm.executeQuery(sql);
+			stm.execute(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1605,7 +1718,7 @@ public class DAO {
 		return null;
 	}
 	
-	public CreditCard updateCreditCard(CreditCard CreditCard) {
+	public CreditCard updateCreditCard(CreditCard CreditCard, Customers customer) {
 
 		Connection conn = jdbc.jobServerInit();
 		String credcardnumber = CreditCard.getCredcardnumber();
@@ -1614,15 +1727,32 @@ public class DAO {
 		Date expdate = CreditCard.getExpdate();
 		String holdername = CreditCard.getHoldername();
 
-		String sql = "Update creditcard"
-				+ "set credcardnumber = " + "'"+credcardnumber+"'" + ", cvcnumber = " + cvcnumber + ", expdate = " + expdate
-				+ ", holdername = " + "'"+holdername+"'" + "where cid = " + cid;
-		System.out.println(sql);
 		Statement stm;
 		ResultSet rs = null;
+		
+		String sql1 = "select cid from Customer where cname = " + "'"+customer.getFirstName() +"'"
+				+ " and clastname = " + "'"+customer.getLastName()+"'" + " and cphone = " + "'"+customer.getPhone()+"'";
+		System.out.println(sql1);
+
 		try {
 			stm = conn.createStatement();
-			rs = stm.executeQuery(sql);
+			rs = stm.executeQuery(sql1);
+			rs.next();
+			cid = Integer.parseInt(rs.getString("cid"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String sql = "Update creditcard"
+				+ " set credcardnumber = " + "'"+credcardnumber+"'" + ", cvcnumber = " + cvcnumber + ", expdate = '" + expdate
+				+ "', holdername = " + "'"+holdername+"'" + "where cid = " + cid;
+		System.out.println(sql);
+		
+		
+		try {
+			stm = conn.createStatement();
+			stm.execute(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1667,7 +1797,6 @@ public class DAO {
 				supplies.setRid(rs.getLong("rid"));
 				supplies.setSupprice(rs.getFloat("supprice"));
 				supplies.setStock(rs.getInt("stock"));
-				supplies.setCityid(rs.getLong("cityid"));
 
 				suppliesList.add(supplies);
 
@@ -1681,33 +1810,40 @@ public class DAO {
 		return suppliesList;
 	}
 
-	public Supplies getSuppliesById(int supid) {
+	public ArrayList<Supplies> getSuppliesBySupplierId(int sid) {
 		Connection conn = jdbc.jobServerInit();
-		String sql = "select * from Supplies natural inner join Supplier natural inner join SupplierAddress"
-				+ " natural inner join City natural inner join Resource where supid = " + supid;
+//		String sql = "select * from Supplies natural inner join Supplier natural inner join SupplierAddress"
+//				+ " natural inner join City natural inner join Resource where supid = " + supid;
+		String sql = "select rname, qtyperpk, catname, subcatname, stock, res.rid, sup.supid, sup.sid, sup.supprice as rprice from Supplies as sup, Resource as res, Category as cat, Subcategory as subcat where sup.rid = res.rid and res.catid = cat.catid and res.subcatid = subcat.subcatid and sup.sid="+sid;
 		System.out.println(sql);
 
-		Supplies supplies = new Supplies();
+		ArrayList<Supplies> supplies = new ArrayList<Supplies>();
 
 		try {
 			Statement stm = conn.createStatement();
 			ResultSet rs = stm.executeQuery(sql);
 
 			while(rs.next()) {
-
-				supplies.setSupid(rs.getLong("supid"));
-				supplies.setSid(rs.getLong("sid"));
-				supplies.setRid(rs.getLong("rid"));
-				supplies.setSupprice(rs.getFloat("supprice"));
-				supplies.setStock(rs.getInt("stock"));
-				supplies.setCityid(rs.getLong("cityid"));
-
+				Supplies supply = new Supplies();
+				supply.setRid(rs.getLong("rid"));
+				supply.setSid(rs.getLong("sid"));
+				supply.setSupid(rs.getLong("supid"));
+				supply.setRname(rs.getString("rname"));
+				supply.setQtyperpk(rs.getInt("qtyperpk"));
+				supply.setCatname(rs.getString("catname"));
+				supply.setSubcatname(rs.getString("subcatname"));
+				supply.setSupprice(rs.getFloat("rprice"));
+				supply.setStock(rs.getInt("stock"));
+				
+				System.out.println(supply);
+				
+				supplies.add(supply);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		System.out.println(supplies);
 		return supplies;
 	}
 

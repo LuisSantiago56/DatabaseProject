@@ -7,8 +7,36 @@ public class Supplies {
 	private long rid;
 	private float supprice;
 	private int stock;
-	private long cityid;
+	private String rname;
+	private int qtyperpk;
+	private String catname;
+	private String subcatname;
 	
+	
+	public String getRname() {
+		return rname;
+	}
+	public void setRname(String rname) {
+		this.rname = rname;
+	}
+	public int getQtyperpk() {
+		return qtyperpk;
+	}
+	public void setQtyperpk(int qtyperpk) {
+		this.qtyperpk = qtyperpk;
+	}
+	public String getCatname() {
+		return catname;
+	}
+	public void setCatname(String catname) {
+		this.catname = catname;
+	}
+	public String getSubcatname() {
+		return subcatname;
+	}
+	public void setSubcatname(String subcatname) {
+		this.subcatname = subcatname;
+	}
 	public long getSupid() {
 		return supid;
 	}
@@ -39,16 +67,11 @@ public class Supplies {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
-	public long getCityid() {
-		return cityid;
-	}
-	public void setCityid(long cityid) {
-		this.cityid = cityid;
-	}
 	@Override
 	public String toString() {
 		return "Supplies [supid=" + supid + ", sid=" + sid + ", rid=" + rid + ", supprice=" + supprice + ", stock="
-				+ stock + ", cityid=" + cityid + "]";
+				+ stock + ", rname=" + rname + ", qtyperpk=" + qtyperpk + ", catname=" + catname + ", subcatname="
+				+ subcatname + "]";
 	}
 	
 }

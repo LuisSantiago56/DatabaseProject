@@ -1,7 +1,7 @@
 package PlainObjects;
 
 public class SupplierSearch {
-
+	private int sid;
 	private String sname;
 	private String slastname;
 	private String sphone;
@@ -10,6 +10,13 @@ public class SupplierSearch {
 	private String state;
 	private String zcode;
 	
+	public int getSid() {
+		return sid;
+	}
+	
+	public void setSid(int sid) {
+		this.sid = sid;
+	}
 	
 	public String getSname() {
 		return sname;

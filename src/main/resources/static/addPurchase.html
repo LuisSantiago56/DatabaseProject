@@ -219,7 +219,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col col-sm-12 col-md-4">
+            <div class="col col-sm-12 col-md-6">
                 <div class="form-group">
                     <label for="customerSelect">Select Customer</label>
                     <select class="form-control" id="customerSelect">
@@ -227,10 +227,10 @@
                     </select>
                 </div>
             </div>
-            <div class="col col-sm-12 col-md-4">
+            <div class="col col-sm-12 col-md-6">
                 <div class="form-group">
-                    <label for="cardSelect">Select Credit Card</label>
-                    <select class="form-control" id="cardSelect">
+                    <label for="supplierSelect">Select Supplier</label>
+                    <select class="form-control" id="supplierSelect">
                         
                     </select>
                 </div>
@@ -255,12 +255,13 @@
                         <th scope="col">Name</th>
                         <th scope="col">Price</th>
                         <th scope="col">Qty/Pack</th>
+                        <th scope="col">Stock</th>
                         <th scope="col">Category</th>
                         <th scope="col">Subcategory</th>
                         <th scope="col"></th>
                         <th scope="col"></th>
                     </thead>
-                    <tbody>
+                    <tbody id="searchTable">
                         
                     </tbody>
                 </table>
@@ -271,67 +272,102 @@
     <script>
         $(document).ready(function () {
             var resources = [];
+            var customers = [];
+            var suppliers = [];
             $.ajax({
                 url: "http://localhost:8080/appdb/customers",
                 type: "GET",
                 success: function(result){
+                    customers = result;
                     var size = result.length;
                     var $select = $('#customerSelect');
                     for(var i = 0;i< size;i++) {
-                        $select.append("<option value='"+ result[i].id +"'>"+ result[i].firstname + " " + result[i].lastname +"</option>");
+                        $select.append("<option value='"+ result[i].id +"'>"+ result[i].firstName + " " + result[i].lastName +"</option>");
                     }
                 },
                 error: function(error){
                     alert("An error occured while getting customers...");
                 },
+                complete: function() {
+                    
+                }
             });
-            $('#customerSelect').change(function(){
+            $.ajax({
+                url: "http://localhost:8080/appdb/suppliers",
+                type: "GET",
+                success: function(result){
+                    suppliers = result;
+                    var size = result.length;
+                    var $select = $('#supplierSelect');
+                    for(var i = 0;i< size;i++) {
+                        $select.append("<option value='"+ result[i].id +"'>"+ result[i].firstName + " " + result[i].lastName +"</option>");
+                    }
+                    $('#supplierSelect').trigger("change");
+                },
+                error: function(error){
+                    alert("An error occured while getting suppliers...");
+                },
+                complete: function() {
+                    
+                }
+            });
+            $('#supplierSelect').change(function(){
                 $('.loader').fadeIn();
-                var customerId = $('#customerSelect').val();
+                var supplierId = $('#supplierSelect').val();
+                debugger;
                 $.ajax({
-                    url: "http://localhost:8080/appdbcustomer/"+customerId+"/creditcard",
+                    url: "http://localhost:8080/appdb/supplies/"+supplierId,
                     type: "GET",
                     success: function(result){
+                        debugger;
+                        resources = result;
                         var size = result.length;
-                        var $select = $('#customerSelect');
+                        var $tbody = $('.table').find('tbody');
+                        $tbody.html("");
                         for(var i = 0;i< size;i++) {
-                            $select.append("<option value='"+ result[i].credcardnumber +"'>"+ result[i].credcardnumber+"</option>");
+                            var html = "<tr class='resource-row' style='display:none;'><td><div class='form-check'><label class='form-check-label'><input data-id='"+result[i].rid+"' type='checkbox' class='check form-check-input'></label></div></td>";
+                            html += "<td>"+result[i].rname+"</td><td>$"+result[i].supprice+"</td><td>"+result[i].qtyperpk+"</td><td>"+result[i].stock+"</td><td>"+result[i].catname+"</td><td>"+result[i].subcatname+"</td>";
+                            html += "<td><input class='qty form-control' type='number' value='1'></td>";
+                            html += "<td><input class='price form-control' type='number' value='"+result[i].supprice+"'></td></tr>";
+                            $tbody.append(html);
+                            $('.resource-row').last().fadeIn();
                         }
                     },
                     error: function(error){
-                        alert("An error occured while getting credit cards...");
+                        alert("An error occured while getting supplied resources...");
                     },
                     complete: function(){
                         $('.loader').fadeOut();
                     }
                 });
             });
-            $.ajax({
-                url: "http://localhost:8080/appdb/request-search",
-                type: "GET",
-                success: function(result){
-                    resources = result;
-                    var size = result.length;
-                    var $tbody = $('.table').find('tbody');
-                    $tbody.html("");
-                    for(var i = 0;i< size;i++) {
-                        var html = "<tr class='resource-row' style='display:none;'><td><div class='form-check'><label class='form-check-label'><input data-id='"+result[i].rid+"' type='checkbox' class='check form-check-input'></label></div></td>";
-                        html += "<td>"+result[i].rname+"</td><td>$"+result[i].rprice+"</td><td>"+result[i].qtyperpk+"</td><td>"+result[i].catname+"</td><td>"+result[i].subcatname+"</td>";
-                        html += "<td><input class='qty form-control' type='number' value='1'></td>";
-                        html += "<td><input class='price form-control' type='number' value='"+result[i].rprice+"'></td></tr>";
-                        $tbody.append(html);
-                        $('.resource-row').last().fadeIn();
-                    }
-                },
-                error: function(error){
-                    alert("An error occured while getting resources...");
-                },
-                complete: function(){
-                    $('.loader').fadeOut();
-                }
-            });
+            // $.ajax({
+            //     url: "http://localhost:8080/appdb/resource-search",
+            //     type: "GET",
+            //     success: function(result){
+            //         resources = result;
+            //         var size = result.length;
+            //         var $tbody = $('.table').find('tbody');
+            //         $tbody.html("");
+            //         for(var i = 0;i< size;i++) {
+            //             var html = "<tr class='resource-row' style='display:none;'><td><div class='form-check'><label class='form-check-label'><input data-id='"+result[i].rid+"' type='checkbox' class='check form-check-input'></label></div></td>";
+            //             html += "<td>"+result[i].rname+"</td><td>$"+result[i].rprice+"</td><td>"+result[i].qtyperpk+"</td><td>"+result[i].catname+"</td><td>"+result[i].subcatname+"</td>";
+            //             html += "<td><input class='qty form-control' type='number' value='1'></td>";
+            //             html += "<td><input class='price form-control' type='number' value='"+result[i].rprice+"'></td></tr>";
+            //             $tbody.append(html);
+            //             $('.resource-row').last().fadeIn();
+            //         }
+            //     },
+            //     error: function(error){
+            //         alert("An error occured while getting resources...");
+            //     },
+            //     complete: function(){
+            //         $('.loader').fadeOut();
+            //     }
+            // });
             $('#search-btn').on('click', function(){
                 var searchTerm = $('#search-input').val().toUpperCase();
+                var table = document.getElementById("searchTable");
                 tr = table.getElementsByTagName("tr");
                 for (var i = 0; i < tr.length; i++) {
                     var td = tr[i].getElementsByTagName("td")[1];
@@ -358,30 +394,40 @@
             $('#save-btn').on('click', function(){
                 $('.loader').fadeIn();
                 var customerId = $('#customerSelect').val();
-                var credcardnumber = $('#cardSelect').val();
+                var supplierId = $('#supplierSelect').val();
                 var rows = $('tr');
                 for(var i = 0; i < rows.length; i++) {
-                    if(rows[i].find('.check').prop('checked')) {
-                        var qty = rows[i].find('.qty').val();
-                        var rid = rows[i].find('.check').data('id');
-                        var purprice = rows[i].find('.price').val();
-                        var date = "";
+                    debugger;
+                    var jqueryObject = jQuery(rows[i]);
+                    if(jqueryObject.find('.check').prop('checked')) {
+                        var qty = jqueryObject.find('.qty').val();
+                        var rid = jqueryObject.find('.check').data('id');
+                        
+                        var purprice = jqueryObject.find('.price').val();
                         var purchase = {
-                            credcardnumber: credcardnumber,
                             cid: customerId,
                             qty: qty,
                             rid: rid,
-                            purdate: date,
-                            purprice: price
+                            sid: supplierId,
+                            purprice: purprice
                         };
+                        debugger;
                         $.ajax({
                             url: "http://localhost:8080/appdb/purchase",
+                            contentType: "application/json",
                             type: "POST",
-                            'data': purchase,
+                            data: JSON.stringify(purchase),
+                            success: function() {
+                                debugger;
+                            },
+                            error: function(error) {
+                                debugger;
+                            }
                         });
                     }
                 }
-                window.location.href = "http://localhost:8080/purchases.html";
+                $('.loader').fadeOut();
+                //window.location.href = "http://localhost:8080/purchases.html";
             });           
         });
     </script>

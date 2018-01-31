@@ -268,7 +268,7 @@
                     </div>
                     <label for="example-text-input" class="col-4 col-form-label">Zip Code:</label>
                     <div class="col-10">
-                      <input class="form-control" type="text" placeholder="Enter zip code..." id="sZipBox">
+                      <input class="form-control" type="text" placeholder="Enter zip code..." id="sZipCodeBox">
                     </div>  
                     <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -277,6 +277,59 @@
             </div>        
           </div>
         </div>   
+
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Edit Supplier</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                        <input style="display:none;" type="text" id="sIdBoxEdit">
+                        <label for="example-text-input" class="col-2 col-form-label">Name:</label>
+                        <div class="col-10">
+                          <input class="form-control" type="text" placeholder="Enter name..." id="sNameBoxEdit">
+                        </div>
+                        <label for="example-text-input" class="col-4 col-form-label">Last Name:</label>
+                        <div class="col-10">
+                          <input class="form-control" type="text" placeholder="Enter last name..." id="sLastBoxEdit">
+                        </div>
+                        <label for="example-text-input" class="col-2 col-form-label">Phone:</label>
+                        <div class="col-10">
+                          <input class="form-control" type="text" placeholder="Enter phone..." id="sPhoneBoxEdit">
+                        </div>
+                        <label for="example-text-input" class="col-2 col-form-label">Street:</label>
+                        <div class="col-10">
+                          <input class="form-control" type="text" placeholder="Enter street name..." id="sStreetBoxEdit">
+                        </div>
+                        <label for="example-text-input" class="col-2 col-form-label">City:</label>
+                        <select id="cityDDEdit" class="custom-select">
+                            <div class="col-10">
+                                <option selected>Choose city...</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </div>
+                        </select>
+                        <label for="example-text-input" class="col-2 col-form-label">State:</label>
+                        <div class="col-10"></div>                   
+                          <input class="form-control" type="text" placeholder="Enter state..." id="sStateBoxEdit">
+                        </div>
+                        <label for="example-text-input" class="col-4 col-form-label">Zip Code:</label>
+                        <div class="col-10">
+                          <input class="form-control" type="text" placeholder="Enter zip code..." id="sZipCodeBoxEdit">
+                        </div>  
+                        <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary edit-save-btn">Save changes</button>
+                              </div>                 
+                </div>        
+              </div>
+            </div>   
+
     <div class="container">
         <div class="row">
             <div class="col col-sm-12 col-md-8">
@@ -326,7 +379,7 @@
                 }
                 $("#addModal").modal('show');
             });
-            debugger;
+
             $('.save-btn').on('click', function(){
                 $('.loader').fadeIn();
                 var supplier = {
@@ -338,13 +391,49 @@
                         state: $('#sStateBox').val(),
                         zcode: $('#sZipCodeBox').val(),
                     };
-                  //  debugger;
                 $.ajax({
                     url: "http://localhost:8080/appdb/suppliers",
-                    data: supplier,
+                    contentType: "application/json",
+                    data: JSON.stringify(supplier),
                     type: "POST",
                     success: function(result){
                         $("#addModal").modal('hide');
+                        $('#search-btn').click();  
+                    },
+                    error: function(error){
+                        alert("An error occured while adding the supplier...");
+                        $('.loader').fadeOut();
+                    },
+                    complete: function(){
+                        $('#sNameBox').val("");
+                        $('#sLastBox').val("");
+                        $('#sPhoneBox').val("");
+                        $('#sStreetBox').val("");
+                        $('#sStateBox').val("");
+                        $('#sZipCodeBox').val("");
+                    }
+                });
+            });
+            $('.edit-save-btn').on('click', function(){
+                $('.loader').fadeIn();
+                var supplier = {
+                        sid: $('#sIdBoxEdit').val(),
+                        sname: $('#sNameBoxEdit').val(),
+                        slastname: $('#sLastBoxEdit').val(),
+                        sphone: $('#sPhoneBoxEdit').val(),
+                        street: $('#sStreetBoxEdit').val(),
+                        city: $('#cityDDEdit').val(),
+                        state: $('#sStateBoxEdit').val(),
+                        zcode: $('#sZipCodeBoxEdit').val(),
+                    };
+                    debugger;
+                $.ajax({
+                    url: "http://localhost:8080/appdb/suppliers/"+supplier.sid,
+                    contentType: "application/json",
+                    data: JSON.stringify(supplier),
+                    method: "PUT",
+                    success: function(result){
+                        $("#editModal").modal('hide');
                         $('#search-btn').click();  
                     },
                     error: function(error){
@@ -380,7 +469,8 @@
                             +result[i].sname+"</td><td>"+result[i].slastname+"</td><td>"
                             +result[i].sphone+"</td><td>"+result[i].street+"</td><td>"
                             +result[i].city+"</td><td>"+result[i].state+"</td><td>"
-                            +result[i].zcode+"</td></tr>";
+                            +result[i].zcode+"</td><td><button type='button' class='btn btn-primary edit-btn' data-id='"
+                            +result[i].sid+"'><i class='fas fa-plus'></i> Edit</button></td></tr>";
                             $tbody.append(html);
                             $('.resource-row').last().fadeIn();
                         }
@@ -390,6 +480,50 @@
                     },
                     complete: function(){
                         $('.loader').fadeOut();
+                        $('.edit-btn').on('click', function(){
+                            $('.loader').fadeIn();
+                            var size = cities.length;
+                            var $select = $('#cityDDEdit');
+                            $select.html("<option selected>Choose city...</option>");
+                            for(var i = 0;i< size;i++) {
+                                $select.append("<option value='"+ cities[i].cityId +"'>"+ cities[i].cityName +"</option>");
+                            }
+                            var sid = $(this).data("id");
+                            $.ajax({
+                                url: "http://localhost:8080/appdb/suppliers/"+sid,
+                                method: "GET",
+                                success: function(result){
+                                    debugger;
+                                    $('#sIdBoxEdit').val(result.id);
+                                    $('#sNameBoxEdit').val(result.firstName);
+                                    $('#sLastBoxEdit').val(result.lastName);
+                                    $('#sPhoneBoxEdit').val(result.phone);
+                                    $.ajax({
+                                        url: "http://localhost:8080/appdb/supplier/"+sid +"/supplieraddress",
+                                        type: "GET",
+                                        success: function(result) {
+                                            debugger;
+                                            $('#sStreetBoxEdit').val(result.street);
+                                            $('#sStateBoxEdit').val(result.state);
+                                            $('#sZipCodeBoxEdit').val(result.zcode);
+                                            $('#sityDDEdit').val(result.city)
+                                            $("#editModal").modal('show');
+                                        },
+                                        error: function(error){
+                                            debugger;
+                                            alert("An error occured while getting the supplier address...");
+                                        }
+                                    });
+                                },
+                                error: function(error){
+                                    debugger;
+                                    alert("An error occured while getting the supplier...");
+                                },
+                                complete: function(){
+                                    $('.loader').fadeOut();
+                                }
+                            });
+                        });
                     }
                 });
             });

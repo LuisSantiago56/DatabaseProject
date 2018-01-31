@@ -236,7 +236,6 @@
                         <th scope="col">Request Date</th>
                         <th scope="col">Customer</th>
                         <th scope="col">Resource</th>
-                        <th scope="col">Supplier</th>
                         <th scope="col">Qty</th>
                         <th scope="col">Latitude</th>
                         <th scope="col">Longitude</th>
@@ -268,7 +267,7 @@
                         for(var i = 0;i< size;i++) {
                             var html = "<tr class='resource-row' style='display:none;'><td>"
                             +result[i].reqdate+"</td><td>"+result[i].cname+"</td><td>"
-                            +result[i].rname+"</td><td>"+result[i].sname+"</td><td>"
+                            +result[i].rname+"</td><td>"
                             +result[i].qty+"</td><td>"+result[i].latitude+"</td><td>"
                             +result[i].longitude+"</td></tr>";
                             $tbody.append(html);

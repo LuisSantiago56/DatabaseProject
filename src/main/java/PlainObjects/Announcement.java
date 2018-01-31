@@ -6,6 +6,7 @@ public class Announcement {
 
 	private long annid;
 	private Date anndate;
+	private Date expdate;
 	private long sid;
 	private long rid;
 	private int qty;
@@ -21,6 +22,12 @@ public class Announcement {
 		return anndate;
 	}
 	public void setAnndate(Date anndate) {
+		this.anndate = anndate;
+	}
+	public Date getExpdate() {
+		return anndate;
+	}
+	public void setExpdate(Date anndate) {
 		this.anndate = anndate;
 	}
 	public long getSid() {

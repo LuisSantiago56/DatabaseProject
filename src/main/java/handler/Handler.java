@@ -90,17 +90,18 @@ public class Handler {
 	 * En el update no tengo que incluir todas las columnas, por lo que
 	 * en el if puedo probar que columnas no son null y solo añadir esas
 	 */
-	public Resources updateResource(HttpServletRequest request) throws IOException {
+	public Resources updateResource(Map<String, Object> payload) throws IOException {
 
-		String req = request.getReader().readLine();
-		System.out.println("Estoy aqui: " + req);
+//		String req = request.getReader().readLine();
+//		System.out.println("Estoy aqui: " + req);
 		Resources resource = new Resources();
+//
+//		Map<String, String> resourceObj = null;
+//		if (req != null) {
+//			resourceObj = splitQueryFromHtml(req);
 
-		Map<String, String> resourceObj = null;
-		if (req != null) {
-			resourceObj = splitQueryFromHtml(req);
-
-			for(Entry<String, String> entry: resourceObj.entrySet()) {
+//			for(Entry<String, String> entry: resourceObj.entrySet()) {
+			for(Entry<String, Object> entry: payload.entrySet()) {
 
 				System.out.println(entry.getKey() + " : " + entry.getValue());
 
@@ -111,31 +112,34 @@ public class Handler {
 				else {
 					if(entry.getKey().equals("name")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						resource.setName(entry.getValue());
+						resource.setName((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
+					else if(entry.getKey().equals("id")) {
+						resource.setId(Long.parseLong((String) entry.getValue()));
+						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("price")) {
-						resource.setPrice(Float.parseFloat(entry.getValue()));
+						resource.setPrice(Float.parseFloat((String) entry.getValue()));
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("qtyperpk")) {
-						resource.setQtyPerPk(Integer.valueOf(entry.getValue()));
+						resource.setQtyPerPk(Integer.valueOf((String) entry.getValue()));
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("catid")) {
-						resource.setCatId(Integer.valueOf(entry.getValue()));	
+						resource.setCatId(Integer.valueOf((String) entry.getValue()));	
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("subcatid")) {
-						resource.setSubCatId(Integer.valueOf(entry.getValue()));
+						resource.setSubCatId(Integer.valueOf((String) entry.getValue()));
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("rid")) {
-						resource.setId(Integer.valueOf(entry.getValue()));
+						resource.setId(Integer.valueOf((String) entry.getValue()));
 						System.out.println(entry.getKey());}
 				}
 			}
-		}
+//		}
 
 		if (dao.getResourcesById(resource.getId()) == null) {
 			//jsonify error Response http
@@ -151,17 +155,18 @@ public class Handler {
 	 * En vez de verificar el length de la data inserted puedo
 	 * probar if(col1!=null && col2!=null && ... )
 	 */
-	public Resources insertResource(HttpServletRequest request) throws IOException {
+	public Resources insertResource(Map<String, Object> payload) throws IOException {
 
-		String req = request.getReader().readLine();
-		System.out.println("Estoy aqui: " + req);
-
-		Map<String, String> resourceObj = null;
-		if (req != null) {
-			resourceObj = splitQueryFromHtml(req);
+//		String req = request.getReader().readLine();
+//		System.out.println("Estoy aqui: " + req);
+//
+//		Map<String, String> resourceObj = null;
+//		if (req != null) {
+//			resourceObj = splitQueryFromHtml(req);
 			Resources resource = new Resources();
 
-			for(Entry<String, String> entry: resourceObj.entrySet()) {
+//			for(Entry<String, String> entry: resourceObj.entrySet()) {
+			for(Entry<String, Object> entry: payload.entrySet()) {
 
 				System.out.println(entry.getKey() + " : " + entry.getValue());
 
@@ -172,30 +177,30 @@ public class Handler {
 				else {
 					if(entry.getKey().equals("name")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						resource.setName(entry.getValue());
+						resource.setName((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("price")) {
-						resource.setPrice(Float.parseFloat(entry.getValue()));
+						resource.setPrice(Float.parseFloat((String) entry.getValue()));
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("qtyperpk")) {
-						resource.setQtyPerPk(Integer.valueOf(entry.getValue()));
+						resource.setQtyPerPk(Integer.valueOf((String) entry.getValue()));
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("catid")) {
-						resource.setCatId(Integer.valueOf(entry.getValue()));	
+						resource.setCatId(Integer.valueOf((String) entry.getValue()));	
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("subcatid")) {
-						resource.setSubCatId(Integer.valueOf(entry.getValue()));
+						resource.setSubCatId(Integer.valueOf((String) entry.getValue()));
 						System.out.println(entry.getKey());}
 				}
 			}
 			System.out.println(resource);
 			dao.insertResource(resource);
-		}	
+//		}	
 		return null;
 	}
 
@@ -242,18 +247,19 @@ public class Handler {
 	 * En el update no tengo que incluir todas las columnas, por lo que
 	 * en el if puedo probar que columnas no son null y solo añadir esas
 	 */
-	public Suppliers updateSupplier(HttpServletRequest request) throws IOException {
+	public Suppliers updateSupplier(Map<String, Object> payload) throws IOException {
 
-		String req = request.getReader().readLine();
-		System.out.println("Estoy aqui: " + req);
+//		String req = request.getReader().readLine();
+//		System.out.println("Estoy aqui: " + req);
 		Suppliers supplier = new Suppliers();
 		SupplierAddress supplierAddr = new SupplierAddress();
 
-		Map<String, String> supplierObj = null;
-		if (req != null) {
-			supplierObj = splitQueryFromHtml(req);
+//		Map<String, String> supplierObj = null;
+//		if (req != null) {
+//			supplierObj = splitQueryFromHtml(req);
 
-			for(Entry<String, String> entry: supplierObj.entrySet()) {
+//			for(Entry<String, String> entry: supplierObj.entrySet()) {
+			for(Entry<String, Object> entry: payload.entrySet()) {
 
 				System.out.println(entry.getKey() + " : " + entry.getValue());
 
@@ -264,70 +270,76 @@ public class Handler {
 				else {
 					if(entry.getKey().equals("sname")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						supplier.setFirstName(entry.getValue());
+						supplier.setFirstName((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
-					else if(entry.getKey().equals(" slastname")) {
+					else if(entry.getKey().equals("sid")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						supplier.setId(Long.parseLong((String)entry.getValue()));
+						System.out.println(entry.getKey());
+
+					}
+					else if(entry.getKey().equals("slastname")) {
+
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						supplier.setLastName(entry.getValue());
+						supplier.setLastName((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("sphone")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						supplier.setPhone(entry.getValue());
+						supplier.setPhone((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("street")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						supplierAddr.setStreet(entry.getValue());
+						supplierAddr.setStreet((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("city")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						supplierAddr.setCity(entry.getValue());
+						supplierAddr.setCity((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("state")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						supplierAddr.setState(entry.getValue());
+						supplierAddr.setState((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("zcode")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						supplierAddr.setZcode(entry.getValue());
+						supplierAddr.setZcode((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 				}
 			}
-		}
+//		}
 
 		if (dao.getSupplierById(supplier.getId()) == null) {
 			//jsonify error Response http
@@ -343,18 +355,20 @@ public class Handler {
 	 * En vez de verificar el length de la data inserted puedo
 	 * probar if(col1!=null && col2!=null && ... )
 	 */
-	public Suppliers insertSupplier(HttpServletRequest request) throws IOException {
+	public Suppliers insertSupplier(Map<String,Object> payload) throws IOException {
 
-		String req = request.getReader().readLine();
-		System.out.println("Estoy aqui: " + req);
-
-		Map<String, String> resourceObj = null;
-		if (req != null) {
-			resourceObj = splitQueryFromHtml(req);
+//		String req = request.getReader().readLine();
+//		System.out.println("Estoy aqui: " + req);
+//
+//		Map<String, String> resourceObj = null;
+//		if (req != null) {
+//			resourceObj = splitQueryFromHtml(req);
 			Suppliers supplier = new Suppliers();
 			SupplierAddress supplierAddr = new SupplierAddress();
 
-			for(Entry<String, String> entry: resourceObj.entrySet()) {
+//			for(Entry<String, String> entry: resourceObj.entrySet()) {
+			for(Entry<String, Object> entry: payload.entrySet()) {
+				
 
 				System.out.println(entry.getKey() + " : " + entry.getValue());
 
@@ -366,64 +380,70 @@ public class Handler {
 				else {
 					if(entry.getKey().equals("sname")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						supplier.setFirstName(entry.getValue());
+						supplier.setFirstName((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
-					else if(entry.getKey().equals(" slastname")) {
+					else if(entry.getKey().equals("sid")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						supplier.setId((long) entry.getValue());
+						System.out.println(entry.getKey());
+
+					}
+					else if(entry.getKey().equals("slastname")) {
+
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						supplier.setLastName(entry.getValue());
+						supplier.setLastName((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("sphone")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						supplier.setPhone(entry.getValue());
+						supplier.setPhone((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("street")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						supplierAddr.setStreet(entry.getValue());
+						supplierAddr.setStreet((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("city")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						supplierAddr.setCity(entry.getValue());
+						supplierAddr.setCity((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("state")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						supplierAddr.setState(entry.getValue());
+						supplierAddr.setState((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("zcode")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						supplierAddr.setZcode(entry.getValue());
+						supplierAddr.setZcode((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
@@ -434,7 +454,7 @@ public class Handler {
 			dao.insertSuppliers(supplier);
 			System.out.println(supplierAddr);
 			dao.insertSupplierAddress(supplierAddr, supplier);
-		}	
+//		}	
 		return null;
 	}
 
@@ -481,18 +501,21 @@ public class Handler {
 	 * En el update no tengo que incluir todas las columnas, por lo que
 	 * en el if puedo probar que columnas no son null y solo añadir esas
 	 */
-	public Customers updateCustomers(HttpServletRequest request) throws IOException {
+	public Customers updateCustomers(Map<String, Object> payload) throws IOException {
 
-			String req = request.getReader().readLine();
-			System.out.println("Estoy aqui: " + req);
+//			String req = request.getReader().readLine();
+//			System.out.println("Estoy aqui: " + req);
+			CreditCard creditcard = new CreditCard();
 			Customers customer = new Customers();
 			CustomerAddress customerAddr = new CustomerAddress();
 
-			Map<String, String> supplierObj = null;
-			if (req != null) {
-				supplierObj = splitQueryFromHtml(req);
-
-				for(Entry<String, String> entry: supplierObj.entrySet()) {
+//			Map<String, String> supplierObj = null;
+//			if (req != null) {
+//				supplierObj = splitQueryFromHtml(req);
+//
+//				for(Entry<String, String> entry: supplierObj.entrySet()) {
+				for(Entry<String, Object> entry: payload.entrySet()) {
+			
 
 					System.out.println(entry.getKey() + " : " + entry.getValue());
 
@@ -501,72 +524,102 @@ public class Handler {
 						break;
 					}
 					else {
-						if(entry.getKey().equals("sname")) {
+						if(entry.getKey().equals("cname")) {
 
-							entry.setValue(entry.getValue().replaceAll("%20", " "));
+							entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 							System.out.println(entry.getValue());
 
-							customer.setFirstName(entry.getValue());
+							customer.setFirstName((String) entry.getValue());
 							System.out.println(entry.getKey());
 
 						}
-						else if(entry.getKey().equals(" slastname")) {
+						else if(entry.getKey().equals("id")) {
+							customer.setId(Long.parseLong((String)entry.getValue()));
+						}
+						else if(entry.getKey().equals("cid")) {
 
-							entry.setValue(entry.getValue().replaceAll("%20", " "));
+							//entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 							System.out.println(entry.getValue());
 
-							customer.setLastName(entry.getValue());
+							customer.setId((Integer) entry.getValue());
 							System.out.println(entry.getKey());
 
 						}
-						else if(entry.getKey().equals("sphone")) {
+						else if(entry.getKey().equals("clastname")) {
 
-							entry.setValue(entry.getValue().replaceAll("%20", " "));
+							entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 							System.out.println(entry.getValue());
 
-							customer.setPhone(entry.getValue());
+							customer.setLastName((String) entry.getValue());
+							System.out.println(entry.getKey());
+
+						}
+						else if(entry.getKey().equals("cphone")) {
+
+							entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
+							System.out.println(entry.getValue());
+
+							customer.setPhone((String) entry.getValue());
 							System.out.println(entry.getKey());
 
 						}
 						else if(entry.getKey().equals("street")) {
 
-							entry.setValue(entry.getValue().replaceAll("%20", " "));
+							entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 							System.out.println(entry.getValue());
 
-							customerAddr.setStreet(entry.getValue());
+							customerAddr.setStreet((String) entry.getValue());
 							System.out.println(entry.getKey());
 
 						}
 						else if(entry.getKey().equals("city")) {
 
-							entry.setValue(entry.getValue().replaceAll("%20", " "));
+							entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 							System.out.println(entry.getValue());
 
-							customerAddr.setCity(entry.getValue());
+							customerAddr.setCity((String) entry.getValue());
 							System.out.println(entry.getKey());
 
 						}
 						else if(entry.getKey().equals("state")) {
 
-							entry.setValue(entry.getValue().replaceAll("%20", " "));
+							entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 							System.out.println(entry.getValue());
 
-							customerAddr.setState(entry.getValue());
+							customerAddr.setState((String) entry.getValue());
 							System.out.println(entry.getKey());
 
 						}
 						else if(entry.getKey().equals("zcode")) {
 
-							entry.setValue(entry.getValue().replaceAll("%20", " "));
+							entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 							System.out.println(entry.getValue());
 
-							customerAddr.setZcode(entry.getValue());
+							customerAddr.setZcode((String) entry.getValue());
+							System.out.println(entry.getKey());
+
+						}
+						else if(entry.getKey().equals("credcardnumber")) {
+
+							creditcard.setCredcardnumber((String) entry.getValue());
+							System.out.println(entry.getKey());
+
+						}
+						else if(entry.getKey().equals("cvcnumber")) {
+
+							creditcard.setCvcnumber(Integer.parseInt((String) entry.getValue()));
+							System.out.println(entry.getKey());
+
+						}
+						else if(entry.getKey().equals("expdate")) {
+
+							creditcard.setExpdate(Date.valueOf((String) entry.getValue()));
 							System.out.println(entry.getKey());
 
 						}
 					}
 				}
-			}
+//			}
 
 			if (dao.getCustomerById(customer.getId()) == null) {
 				//jsonify error Response http
@@ -574,6 +627,7 @@ public class Handler {
 				return null;
 			}
 			dao.updateCustomer(customer, customerAddr);
+			dao.updateCreditCard(creditcard, customer);
 			return customer;
 	}
 
@@ -582,17 +636,19 @@ public class Handler {
 	 * En vez de verificar el length de la data inserted puedo
 	 * probar if(col1!=null && col2!=null && ... )
 	 */
-	public Customers insertCustomer(HttpServletRequest request) throws IOException {
-		String req = request.getReader().readLine();
-		System.out.println("Estoy aqui: " + req);
-
-		Map<String, String> resourceObj = null;
-		if (req != null) {
-			resourceObj = splitQueryFromHtml(req);
+	public Customers insertCustomer(Map<String, Object> payload) throws IOException {
+//		String req = request.getReader().readLine();
+//		System.out.println("Estoy aqui: " + req);
+//
+//		Map<String, String> resourceObj = null;
+//		if (req != null) {
+//			resourceObj = splitQueryFromHtml(req);
 			Customers customer = new Customers();
 			CustomerAddress customerAddr = new CustomerAddress();
+			CreditCard creditcard = new CreditCard();
 
-			for(Entry<String, String> entry: resourceObj.entrySet()) {
+//			for(Entry<String, String> entry: resourceObj.entrySet()) {
+			for(Entry<String, Object> entry: payload.entrySet()) {
 
 				System.out.println(entry.getKey() + " : " + entry.getValue());
 
@@ -604,64 +660,82 @@ public class Handler {
 				else {
 					if(entry.getKey().equals("cname")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						customer.setFirstName(entry.getValue());
+						customer.setFirstName((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
-					else if(entry.getKey().equals(" clastname")) {
+					else if(entry.getKey().equals("clastname")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						customer.setLastName(entry.getValue());
+						customer.setLastName((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("cphone")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						customer.setPhone(entry.getValue());
+						customer.setPhone((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("street")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						customerAddr.setStreet(entry.getValue());
+						customerAddr.setStreet((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("city")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						customerAddr.setCity(entry.getValue());
+						customerAddr.setCity((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("state")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						customerAddr.setState(entry.getValue());
+						customerAddr.setState((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("zcode")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						customerAddr.setZcode(entry.getValue());
+						customerAddr.setZcode((String) entry.getValue());
+						System.out.println(entry.getKey());
+
+					}
+					else if(entry.getKey().equals("credcardnumber")) {
+
+						creditcard.setCredcardnumber((String) entry.getValue());
+						System.out.println(entry.getKey());
+
+					}
+					else if(entry.getKey().equals("cvcnumber")) {
+
+						creditcard.setCvcnumber(Integer.parseInt((String) entry.getValue()));
+						System.out.println(entry.getKey());
+
+					}
+					else if(entry.getKey().equals("expdate")) {
+
+						creditcard.setExpdate(Date.valueOf((String) entry.getValue()));
 						System.out.println(entry.getKey());
 
 					}
@@ -672,7 +746,8 @@ public class Handler {
 			dao.insertCustomers(customer);
 			System.out.println(customerAddr);
 			dao.insertCustomerAddress(customerAddr, customer);
-		}	
+			dao.insertCreditCard(creditcard, customer);
+//		}	
 		return null;
 	}
 
@@ -744,6 +819,11 @@ public class Handler {
 		logger.info("Im on getSupplierAddressById Method");
 		return dao.getSupplierAddressById(supadd_id);
 	}
+	
+	public SupplierAddress getSupplierAddressBySupplierId(long sid) {
+		logger.info("Im on getSupplierAddressBySupplierId Method");
+		return dao.getSupplierAddressBySupplierId(sid);
+	}
 
 	public ArrayList<CustomerAddress> getAllCustomerAddress(HttpServletRequest request) throws UnsupportedEncodingException {
 		String req = request.getQueryString();
@@ -768,6 +848,11 @@ public class Handler {
 		return dao.getCustomerAddressById(cusadd_id);
 	}
 
+	public CustomerAddress getCustomerAddressByCustomerId(long cid) {
+		logger.info("Im on getCustomerAddressByCustomerId Method");
+		return dao.getCustomerAddressByCustomerId(cid);
+	}
+	
 	public ArrayList<City> getAllCities(HttpServletRequest request) throws UnsupportedEncodingException {
 		String req = request.getQueryString();
 		Map<String, String> query_pairs = null;
@@ -836,16 +921,17 @@ public class Handler {
 	 * En vez de verificar el length de la data inserted puedo
 	 * probar if(col1!=null && col2!=null && ... )
 	 */
-	public Announcement insertAnnouncement(HttpServletRequest request) throws IOException {
-		String req = request.getReader().readLine();
-		System.out.println("Estoy aqui: " + req);
-
-		Map<String, String> announcementObj = null;
-		if (req != null) {
-			announcementObj = splitQueryFromHtml(req);
+	public Announcement insertAnnouncement(Map<String, Object> payload) throws IOException {
+//		String req = request.getReader().readLine();
+//		System.out.println("Estoy aqui: " + req);
+//
+//		Map<String, String> announcementObj = null;
+//		if (req != null) {
+//			announcementObj = splitQueryFromHtml(req);
 			Announcement announcement = new Announcement();
 
-			for(Entry<String, String> entry: announcementObj.entrySet()) {
+//			for(Entry<String, String> entry: announcementObj.entrySet()) {
+			for(Entry<String, Object> entry: payload.entrySet()) {
 
 				System.out.println(entry.getKey() + " : " + entry.getValue());
 
@@ -855,28 +941,28 @@ public class Handler {
 				}
 				else {
 					if(entry.getKey().equals("date")) {
-						announcement.setAnndate(Date.valueOf(entry.getValue()));
+						announcement.setAnndate(Date.valueOf((String) entry.getValue()));
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("price")) {
-						announcement.setPrice(Float.parseFloat(entry.getValue()));
+						announcement.setPrice(Float.parseFloat((String) entry.getValue()));
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("qty")) {
-						announcement.setQty(Integer.valueOf(entry.getValue()));
+						announcement.setQty(Integer.valueOf((String) entry.getValue()));
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("sid")) {
-						announcement.setSid(Integer.valueOf(entry.getValue()));	
+						announcement.setSid(Integer.valueOf((String) entry.getValue()));	
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("rid")) {
-						announcement.setRid(Integer.valueOf(entry.getValue()));
+						announcement.setRid((Integer)entry.getValue());	
 						System.out.println(entry.getKey());}
-					else if(entry.getKey().equals("annid")) {
-						announcement.setAnnid(Integer.valueOf(entry.getValue()));
+					else if(entry.getKey().equals("expdate")) {
+						announcement.setExpdate(Date.valueOf((String) entry.getValue()));
 						System.out.println(entry.getKey());}
 				}
 			}
 			System.out.println(announcement);
 			dao.insertAnnouncement(announcement);
-		}	
+//		}	
 		return null;
 	}
 
@@ -925,17 +1011,18 @@ public class Handler {
 	 * En vez de verificar el length de la data inserted puedo
 	 * probar if(col1!=null && col2!=null && ... )
 	 */
-	public Request insertRequest(HttpServletRequest request) throws IOException {
-		String req = request.getReader().readLine();
-		System.out.println("Estoy aqui: " + req);
-
-		Map<String, String> requestObj = null;
-		if (req != null) {
-			requestObj = splitQueryFromHtml(req);
+	public Request insertRequest(Map<String, Object> payload) throws IOException {
+//		String req = request.getReader().readLine();
+//		System.out.println("Estoy aqui: " + req);
+//
+//		Map<String, String> requestObj = null;
+//		if (req != null) {
+//			requestObj = splitQueryFromHtml(req);
 			Request requ = new Request();
 			Location loc = new Location();
 
-			for(Entry<String, String> entry: requestObj.entrySet()) {
+//			for(Entry<String, String> entry: requestObj.entrySet()) {
+			for(Entry<String, Object> entry: payload.entrySet()) {
 
 				System.out.println(entry.getKey() + " : " + entry.getValue());
 
@@ -945,31 +1032,28 @@ public class Handler {
 				}
 				else {
 					if(entry.getKey().equals("qty")) {
-						requ.setQty(Integer.valueOf(entry.getValue()));
+						requ.setQty(Integer.valueOf((String) entry.getValue()));
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("cid")) {
-						requ.setCid(Integer.valueOf(entry.getValue()));	
+						requ.setCid(Integer.valueOf((String) entry.getValue()));	
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("rid")) {
-						requ.setRid(Integer.valueOf(entry.getValue()));
-						System.out.println(entry.getKey());}
-					else if(entry.getKey().equals("locid")) {
-						requ.setLocid(Integer.valueOf(entry.getValue()));
+						requ.setRid((Integer) entry.getValue());
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("latitude")) {
-						loc.setLatitude(entry.getValue());
+						loc.setLatitude((String) entry.getValue());
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("longitude")) {
-						loc.setLongitude(entry.getValue());
+						loc.setLongitude((String) entry.getValue());
 						System.out.println(entry.getKey());}
+					else if(entry.getKey().equals("reqdate")) {
+						requ.setReqdate(Date.valueOf((String) entry.getValue()));
+						System.out.println(entry.getKey());}
+					}
 				}
-			}
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			Date date = new Date(0);
-			requ.setReqdate(Date.valueOf(dateFormat.format(date)));
 			System.out.println(requ);
 			dao.insertRequest(requ, loc);
-		}	
+//		}	
 		return null;
 	}
 
@@ -1041,16 +1125,17 @@ public class Handler {
 	 * En vez de verificar el length de la data inserted puedo
 	 * probar if(col1!=null && col2!=null && ... )
 	 */
-	public Purchase insertPurchase(HttpServletRequest request) throws IOException {
-		String req = request.getReader().readLine();
-		System.out.println("Estoy aqui: " + req);
-
-		Map<String, String> purchaseObj = null;
-		if (req != null) {
-			purchaseObj = splitQueryFromHtml(req);
+	public Purchase insertPurchase(Map<String, Object> payload) throws IOException {
+//		String req = request.getReader().readLine();
+//		System.out.println("Estoy aqui: " + req);
+//
+//		Map<String, String> purchaseObj = null;
+//		if (req != null) {
+//			purchaseObj = splitQueryFromHtml(req);
 			Purchase purchase = new Purchase();
 
-			for(Entry<String, String> entry: purchaseObj.entrySet()) {
+//			for(Entry<String, String> entry: purchaseObj.entrySet()) {
+			for(Entry<String, Object> entry: payload.entrySet()) {
 
 				System.out.println(entry.getKey() + " : " + entry.getValue());
 
@@ -1060,28 +1145,33 @@ public class Handler {
 				}
 				else {
 					if(entry.getKey().equals("qty")) {
-						purchase.setQty(Integer.valueOf(entry.getValue()));
+						purchase.setQty(Integer.valueOf((String) entry.getValue()));
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("cid")) {
-						purchase.setCid(Integer.valueOf(entry.getValue()));	
+						purchase.setCid(Integer.valueOf((String) entry.getValue()));	
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("rid")) {
-						purchase.setRid(Integer.valueOf(entry.getValue()));
+						purchase.setRid((Integer) entry.getValue());
+						System.out.println(entry.getKey());}
+					else if(entry.getKey().equals("sid")) {
+						purchase.setSid(Integer.parseInt((String) entry.getValue()));
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("credcardnumber")) {
-						purchase.setCredcardnumber(entry.getValue());
+						purchase.setCredcardnumber((String) entry.getValue());
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("purprice")) {
-						purchase.setPurprice(Float.parseFloat(entry.getValue()));
+						purchase.setPurprice(Float.parseFloat((String)entry.getValue()));
 						System.out.println(entry.getKey());}
 				}
 			}
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			Date date = new Date(0);
-			purchase.setPurdate(Date.valueOf(dateFormat.format(date)));
+			//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			//Date date = new Date(0);
+			//purchase.setPurdate(Date.);
+			String credNum = getCreditCardByCustomerId(purchase.getCid()).getCredcardnumber();
+			purchase.setCredcardnumber(credNum);
 			System.out.println(purchase);
 			dao.insertPurchase(purchase);
-		}	
+//		}	
 		return null;
 	}
 
@@ -1107,22 +1197,28 @@ public class Handler {
 		logger.info("Im on getCreditCardById Method");
 		return dao.getCreditCardById(credcardnumber);
 	}
+	
+	public CreditCard getCreditCardByCustomerId(long cid) {
+		logger.info("Im on getCreditCardById Method");
+		return dao.getCreditCardByCustomerId(cid);
+	}
 
 	/*
 	 * En el update no tengo que incluir todas las columnas, por lo que
 	 * en el if puedo probar que columnas no son null y solo añadir esas
 	 */
-	public CreditCard updateCreditCard(HttpServletRequest request) throws IOException {
+	public CreditCard updateCreditCard(Map<String, Object> payload) throws IOException {
 		
-		String req = request.getReader().readLine();
-		System.out.println("Estoy aqui: " + req);
+//		String req = request.getReader().readLine();
+//		System.out.println("Estoy aqui: " + req);
 		CreditCard creditcard = new CreditCard();
 
-		Map<String, String> resourceObj = null;
-		if (req != null) {
-			resourceObj = splitQueryFromHtml(req);
+//		Map<String, String> resourceObj = null;
+//		if (req != null) {
+//			resourceObj = splitQueryFromHtml(req);
 
-			for(Entry<String, String> entry: resourceObj.entrySet()) {
+//			for(Entry<String, String> entry: resourceObj.entrySet()) {
+		for(Entry<String, Object> entry: payload.entrySet()) {
 
 				System.out.println(entry.getKey() + " : " + entry.getValue());
 
@@ -1133,54 +1229,36 @@ public class Handler {
 				else {
 					if(entry.getKey().equals("holdername")) {
 
-						entry.setValue(entry.getValue().replaceAll("%20", " "));
+						entry.setValue(((String) entry.getValue()).replaceAll("%20", " "));
 						System.out.println(entry.getValue());
 
-						creditcard.setHoldername(entry.getValue());
+						creditcard.setHoldername((String) entry.getValue());
 						System.out.println(entry.getKey());
 
 					}
 					else if(entry.getKey().equals("credcardnumber")) {
-						creditcard.setCredcardnumber(entry.getValue());
+						creditcard.setCredcardnumber((String) entry.getValue());
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("qtyperpk")) {
-						creditcard.setExpdate(Date.valueOf(entry.getValue()));
+						creditcard.setExpdate(Date.valueOf((String) entry.getValue()));
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("cvcnumber")) {
-						creditcard.setCvcnumber(Integer.valueOf(entry.getValue()));	
+						creditcard.setCvcnumber(Integer.valueOf((String) entry.getValue()));	
 						System.out.println(entry.getKey());}
 					else if(entry.getKey().equals("cid")) {
-						creditcard.setCid(Integer.valueOf(entry.getValue()));
+						creditcard.setCid(Integer.valueOf((String) entry.getValue()));
 						System.out.println(entry.getKey());}
 				}
 			}
-		}
+//		}
 
 		if (dao.getCreditCardById(creditcard.getCredcardnumber()) == null) {
 			//jsonify error Response http
 			System.out.println("No credit card with that id.");
 			return null;
 		}
-		dao.updateCreditCard(creditcard);
+		//dao.updateCreditCard(creditcard);
 		return creditcard;
-	}
-
-	/*
-	 * En el insert se tienen que proveer todas las columnas
-	 * En vez de verificar el length de la data inserted puedo
-	 * probar if(col1!=null && col2!=null && ... )
-	 */
-	public CreditCard insertCreditCard(HttpServletRequest request) {
-		if(true) {
-			//length of data inserted is not equal to the number of columns
-		}
-		else {
-			CreditCard CreditCard = new CreditCard();
-
-			//				CreditCard.setName("rname");
-		}
-
-		return null;
 	}
 
 	public ArrayList<Supplies> getAllSupplies(HttpServletRequest request) throws UnsupportedEncodingException {
@@ -1201,11 +1279,16 @@ public class Handler {
 		return suppliesList;
 	}
 
-	public Supplies getSuppliesById(int supid) {
-		logger.info("Im on getCreditCardById Method");
-		return dao.getSuppliesById(supid);
+	public ArrayList<Supplies> getSuppliesBySupplierId(int sid) {
+		logger.info("Im on getSuppliesBySupplierId Method");
+		return dao.getSuppliesBySupplierId(sid);
 	}
 
+	
+	
+	
+	
+	
 	//=================================================================
 
 	private static Map<String, String> splitQuery(HttpServletRequest request) throws UnsupportedEncodingException {

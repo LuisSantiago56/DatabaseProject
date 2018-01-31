@@ -1,7 +1,7 @@
 package PlainObjects;
 
 public class CustomerSearch {
-
+	private int cid;
 	private String cname;
 	private String clastname;
 	private String cphone;
@@ -10,6 +10,13 @@ public class CustomerSearch {
 	private String state;
 	private String zcode;
 	
+	public int getCid() {
+		return cid;
+	}
+	
+	public void setCid(int cid) {
+		this.cid = cid;
+	}
 	
 	public String getCname() {
 		return cname;

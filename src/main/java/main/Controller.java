@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,33 +51,24 @@ public class Controller {
 //		return "Hello, this is the Disaster Relief DB App!";
 //	}
 	
-	@RequestMapping(value="/appdb/resources", method={RequestMethod.GET,RequestMethod.POST})
-	public ArrayList<Resources> getAllResources(HttpServletRequest request) throws SQLException, IOException {
-		
-		System.out.println("Metodo es: " + request.getMethod());
-		if (request.getMethod().equals("POST")) {
-			handler.insertResource(request);
-			return null;
-		}
-		else {
-			return handler.getAllResources(request);
-		}
+	@RequestMapping(value="/appdb/resources", method={RequestMethod.GET})
+	public ArrayList<Resources> getAllResources(HttpServletRequest request) throws SQLException, IOException {		
+		return handler.getAllResources(request);
 	}
 	
-	@RequestMapping(value="/appdb/resources/{rid}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value="/appdb/resources", method={RequestMethod.POST})
+	public void postResources(@RequestBody Map<String, Object> payload) throws SQLException, IOException {
+		handler.insertResource(payload);
+	}
+	
+	@RequestMapping(value="/appdb/resources/{rid}", method={RequestMethod.GET})
 	public Resources getResourceById(@PathVariable int rid,HttpServletRequest request) throws IOException {
-		if ( request.getMethod().equals("GET")) {
-			return handler.getResourceById(rid);
-		}
-		else if ( request.getMethod().equals("PUT")) {
-			return handler.updateResource(request);
-		}
-		else if ( request.getMethod().equals("DELETE")) {
-			return null;
-		}
-		else {
-			return null; //jsonify error
-		}
+		return handler.getResourceById(rid);
+	}
+	
+	@RequestMapping(value="/appdb/resources/{rid}", method={RequestMethod.PUT})
+	public Resources updateResourceById( @RequestBody Map<String, Object> payload) throws IOException {
+		return handler.updateResource(payload);
 	}
 	
 	@RequestMapping(value="/appdb/resource-search", method={RequestMethod.GET,RequestMethod.POST})
@@ -103,15 +96,14 @@ public class Controller {
 		return null;
 	}
 	
-	@RequestMapping(value="/appdb/suppliers", method={RequestMethod.GET,RequestMethod.POST})
-	public 	ArrayList<Suppliers> getAllSuppliers(HttpServletRequest request) throws SQLException, IOException {
-		if ( request.getMethod().equals("POST")) {
-			handler.insertSupplier(request);
-			return null;
-		}
-		else {
-			return handler.getAllSuppliers(request);
-		}
+	@RequestMapping(value="/appdb/suppliers", method={RequestMethod.GET})
+	public 	ArrayList<Suppliers> getAllSuppliers(HttpServletRequest request) throws SQLException, IOException {		
+		return handler.getAllSuppliers(request);
+	}
+	
+	@RequestMapping(value="/appdb/suppliers", method={RequestMethod.POST})
+	public void postSuppliers(@RequestBody Map<String, Object> payload) throws SQLException, IOException {
+		handler.insertSupplier(payload);		
 	}
 	
 	@RequestMapping(value="/appdb/suppliers-search", method={RequestMethod.GET,RequestMethod.POST})
@@ -124,20 +116,14 @@ public class Controller {
 		}
 	}
 	
-	@RequestMapping(value="/appdb/suppliers/{sid}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
-	public Suppliers getSupplierById(@PathVariable int sid) {
-		if (request.getMethod().equals("GET")) {
-			return handler.getSupplierById(sid);
-		}
-		else if (request.getMethod().equals("PUT")) {
-			return null;
-		}
-		else if (request.getMethod().equals("DELETE")) {
-			return null;
-		}
-		else {
-			return null; //jsonify error
-		}
+	@RequestMapping(value="/appdb/suppliers/{sid}", method={RequestMethod.GET})
+	public Suppliers getSupplierById(@PathVariable int sid) throws IOException {
+		return handler.getSupplierById(sid);
+	}
+	
+	@RequestMapping(value="/appdb/suppliers/{sid}", method={RequestMethod.PUT})
+	public Suppliers postSupplierById(@PathVariable int sid, @RequestBody Map<String, Object> payload) throws IOException {
+		return handler.updateSupplier(payload);
 	}
 	
 	@RequestMapping("/appdb/supplier/{sid}/resource")
@@ -150,16 +136,14 @@ public class Controller {
 		return null;
 	}
 	
-	@RequestMapping(value="/appdb/customers", method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value="/appdb/customers", method={RequestMethod.GET})
 	public ArrayList<Customers> getAllCustomers(HttpServletRequest request) throws IOException {
-		if ( request.getMethod().equals("POST")) {
-			Object form = null;
-			handler.insertCustomer(request);
-			return null;
-		}
-		else {
-			return handler.getAllCustomers(request);
-		}
+		return handler.getAllCustomers(request);
+	}
+	
+	@RequestMapping(value="/appdb/customers", method={RequestMethod.POST})
+	public void postCustomers(@RequestBody Map<String, Object> payload) throws IOException {
+			handler.insertCustomer(payload);
 	}
 	
 	@RequestMapping(value="/appdb/customers-search", method={RequestMethod.GET,RequestMethod.POST})
@@ -172,20 +156,14 @@ public class Controller {
 		}
 	}
 	
-	@RequestMapping(value="/appdb/customer/{cid}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
-	public Customers getCustomerById(@PathVariable int cid) {
-		if ( request.getMethod().equals("GET")) {
-			return handler.getCustomerById(cid);
-		}
-		else if ( request.getMethod().equals("PUT")) {
-			return null;
-		}
-		else if (request.getMethod().equals("DELETE")) {
-			return null;
-		}
-		else {
-			return null; //jsonify error
-		}
+	@RequestMapping(value="/appdb/customer/{cid}", method={RequestMethod.GET})
+	public Customers getCustomerById(HttpServletRequest request, @PathVariable int cid) throws IOException {
+		return handler.getCustomerById(cid);
+	}
+	
+	@RequestMapping(value="/appdb/customer/{cid}", method={RequestMethod.PUT,RequestMethod.POST})
+	public Customers updateCustomerById(@PathVariable int cid, @RequestBody Map<String, Object> payload) throws IOException {
+		return handler.updateCustomers(payload);
 	}
 	
 	@RequestMapping("/appdb/customer/{cid}/purchase")
@@ -199,165 +177,91 @@ public class Controller {
 	}
 	
 	@RequestMapping("/appdb/customer/{cid}/creditcard")
-	public ArrayList<CreditCard> getCreditCardByCustomerId(@PathVariable int cid) {
-		return null;
+	public CreditCard getCreditCardByCustomerId(@PathVariable int cid) {
+		return handler.getCreditCardByCustomerId(cid);
 	}
 	
-	@RequestMapping(value="/appdb/category", method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value="/appdb/category", method={RequestMethod.GET})
 	public ArrayList<Category> getAllCategories(HttpServletRequest request) throws UnsupportedEncodingException {
-		if ( request.getMethod().equals("POST")) {
-			return null;
-		}
-		else {
 			return handler.getAllCategories(request);
-		}
 	}
 	
-	@RequestMapping(value="/appdb/category/{cat_id}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value="/appdb/category/{cat_id}", method={RequestMethod.GET})
 	public Category getCategoryById(@PathVariable int cat_id) {
-		if ( request.getMethod().equals("GET")) {
+
 			return handler.getCategoryById(cat_id);
-		}
-		else if ( request.getMethod().equals("PUT")) {
-			return null;
-		}
-		else if (request.getMethod().equals("DELETE")) {
-			return null;
-		}
-		else {
-			return null; //jsonify error
-		}
+
 	}
 	
-	@RequestMapping(value="/appdb/subcategory", method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value="/appdb/subcategory", method={RequestMethod.GET})
 	public ArrayList<SubCategory> getAllSubCategories(HttpServletRequest request) throws UnsupportedEncodingException {
-		if ( request.getMethod().equals("POST")) {
-			return null;
-		}
-		else {
 			return handler.getAllSubCategories(request);
-		}
 	}
 	
-	@RequestMapping(value="/appdb/subcategory/{subcatid}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value="/appdb/subcategory/{subcatid}", method={RequestMethod.GET})
 	public SubCategory getSubCategoryById(@PathVariable int subcat_id) {
-		if ( request.getMethod().equals("GET")) {
 			return handler.getSubCategoryById(subcat_id);
-		}
-		else if ( request.getMethod().equals("PUT")) {
-			return null;
-		}
-		else if (request.getMethod().equals("DELETE")) {
-			return null;
-		}
-		else {
-			return null; //jsonify error
-		}
 	}
 
-	@RequestMapping(value="/appdb/supplieraddress", method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value="/appdb/supplieraddress", method={RequestMethod.GET})
 	public ArrayList<SupplierAddress> getAllSupplierAddress(HttpServletRequest request) throws UnsupportedEncodingException {
 			return handler.getAllSupplierAddress(request);
 	}
 	
-	@RequestMapping(value="/appdb/supplieraddress/{supadd_id}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value="/appdb/supplieraddress/{supadd_id}", method={RequestMethod.GET})
 	public SupplierAddress getSupplierAddressById(@PathVariable int supadd_id) {
-		if ( request.getMethod().equals("GET")) {
 			return handler.getSupplierAddressById(supadd_id);
-		}
-		else if ( request.getMethod().equals("PUT")) {
-			return null;
-		}
-		else if (request.getMethod().equals("DELETE")) {
-			return null;
-		}
-		else {
-			return null; //jsonify error
-		}
+	}
+	
+	@RequestMapping("appdb/supplier/{sid}/supplieraddress")
+	public SupplierAddress getSupplierAddressBySupplierId(@PathVariable long sid){
+		return handler.getSupplierAddressBySupplierId(sid);
 	}
 
-	@RequestMapping(value="/appdb/customeraddress", method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value="/appdb/customeraddress", method={RequestMethod.GET})
 	public ArrayList<CustomerAddress> getAllCustomerAddress(HttpServletRequest request) throws UnsupportedEncodingException {
 			return handler.getAllCustomerAddress(request);
 	}
 	
-	@RequestMapping(value="/appdb/customeraddress/{cusadd_id}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value="/appdb/customeraddress/{cusadd_id}", method={RequestMethod.GET})
 	public CustomerAddress getCustomerAddressById(@PathVariable int cusadd_id) {
-		if ( request.getMethod().equals("GET")) {
+
 			return handler.getCustomerAddressById(cusadd_id);
-		}
-		else if ( request.getMethod().equals("PUT")) {
-			return null;
-		}
-		else if (request.getMethod().equals("DELETE")) {
-			return null;
-		}
-		else {
-			return null; //jsonify error
-		}
+	}
+	
+	@RequestMapping("appdb/customer/{cid}/customeraddress")
+	public CustomerAddress getCustomersAddressByCustomerId(@PathVariable long cid){
+		return handler.getCustomerAddressByCustomerId(cid);
 	}
 
-	@RequestMapping(value="/appdb/city", method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value="/appdb/city", method={RequestMethod.GET})
 	public ArrayList<City> getAllCities(HttpServletRequest request) throws UnsupportedEncodingException {
-		if ( request.getMethod().equals("POST")) {
-			return null;
-		}
-		else {
 			return handler.getAllCities(request);
-		}
 	}
 	
-	@RequestMapping(value="/appdb/city/{cityid}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value="/appdb/city/{cityid}", method={RequestMethod.GET})
 	public City getCityById(@PathVariable int cityId) {
-		if ( request.getMethod().equals("GET")) {
 			return handler.getCityById(cityId);
-		}
-		else if ( request.getMethod().equals("PUT")) {
-			return null;
-		}
-		else if (request.getMethod().equals("DELETE")) {
-			return null;
-		}
-		else {
-			return null; //jsonify error
-		}
 	}
 
-	@RequestMapping(value="/appdb/announcement", method={RequestMethod.GET,RequestMethod.POST})
-	public ArrayList<Announcement> getAllAnnouncements(HttpServletRequest request) throws IOException {
-		if ( request.getMethod().equals("POST")) {
-			handler.insertAnnouncement(request);
-			return null;
-		}
-		else {
+	@RequestMapping(value="/appdb/announcement", method={RequestMethod.GET})
+	public ArrayList<Announcement> getAllAnnouncements(@RequestBody Map<String, Object> payload) throws IOException {
 			return handler.getAllAnnouncements(request);
-		}
 	}
 	
-	@RequestMapping(value="/appdb/announcement/{annid}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value="/appdb/announcement", method={RequestMethod.POST})
+	public void postAnnouncement(@RequestBody Map<String, Object> payload) throws IOException {
+			handler.insertAnnouncement(payload);
+	}
+	
+	@RequestMapping(value="/appdb/announcement/{annid}", method={RequestMethod.GET})
 	public Announcement getAnnouncementById(int annid) {
-		if ( request.getMethod().equals("GET")) {
 			return handler.getAnnouncementById(annid);
-		}
-		else if ( request.getMethod().equals("PUT")) {
-			return null;
-		}
-		else if (request.getMethod().equals("DELETE")) {
-			return null;
-		}
-		else {
-			return null; //jsonify error
-		}
 	}
 	
-	@RequestMapping(value="/appdb/announcement-search", method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value="/appdb/announcement-search", method={RequestMethod.GET})
 	public ArrayList<AnnouncementSearch> searchAnnouncement(HttpServletRequest request) throws UnsupportedEncodingException {
-		if ( request.getMethod().equals("POST")) {
-			return null;
-		}
-		else {
 			return handler.searchAnnouncement(request);
-		}
 	}
 	
 	@RequestMapping("/appdb/announcement/{annid}/supplier")
@@ -370,15 +274,14 @@ public class Controller {
 		return null;
 	}
 
-	@RequestMapping(value="/appdb/request", method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value="/appdb/request", method={RequestMethod.GET})
 	public ArrayList<Request> getAllRequests(HttpServletRequest request) throws IOException {
-		if ( request.getMethod().equals("POST")) {
-			handler.insertRequest(request);
-			return null;
-		}
-		else {
 			return handler.getAllRequests(request);
-		}
+	}
+	
+	@RequestMapping(value="/appdb/request", method={RequestMethod.POST})
+	public void postRequest(@RequestBody Map<String, Object> payload) throws IOException {
+			handler.insertRequest(payload);
 	}
 	
 	@RequestMapping(value="/appdb/request-search", method={RequestMethod.GET,RequestMethod.POST})
@@ -391,20 +294,9 @@ public class Controller {
 		}
 	}
 	
-	@RequestMapping(value="/appdb/request/{reqid}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value="/appdb/request/{reqid}", method={RequestMethod.GET})
 	public Request getRequestById(int reqid) {
-		if ( request.getMethod().equals("GET")) {
 			return handler.getRequestById(reqid);
-		}
-		else if ( request.getMethod().equals("PUT")) {
-			return null;
-		}
-		else if (request.getMethod().equals("DELETE")) {
-			return null;
-		}
-		else {
-			return null; //jsonify error
-		}
 	}
 	
 	@RequestMapping("appdb/request/{reqid}/customer")
@@ -417,36 +309,24 @@ public class Controller {
 		return null;
 	}
 
-	@RequestMapping(value="/appdb/location", method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value="/appdb/location", method={RequestMethod.GET})
 	public ArrayList<Location> getAllLocations(HttpServletRequest request) throws UnsupportedEncodingException {
 			return handler.getAllLocations(request);
 	}
 	
-	@RequestMapping(value="/appdb/location/{locid}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value="/appdb/location/{locid}", method={RequestMethod.GET})
 	public Location getLocationById(int locid) {
-		if ( request.getMethod().equals("GET")) {
 			return handler.getLocationById(locid);
-		}
-		else if ( request.getMethod().equals("PUT")) {
-			return null;
-		}
-		else if (request.getMethod().equals("DELETE")) {
-			return null;
-		}
-		else {
-			return null; //jsonify error
-		}
 	}
 
-	@RequestMapping(value="/appdb/purchase", method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value="/appdb/purchase", method={RequestMethod.GET})
 	public ArrayList<Purchase> getAllPurchases(HttpServletRequest request) throws IOException {
-		if ( request.getMethod().equals("POST")) {
-			handler.insertPurchase(request);
-			return null;
-		}
-		else { 
 			return handler.getAllPurchases(request);
-		}
+	}
+	
+	@RequestMapping(value="/appdb/purchase", method={RequestMethod.POST})
+	public void postPurchase(@RequestBody Map<String, Object> payload) throws IOException {
+			handler.insertPurchase(payload);
 	}
 	
 	@RequestMapping(value="/appdb/purchase-search", method={RequestMethod.GET,RequestMethod.POST})
@@ -459,20 +339,9 @@ public class Controller {
 		}
 	}
 	
-	@RequestMapping(value="/appdb/purchase/{purid}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value="/appdb/purchase/{purid}", method={RequestMethod.GET})
 	public Purchase getPurchaseById(int purid) {
-		if ( request.getMethod().equals("GET")) {
 			return handler.getPurchaseById(purid);
-		}
-		else if ( request.getMethod().equals("PUT")) {
-			return null;
-		}
-		else if (request.getMethod().equals("DELETE")) {
-			return null;
-		}
-		else {
-			return null; //jsonify error
-		}
 	}
 	
 	@RequestMapping("/appdb/purchase/{purid}/customer")
@@ -485,32 +354,14 @@ public class Controller {
 		return null;
 	}
 	
-	@RequestMapping(value="/appdb/creditcard", method={RequestMethod.GET,RequestMethod.POST})
-	public ArrayList<CreditCard> getAllCreditCards(HttpServletRequest request) throws UnsupportedEncodingException {
-		if ( request.getMethod().equals("POST")) {
-			Object form = null;
-			handler.insertCreditCard(request);
-			return null;
-		}
-		else {
+	@RequestMapping(value="/appdb/creditcard", method={RequestMethod.GET})
+	public ArrayList<CreditCard> getAllCreditCards(HttpServletRequest request, @RequestBody Map<String, Object> payload) throws UnsupportedEncodingException {
 			return handler.getAllCreditCards(request);
-		}
 	}
 	
-	@RequestMapping(value="/appdb/creditcard/{credcardnumber}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value="/appdb/creditcard/{credcardnumber}", method={RequestMethod.GET})
 	public CreditCard getCreditCardById(String credcardnumber) {
-		if ( request.getMethod().equals("GET")) {
 			return handler.getCreditCardById(credcardnumber);
-		}
-		else if ( request.getMethod().equals("PUT")) {
-			return null;
-		}
-		else if (request.getMethod().equals("DELETE")) {
-			return null;
-		}
-		else {
-			return null; //jsonify error
-		}
 	}
 	
 	@RequestMapping("/appdb/creditcard/{credcardnumber}/customer")
@@ -523,30 +374,14 @@ public class Controller {
 		return null;
 	}
 	
-	@RequestMapping(value="/appdb/supplies", method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value="/appdb/supplies", method={RequestMethod.GET})
 	public ArrayList<Supplies> getAllSupplies(HttpServletRequest request) throws UnsupportedEncodingException {
-		if ( request.getMethod().equals("POST")) {
-			return null;
-		}
-		else {
 			return handler.getAllSupplies(request);
-		}
 	}
 	
-	@RequestMapping(value="/appdb/supplies/{supid}", method={RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
-	public Supplies getSuppliesById(int supid) {
-		if ( request.getMethod().equals("GET")) {
-			return handler.getSuppliesById(supid);
-		}
-		else if ( request.getMethod().equals("PUT")) {
-			return null;
-		}
-		else if (request.getMethod().equals("DELETE")) {
-			return null;
-		}
-		else {
-			return null; //jsonify error
-		}
+	@RequestMapping(value="/appdb/supplies/{sid}", method={RequestMethod.GET})
+	public ArrayList<Supplies> getSuppliesById(@PathVariable int sid) {
+			return handler.getSuppliesBySupplierId(sid);
 	}
 	
 }
